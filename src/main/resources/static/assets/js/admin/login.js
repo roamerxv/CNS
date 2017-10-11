@@ -1,7 +1,3 @@
-var contextPath = $("meta[name='ctx']").attr("content");
-
-Logger.useDefaults();
-
 var SnippetLogin = function () {
     var e = $("#m_login"), i = function (e, i, a) {
         var t = $('<div class="m-alert m-alert--outline alert alert-' + i + ' alert-dismissible" role="alert">\t\t\t<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>\t\t\t<span></span>\t\t</div>');
@@ -41,7 +37,7 @@ var SnippetLogin = function () {
                 $.ajax({
                     type: 'post',
                     data: JSON.stringify(send_data),
-                    url: contextPath + '/signIn.json',
+                    url: contextPath + 'signIn.json',
                     async: false,//默认为true
                     contentType: "application/json",
                     dataType: 'json',//默认为预期服务器返回的数据类型
@@ -54,7 +50,7 @@ var SnippetLogin = function () {
                     error: function (data) {
                         Logger.debug("出现错误！");
                         setTimeout(function () {
-                            a.removeClass("m-loader m-loader--right m-loader--light").attr("disabled", !1), i(t, "danger", "Incorrect username or password. Please try again.")
+                            a.removeClass("m-loader m-loader--right m-loader--light").attr("disabled", !1), i(t, "danger", "错误的用户名或密码！请重试")
                         }, 1e3)
                         //showExceptionTip(data);
                     }

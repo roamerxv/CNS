@@ -24,10 +24,10 @@
     <aop:config>
         <aop:pointcut
                 id="logControllerPointcut"
-                expression="execution(* com.alcor.cns.controller..*.*(..)) &amp;&amp; !execution(* com.alcor.cns.controller.UserController.logout(..))"/>
+                expression="execution(* com.alcor.cns.controller..*.*(..)) &amp;&amp; !execution(* com.alcor.cns.controller.UserController.adminLogout(..))"/>
         <aop:pointcut
                 id="beforeLogControllerPointcut"
-                expression="execution(* com.alcor.cns.controller.UserController.logout(..))"/>
+                expression="execution(* com.alcor.cns.controller.UserController.adminLogout(..))"/>
         <aop:aspect ref="businessLogAspect">
             <aop:around method="logAroundAction" pointcut-ref="logControllerPointcut"/>
             <aop:before method="logBeforeAction" pointcut-ref="beforeLogControllerPointcut"/>

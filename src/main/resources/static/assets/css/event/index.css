@@ -2,24 +2,23 @@ div .m-content {
     width: 100%
 }
 
-div #businesslog_table_wrapper {
+div #event_table_wrapper {
     display: inherit !important;
 }
-
 
 .dataTable_div {
     /*font-size: 0.2em;*/
 }
 
-#businesslog_table {
+#event_table {
     /*font-size: 1em;*/
 }
 
-#businesslog_table tbody tr td.success_type {
+#event_table tbody tr td.success_type {
     color: green;
 }
 
-#businesslog_table tbody tr td.fail_type {
+#event_table tbody tr td.fail_type {
     color: red;
     /*font-size: 1.0em;*/
 }

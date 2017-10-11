@@ -49,3 +49,16 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+CREATE TABLE `cns`.`event` (
+  `id` varchar(36) NOT NULL COMMENT 'id',
+  `name` varchar(256) NOT NULL COMMENT '事件名字',
+  `memo` text NULL COMMENT '事件描述',
+  `notice_content` text NOT NULL COMMENT '提醒内容',
+  `act_date` date NOT NULL COMMENT '提醒日',
+  `repeat_type` integer(2) NOT NULL COMMENT '重复提醒类型。0 到期提醒一次  1每月提醒 2每周提醒',
+  `notice` tinyint(1) NOT NULL COMMENT '是否需要提醒 0 不需要 1 需要',
+  `notice_mail` text NOT NULL COMMENT '提醒对象的 mail 地址 , 以 ，分隔',
+  PRIMARY KEY (`id`)
+) COMMENT = '提醒事件表';

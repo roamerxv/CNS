@@ -9,7 +9,7 @@
                 <div class="m-stack m-stack--ver m-stack--general">
                     <div class="m-stack__item m-stack__item--middle m-stack__item--center m-brand__logo">
                         <a th:href="@{/}" class="m-brand__logo-wrapper">
-                            <img alt="" th:src="@{assets/img/logo/logo.png}"/>
+                            <img alt="" th:src="@{~/assets/img/logo/logo.png}"/>
                         </a>
                     </div>
                     <div class="m-stack__item m-stack__item--middle m-brand__tools">
@@ -50,7 +50,7 @@
                                 data-dropdown-toggle="click">
                                 <a href="#" class="m-nav__link m-dropdown__toggle">
                                                 <span class="m-topbar__userpic">
-                                                    <img src="assets/app/media/img/users/user3.jpg" alt=""/>
+                                                    <img th:src="@{~/assets/app/media/img/users/user3.jpg}" alt=""/>
                                                 </span>
                                 </a>
                                 <div class="m-dropdown__wrapper">
@@ -60,11 +60,11 @@
                                              style="background: url(assets/app/media/img/misc/user_profile_bg.jpg); background-size: cover;">
                                             <div class="m-card-user m-card-user--skin-dark">
                                                 <div class="m-card-user__pic">
-                                                    <img src="assets/app/media/img/users/user3.jpg" alt=""/>
+                                                    <img th:src="@{~/assets/app/media/img/users/user3.jpg}" alt=""/>
                                                 </div>
                                                 <div class="m-card-user__details">
                                                                 <span class="m-card-user__name m--font-weight-500">
-                                                                    Lisa Strong
+                                                                    杨政
                                                                 </span>
                                                     <a href="" class="m-card-user__email m--font-weight-300 m-link">
                                                         lisa.strong@gmail.com
