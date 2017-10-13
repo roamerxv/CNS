@@ -1,6 +1,10 @@
 var businesslog_table;
 
 $().ready(function () {
+    //显示左侧菜单的对应菜单项激活效果
+    $("li.m-menu__item").removeClass("m-menu__item--active");
+    $("li[name='menu2']").addClass("m-menu__item--active");
+    //end
 
     if ($('#begin_time') == undefined || $('#begin_time') == undefined) {
         Logger.error("没有定义开始时间和结束时间的 UI 组件");

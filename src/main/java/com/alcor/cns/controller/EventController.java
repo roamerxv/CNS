@@ -38,7 +38,7 @@ public class EventController extends BaseController {
      *
      * @throws ControllerException
      */
-    @BusinessMethod(value = "查看提醒事件列表", isLogged = true)
+//    @BusinessMethod(value = "查看提醒事件列表", isLogged = true)
     @GetMapping(value = "/events/getDataWithoutPaged")
     @ResponseBody
     public String getDataWithoutPaged() throws ControllerException {

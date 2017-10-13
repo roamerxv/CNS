@@ -69,3 +69,10 @@ function fun_delete(id) {
         }
     });
 }
+
+$().ready(function () {
+    //显示左侧菜单的对应菜单项激活效果
+    $("li.m-menu__item").removeClass("m-menu__item--active");
+    $("li[name='menu1']").addClass("m-menu__item--active");
+    //end
+});
