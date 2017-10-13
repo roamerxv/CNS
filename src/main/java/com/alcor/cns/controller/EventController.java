@@ -1,19 +1,21 @@
 package com.alcor.cns.controller;
 
+import com.alcor.cns.entity.EventEntity;
 import com.alcor.cns.service.EventService;
 import com.alcor.cns.service.ServiceException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pers.roamer.boracay.aspect.businesslogger.BusinessMethod;
 import pers.roamer.boracay.aspect.httprequest.SessionCheckKeyword;
+import pers.roamer.boracay.helper.HttpResponseHelper;
 import pers.roamer.boracay.helper.JsonUtilsHelper;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * 提醒事件的 controller 类
@@ -37,7 +39,7 @@ public class EventController extends BaseController {
      * @throws ControllerException
      */
     @BusinessMethod(value = "查看提醒事件列表", isLogged = true)
-    @GetMapping(value = "/event/getDataWithoutPaged")
+    @GetMapping(value = "/events/getDataWithoutPaged")
     @ResponseBody
     public String getDataWithoutPaged() throws ControllerException {
         log.debug("开始查询");
@@ -58,11 +60,71 @@ public class EventController extends BaseController {
         }
     }
 
-    @GetMapping(value = "/event/{id}")
-    public ModelAndView edit() throws  ControllerException{
+    /**
+     * 显示一个事件详情
+     *
+     * @param id
+     *
+     * @return
+     *
+     * @throws ControllerException
+     */
+    @GetMapping(value = "/events/{id}")
+    public ModelAndView edit(@PathVariable String id) throws ControllerException {
         log.debug("显示一个需要编辑的记录");
         ModelAndView modelAndView = new ModelAndView("/event/edit");
+        try {
+            modelAndView.addObject("event", eventService.findById(id));
+        } catch (ServiceException e) {
+            throw new ControllerException(e.getMessage());
+        }
         log.debug("显示结束");
         return modelAndView;
+    }
+
+
+    @BusinessMethod(value = "更新一个事件信息")
+    @PostMapping("/events/{id}")
+    @ResponseBody
+    public String update(@RequestBody EventEntity eventEntity) throws ControllerException {
+        try {
+            log.debug("更新一条记录:" + JsonUtilsHelper.objectToJsonString(eventEntity));
+            try {
+                EventEntity eventEntityUpdated = eventService.update(eventEntity);
+
+            } catch (ServiceException e) {
+                throw new ControllerException(e.getBindingResult());
+            }
+        } catch (JsonProcessingException e) {
+            log.error(e.getMessage());
+        }
+        log.debug("更新成功");
+        return HttpResponseHelper.successInfoInbox("更新成功");
+    }
+
+    @BusinessMethod(value = "新建一个事件信息")
+    @GetMapping("/events")
+    public ModelAndView create() throws ControllerException {
+        log.debug("增加的记录");
+        ModelAndView modelAndView = new ModelAndView("/event/new");
+        EventEntity eventEntity = new EventEntity();
+        eventEntity.setId(UUID.randomUUID().toString());
+        modelAndView.addObject("event", eventEntity);
+        log.debug("增加结束");
+        return modelAndView;
+    }
+
+    @BusinessMethod(value = "删除一个事件信息")
+    @DeleteMapping("/events/{id}")
+    @ResponseBody
+    public String delete(@PathVariable String id) throws ControllerException {
+        log.debug("删除一条记录:" + id);
+        try {
+            eventService.delete(id);
+        } catch (ServiceException e) {
+            throw new ControllerException(e.getBindingResult());
+        }
+        log.debug("删除成功");
+        return HttpResponseHelper.successInfoInbox("更新成功");
     }
 }

@@ -8,6 +8,9 @@ div #event_table_wrapper {
 
 .dataTable_div {
     /*font-size: 0.2em;*/
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
 }
 
 #event_table {

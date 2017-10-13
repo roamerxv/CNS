@@ -26,4 +26,16 @@ public class EventService {
         return iEventRepository.findAll();
     }
 
+    public EventEntity findById(String id) throws ServiceException{
+        return iEventRepository.findOne(id);
+    }
+
+    public EventEntity update( EventEntity eventEntity) throws  ServiceException{
+        return iEventRepository.save(eventEntity);
+    }
+
+    public void delete( String id) throws  ServiceException{
+        iEventRepository.delete(id);
+    }
+
 }

@@ -23,6 +23,7 @@ import java.util.Enumeration;
  */
 @Log4j2
 @Controller("com.alcor.cns.controller.UserController")
+@SessionCheckKeyword(checkIt = true)
 public class UserController extends com.alcor.cns.controller.BaseController {
 
     @Autowired
@@ -52,6 +53,7 @@ public class UserController extends com.alcor.cns.controller.BaseController {
 
     @BusinessMethod(value = "管理员登录")
     @PostMapping("/signIn")
+    @SessionCheckKeyword(checkIt = false)
     @ResponseBody
     public String login(@RequestBody UserEntity userEntity) throws ControllerException {
         log.debug("管理员 登录!");
