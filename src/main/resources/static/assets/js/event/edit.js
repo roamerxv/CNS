@@ -31,7 +31,7 @@ function fun_submit() {
         error: function (data) {
             var responseText = JSON.parse(jqXHR.responseText);
             mApp.unblock();
-            showMessage("error", responseText.data[0].errorMessage);
+            showMessage("error", "错误",responseText.data[0].errorMessage);
         }
     });
 };

@@ -50,6 +50,8 @@ CREATE TABLE `user` (
 
 SET FOREIGN_KEY_CHECKS = 1;
 
+INSERT INTO `user` VALUES ('admin@me.com', '1');
+
 
 CREATE TABLE `cns`.`event` (
   `id` varchar(36) NOT NULL COMMENT 'id',
@@ -62,3 +64,25 @@ CREATE TABLE `cns`.`event` (
   `notice_mail` text NOT NULL COMMENT '提醒对象的 mail 地址 , 以 ，分隔',
   PRIMARY KEY (`id`)
 ) COMMENT = '提醒事件表';
+
+
+# 系统参数表
+CREATE TABLE `system_configure` (
+  `name` varchar(32) COLLATE utf8_bin NOT NULL COMMENT '参数名字',
+  `value` text COLLATE utf8_bin NOT NULL COMMENT '参数值',
+  `description` text COLLATE utf8_bin NOT NULL COMMENT '描述',
+  `sort_no` INT NOT NULL  COMMENT '序号',
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='系统参数表';
+
+-- ----------------------------
+-- Records of system_configure
+-- ----------------------------
+BEGIN;
+INSERT INTO `system_configure` VALUES ('mail_smtp_server', '', '发件服务器',1);
+INSERT INTO `system_configure` VALUES ('mail_user', '', '发件用户名',2);
+INSERT INTO `system_configure` VALUES ('mail_password', '', '发件密码',3);
+
+COMMIT;
+
+SET FOREIGN_KEY_CHECKS = 1;

@@ -23,7 +23,6 @@ function cleanAllExceptionTip() {
  */
 function showExceptionTip(exception) {
     var error_information = JSON.parse(exception.responseText);
-    Logger.debug(error_information);
     for (var index in error_information.data) {
         var exceptionMessage = error_information.data[index].errorMessage;
         var nodes = error_information.data[index].nodesName;
@@ -57,8 +56,8 @@ function showExceptionTip(exception) {
             } else {
                 $.notify({
                     title: "<strong>错误</strong> ",
-                    message:  exceptionMessage
-                },{
+                    message: exceptionMessage
+                }, {
                     type: "danger",
                     placement: {
                         from: 'bottom',
@@ -75,11 +74,11 @@ function showExceptionTip(exception) {
  * @param type
  * @param message
  */
-function showMessage(type, message) {
+function showMessage(type, title, message) {
     $.notify({
-        title: "<strong>错误</strong> ",
-        message:  message
-    },{
+        title: "<strong>" + title + "</strong> ",
+        message: message
+    }, {
         type: type,
         placement: {
             from: 'bottom',

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="decorators/webModel">
+<body>
+
+<div class="content_container" th:fragment="content" th:remove="tag">
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        系统参数设置
+                        <small>
+                            显示所有的系统参数
+                        </small>
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <tbody th:each="systemConfigure,rowStat: ${systemConfigures}">
+            <div class="form-group m-form__group row">
+                <div class="col-lg-6">
+                    <label th:for="${systemConfigure.name}" th:text="${systemConfigure.description}"/>
+                    <div class="form-group m-form__group row">
+                        <input type="input" class="form-control m-input" th:id="${systemConfigure.name}"
+                               th:value="${systemConfigure.value}">
+                        <input type="button" style="margin-top: 10px" th:id="${systemConfigure.name}"
+                               class="btn btn-primary" value="保存" th:onclick="'javascript:fun_update(\'' + ${systemConfigure.name}+'\')'">
+                    </div>
+                </div>
+            </div>
+            </tbody>
+        </div>
+
+        <script th:src="@{/assets/js/systemConfigure/edit.js}"></script>
+    </div>
+</body>
+</html>

@@ -9,7 +9,7 @@ $().ready(function () {
             url: contextPath + "events/getDataWithoutPaged.json",
             error: function (jqXHR, textStatus, errorThrown) {
                 var responseText = JSON.parse(jqXHR.responseText);
-                showMessage("error", responseText.data[0].errorMessage);
+                showMessage("error", "错误",responseText.data[0].errorMessage);
             },
         },
         "language": {

@@ -52,9 +52,9 @@ function fun_delete(id) {
                     contentType: "application/json",
                     dataType: 'json',//默认为预期服务器返回的数据类型
                     success: function (data) {
-                        if ( typeof event_table == 'undefined' ){
-                            window.location = contextPath ;
-                        }else{
+                        if (typeof event_table == 'undefined') {
+                            window.location = contextPath;
+                        } else {
                             event_table.ajax.reload();
                             mApp.unblock();
                         }
@@ -62,7 +62,7 @@ function fun_delete(id) {
                     error: function (data) {
                         var responseText = JSON.parse(jqXHR.responseText);
                         mApp.unblock();
-                        showMessage("error", responseText.data[0].errorMessage);
+                        showMessage("error", "错误", responseText.data[0].errorMessage);
                     }
                 });
             }
@@ -72,7 +72,6 @@ function fun_delete(id) {
 
 $().ready(function () {
     //显示左侧菜单的对应菜单项激活效果
-    $("li.m-menu__item").removeClass("m-menu__item--active");
-    $("li[name='menu1']").addClass("m-menu__item--active");
+    activeMenu("menu1")
     //end
 });
