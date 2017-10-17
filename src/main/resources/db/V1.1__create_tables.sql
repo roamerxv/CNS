@@ -79,9 +79,7 @@ CREATE TABLE `system_configure` (
 -- Records of system_configure
 -- ----------------------------
 BEGIN;
-INSERT INTO `system_configure` VALUES ('mail_smtp_server', '', '发件服务器',1);
-INSERT INTO `system_configure` VALUES ('mail_user', '', '发件用户名',2);
-INSERT INTO `system_configure` VALUES ('mail_password', '', '发件密码',3);
+INSERT INTO `system_configure` VALUES ('cns_subject', 'CNS-对[%s]进行的提醒', '提醒邮件的标题',1);
 
 COMMIT;
 

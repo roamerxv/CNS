@@ -30,7 +30,7 @@
                             <div class="form-group m-form__group row">
                                 <div class="col-lg-6">
                                     <label for="name">
-                                        事件名称
+                                        事件名称(作为提醒内容的标题)
                                     </label>
                                     <input type="input" class="form-control m-input" id="name" placeholder=""
                                            th:value="${event.name}" required="required">
@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="noticeMail">
-                                        发送提醒的 mail 地址
+                                        发送提醒的 mail 地址(多个地址以 , 分隔)
                                     </label>
                                     <textarea class="form-control m-input" id="noticeMail" rows="3" required="required"
                                               th:text="${event.noticeMail}"></textarea>

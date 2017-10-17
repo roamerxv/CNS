@@ -5,7 +5,6 @@ import com.alcor.cns.service.ServiceException;
 import com.alcor.cns.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pers.roamer.boracay.aspect.businesslogger.BusinessMethod;
@@ -22,7 +21,7 @@ import java.util.Enumeration;
  * @create 2017-09-2017/9/28  上午9:53
  */
 @Log4j2
-@Controller("com.alcor.cns.controller.UserController")
+@RestController("com.alcor.cns.controller.UserController")
 @SessionCheckKeyword(checkIt = true)
 public class UserController extends com.alcor.cns.controller.BaseController {
 
@@ -54,7 +53,6 @@ public class UserController extends com.alcor.cns.controller.BaseController {
     @BusinessMethod(value = "管理员登录")
     @PostMapping("/signIn")
     @SessionCheckKeyword(checkIt = false)
-    @ResponseBody
     public String login(@RequestBody UserEntity userEntity) throws ControllerException {
         log.debug("管理员 登录!");
         try {
@@ -79,7 +77,6 @@ public class UserController extends com.alcor.cns.controller.BaseController {
      */
     @GetMapping(value = "/businessMethodLog")
     @BusinessMethod(value = "测试需要记录日志的业务方法")
-    @ResponseBody
     public String businessMethodLog() throws ControllerException {
         return HttpResponseHelper.successInfoInbox("记录业务日志的方法被成功调用！现在可以到日志结果查看功能里面去查看日志是否被成功记录！");
     }

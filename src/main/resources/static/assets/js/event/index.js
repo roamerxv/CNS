@@ -9,7 +9,7 @@ $().ready(function () {
             url: contextPath + "events/getDataWithoutPaged.json",
             error: function (jqXHR, textStatus, errorThrown) {
                 var responseText = JSON.parse(jqXHR.responseText);
-                showMessage("error", "错误",responseText.data[0].errorMessage);
+                showMessage("error", "错误", responseText.data[0].errorMessage);
             },
         },
         "language": {
@@ -39,7 +39,7 @@ $().ready(function () {
                     // return '<button type="button" class="btn btn-outline-primary"  onclick="fun_edit(\'' + row.id + '\')">编辑</button>&nbsp;&nbsp;<button class="btn btn-outline-danger btn-sm" type="button"  onclick="fun_delete(\'' + row.id + '\')">删除</button>'
                     return '<a href="javascript:fun_edit(\'' + row.id + '\')" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="编辑"><i class="la la-edit"></i></a>' +
                         '<a href="javascript:fun_delete(\'' + row.id + '\')" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title=" 删除"><i class="la la-trash"></i></a>' +
-                        '<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="测试提醒"><i class="la la-send"></i></a>'
+                        '<a href="javascript:fun_notice(\'' + row.id + '\')" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="测试提醒"><i class="la la-send"></i></a>'
                 }
             },
             {
@@ -47,9 +47,19 @@ $().ready(function () {
                 "targets": [5],
                 "render": function (data, type, row, meta) {
                     if (row.notice) {
-                        return '<span class="m-badge m-badge--success" title="正在进行提醒"></span>'
+                        return '<span class="m-switch m-switch--sm m-switch--icon">\n' +
+                            '<label>\n' +
+                            '<input type="checkbox" checked="checked"  disabled name="" style="margin-left: 0px">\n' +
+                            '<span></sp\\an>\n' +
+                            '</label>\n' +
+                            '</span>'
                     } else {
-                        return '<a class="m-badge m-badge--danger" alt="不再进行提醒"></a>'
+                        return '<span class="m-switch m-switch--sm m-switch--icon">\n' +
+                            '<label>\n' +
+                            '<input type="checkbox" name=""  disabled style="margin-left: 0px">\n' +
+                            '<span></sp\\an>\n' +
+                            '</label>\n' +
+                            '</span>'
                     }
 
                 }
@@ -76,3 +86,30 @@ $().ready(function () {
 function fun_edit(id) {
     window.location = contextPath + "events/" + id;
 }
+
+function fun_notice(id) {
+    //关闭页面响应
+    mApp.blockPage({
+        overlayColor: "#000000",
+        type: "loader",
+        state: "success",
+        message: "正在发送提醒,请稍等..."
+    });
+    $.ajax({
+        type: 'post',
+        url: contextPath + 'notice/test/' + id + ".json",
+        async: true,//默认为true
+        contentType: "application/json",
+        dataType: 'json',//默认为预期服务器返回的数据类型
+        success: function (data, textStatus, jqXHR) {
+            showMessage("success", "成功", data.data.localMessage);
+        },
+        error: function (data, textStatus, jqXHR) {
+            showMessage("danger", "错误", data.responseJSON.data[0].errorMessage);
+        },
+    }).always(function () {
+        //关闭页面响应
+        mApp.unblock();
+    });
+}
+

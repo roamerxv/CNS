@@ -5,11 +5,7 @@ import com.alcor.cns.service.ServiceException;
 import com.alcor.cns.service.SystemConfigureService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pers.roamer.boracay.aspect.businesslogger.BusinessMethod;
 import pers.roamer.boracay.aspect.httprequest.SessionCheckKeyword;
@@ -24,7 +20,7 @@ import java.util.List;
  * @create 2017-10-2017/10/16  上午10:56
  */
 @Log4j2
-@Controller("com.alcor.cns.controller.SystemConfigureController")
+@RestController("com.alcor.cns.controller.SystemConfigureController")
 @SessionCheckKeyword(checkIt = true)
 public class SystemConfigureController extends BaseController {
 
@@ -50,7 +46,6 @@ public class SystemConfigureController extends BaseController {
 
     @PostMapping(value = "/systemConfigs/{name}")
     @BusinessMethod(value = "新建一个配置项")
-    @ResponseBody
     public String update(@RequestBody SystemConfigureEntity systemConfigureEntity) throws ControllerException{
         log.debug("更新一个配置项目");
         try {
