@@ -19,3 +19,6 @@ function activeMenu(menuName) {
     //end
 }
 
+$().ready(function () {
+    $("#banner_message").html("多谢你如此精彩耀眼，做我平淡岁月里星辰");
+})

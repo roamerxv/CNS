@@ -80,6 +80,7 @@ CREATE TABLE `system_configure` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `system_configure` VALUES ('cns_subject', 'CNS-对[%s]进行的提醒', '提醒邮件的标题',1);
+INSERT INTO `system_configure` VALUES ('banner_message', '多谢你如此精彩耀眼，做我平淡岁月里星辰', '用户的 banner 信息',2);
 
 COMMIT;
 
