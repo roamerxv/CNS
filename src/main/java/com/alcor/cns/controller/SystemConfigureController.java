@@ -3,6 +3,7 @@ package com.alcor.cns.controller;
 import com.alcor.cns.entity.SystemConfigureEntity;
 import com.alcor.cns.service.ServiceException;
 import com.alcor.cns.service.SystemConfigureService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import pers.roamer.boracay.aspect.businesslogger.BusinessMethod;
 import pers.roamer.boracay.aspect.httprequest.SessionCheckKeyword;
 import pers.roamer.boracay.helper.HttpResponseHelper;
+import pers.roamer.boracay.helper.JsonUtilsHelper;
 
 import java.util.List;
 
@@ -37,6 +39,7 @@ public class SystemConfigureController extends BaseController {
             log.debug("总共发现{}条系统参数记录", systemConfigureEntityList.size());
             modelAndView.addObject("systemConfigures", systemConfigureEntityList);
         } catch (ServiceException e) {
+
             throw new ControllerException(e.getBindingResult());
         }
         log.debug("显示完成");
@@ -44,10 +47,22 @@ public class SystemConfigureController extends BaseController {
         return modelAndView;
     }
 
+    @GetMapping(value = "/systemConfigs/{name}")
+    public String getValueByName(@PathVariable String name ) throws ControllerException{
+        log.debug("开始获取{}的值",name);
+        try {
+            SystemConfigureEntity systemConfigureEntity = systemConfigureService.findByName(name);
+            log.debug("获取的系统变量的内容是：{}",systemConfigureEntity.getValue());
+            return  JsonUtilsHelper.objectToJsonString(systemConfigureEntity);
+        } catch (ServiceException | JsonProcessingException e) {
+            throw new ControllerException(e.getMessage());
+        }
+    }
+
     @PostMapping(value = "/systemConfigs/{name}")
     @BusinessMethod(value = "新建一个配置项")
     public String update(@RequestBody SystemConfigureEntity systemConfigureEntity) throws ControllerException{
-        log.debug("更新一个配置项目");
+        log.debug("更新一个配置项目,名字是:{},内容是:{}",systemConfigureEntity.getName(),systemConfigureEntity.getValue());
         try {
             SystemConfigureEntity systemConfigureEntity2Update = systemConfigureService.findByName(systemConfigureEntity.getName());
             systemConfigureEntity2Update.setValue(systemConfigureEntity.getValue());

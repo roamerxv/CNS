@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -31,10 +32,12 @@ public class SystemConfigureService {
         return iSystemConfigureRepository.findOne(name);
     }
 
+    @Transactional()
     public SystemConfigureEntity update( SystemConfigureEntity systemConfigureEntity) throws  ServiceException{
         return iSystemConfigureRepository.save(systemConfigureEntity);
     }
 
+    @Transactional()
     public void delete( String id) throws  ServiceException{
         iSystemConfigureRepository.delete(id);
     }

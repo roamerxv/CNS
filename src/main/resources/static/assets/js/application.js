@@ -20,5 +20,19 @@ function activeMenu(menuName) {
 }
 
 $().ready(function () {
-    $("#banner_message").html("多谢你如此精彩耀眼，做我平淡岁月里星辰");
+    $.ajax({
+        type: 'get',
+        url: contextPath + 'systemConfigs/banner_message.json',
+        async: true,//默认为true
+        contentType: "application/json",
+        dataType: 'json',//默认为预期服务器返回的数据类型
+        success: function (data,  textStatus, jqXHR) {
+            $("#banner_text").html(data.value);
+            Logger.debug(data);
+        },
+        error: function (data) {
+
+        }
+    });
+
 })
