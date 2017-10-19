@@ -74,7 +74,13 @@ public class EventController extends BaseController {
         log.debug("显示一个需要编辑的记录");
         ModelAndView modelAndView = new ModelAndView("/event/edit");
         try {
-            modelAndView.addObject("event", eventService.findById(id));
+            EventEntity eventEntity = eventService.findById(id);
+            if (eventEntity == null) {
+                String error_message = "exception.system.event.not_found";
+                log.error(error_message);
+                throw new ControllerException(error_message);
+            }
+            modelAndView.addObject("event", eventEntity);
         } catch (ServiceException e) {
             throw new ControllerException(e.getMessage());
         }

@@ -21,6 +21,7 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'idea'
+apply plugin: 'war'
 apply plugin: 'org.springframework.boot'
 
 /* 这里定义一个检查 dependency 版本的插件 begin*/

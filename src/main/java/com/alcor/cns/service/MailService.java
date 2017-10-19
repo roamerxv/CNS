@@ -40,7 +40,7 @@ public class MailService {
      * @param content
      */
     @Async
-    public Future<String> sendSimpleMail(String[] to, String subject, String content) throws  ServiceException{
+    public Future<String> sendSimpleMail(String[] to, String subject, String content) throws ServiceException {
         log.debug("mail 服务被调用");
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(from);
@@ -66,7 +66,7 @@ public class MailService {
      * @param content
      */
     @Async
-    public void sendHtmlMail(String to, String subject, String content)  {
+    public void sendHtmlMail(String to, String subject, String content) {
         MimeMessage message = sender.createMimeMessage();
 
         try {
@@ -111,7 +111,7 @@ public class MailService {
             sender.send(message);
             log.info("带附件的邮件已经发送。");
         } catch (MessagingException e) {
-            throw new ServiceException (e.getMessage());
+            throw new ServiceException(e.getMessage());
         }
     }
 
@@ -145,4 +145,5 @@ public class MailService {
             log.error("发送嵌入静态资源的邮件时发生异常！", e);
         }
     }
+
 }

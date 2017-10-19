@@ -96,6 +96,11 @@
             <need_login>
                 必须登录系统
             </need_login>
+            <event>
+                <not_found>
+                    事件不存在！
+                </not_found>
+            </event>
         </system>
         <!--短信验证部分-->
         <sms>

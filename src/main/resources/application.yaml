@@ -20,10 +20,10 @@ spring:
         driver-class-name: com.mysql.jdbc.Driver
 
     mail:
-        host: smtp.163.com
+        host: webmail.dbond.net
         port: 25
-        username: roamerxv@163.com
-        password: "!QAZ2wsx0okm"
+        username: crm@dingbang.net
+        password: dbond1234##
         properties:
             starttls.enable: false
             starttls.required: false

@@ -52,7 +52,6 @@ public class SystemConfigureController extends BaseController {
         log.debug("开始获取{}的值",name);
         try {
             SystemConfigureEntity systemConfigureEntity = systemConfigureService.findByName(name);
-            log.debug("获取的系统变量的内容是：{}",systemConfigureEntity.getValue());
             return  JsonUtilsHelper.objectToJsonString(systemConfigureEntity);
         } catch (ServiceException | JsonProcessingException e) {
             throw new ControllerException(e.getMessage());
