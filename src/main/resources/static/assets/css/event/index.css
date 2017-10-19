@@ -13,9 +13,6 @@ div #event_table_wrapper {
     margin-top: 10px;
 }
 
-#event_table {
-    /*font-size: 1em;*/
-}
 
 #event_table tbody tr td.success_type {
     color: green;

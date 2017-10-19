@@ -5,6 +5,8 @@ $().ready(function () {
     $.fn.dataTable.ext.errMode = 'none';
 
     event_table = $("#event_table").DataTable({
+        "width": "100%",
+        "autoWidth": true ,
         "ajax": {
             url: contextPath + "events/getDataWithoutPaged.json",
             error: function (jqXHR, textStatus, errorThrown) {

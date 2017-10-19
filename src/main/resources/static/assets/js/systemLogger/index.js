@@ -23,6 +23,7 @@ $().ready(function () {
 
     businesslog_table = $("#businesslog_table").DataTable({
         // "scrollX": true,  //如果使用这个选项，会导致表格的内容向右移动。
+        "width": "100%",
         "autoWidth": true,
         "processing": true,
         "serverSide": true,
