@@ -20,8 +20,8 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'idea'
 apply plugin: 'war'
+apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
 /* 这里定义一个检查 dependency 版本的插件 begin*/
@@ -33,7 +33,7 @@ apply plugin: 'org.flywaydb.flyway'
 // end
 
 group = 'com.alcor'
-version = '0.0.1'
+version = '1.0.0'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
