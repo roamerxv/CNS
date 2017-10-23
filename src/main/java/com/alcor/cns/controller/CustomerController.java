@@ -1,5 +1,6 @@
 package com.alcor.cns.controller;
 
+import com.alcor.cns.entity.CustomerEntity;
 import com.alcor.cns.service.CustomerService;
 import com.alcor.cns.service.ServiceException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -8,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import pers.roamer.boracay.aspect.httprequest.SessionCheckKeyword;
 import pers.roamer.boracay.helper.JsonUtilsHelper;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * 提醒事件的 controller 类
@@ -26,6 +29,34 @@ public class CustomerController extends BaseController {
 
     @Autowired
     CustomerService customerService;
+
+
+    /**
+     * 跳转到显示所有客户信息的界面
+     * @return
+     */
+    @GetMapping("/customers/index")
+    public ModelAndView showCustomersPage() {
+        ModelAndView modelAndView = new ModelAndView("/customer/index");
+        return modelAndView;
+    }
+
+
+    /**
+     * 跳转到新建一个客户信息的界面
+     * @return
+     * @throws ControllerException
+     */
+    @GetMapping("/customers")
+    public ModelAndView create() throws ControllerException {
+        log.debug("显示增加的客户信息的界面");
+        ModelAndView modelAndView = new ModelAndView("/customer/new");
+        CustomerEntity customerEntity = new CustomerEntity();
+        customerEntity.setId(UUID.randomUUID().toString());
+        modelAndView.addObject("customer", customerEntity);
+        log.debug("增加结束");
+        return modelAndView;
+    }
 
     /**
      * 列出客户数据，以 json 字符串的形式返回给 dataTables 使用
@@ -54,4 +85,7 @@ public class CustomerController extends BaseController {
             throw new ControllerException(e.getMessage());
         }
     }
+
+
+
 }

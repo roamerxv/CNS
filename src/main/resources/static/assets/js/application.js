@@ -28,7 +28,6 @@ $().ready(function () {
         dataType: 'json',//默认为预期服务器返回的数据类型
         success: function (data,  textStatus, jqXHR) {
             $("#banner_text").html(data.value);
-            Logger.debug(data);
         },
         error: function (data) {
 

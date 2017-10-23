@@ -32,6 +32,35 @@ public class EventController extends BaseController {
     EventService eventService;
 
     /**
+     * 显示新建一个事件信息的界面
+     */
+    @GetMapping("/events")
+    public ModelAndView create() throws ControllerException {
+        log.debug("显示一个增加的记录");
+        ModelAndView modelAndView = new ModelAndView("/event/new");
+        EventEntity eventEntity = new EventEntity();
+        eventEntity.setId(UUID.randomUUID().toString());
+        modelAndView.addObject("event", eventEntity);
+        log.debug("增加结束");
+        return modelAndView;
+    }
+
+
+    /**
+     * 显示所有事件信息的界面
+     */
+    @GetMapping("/events/index")
+    public ModelAndView index() throws ControllerException {
+        log.debug("显示一个增加的记录");
+        ModelAndView modelAndView = new ModelAndView("/event/index");
+        EventEntity eventEntity = new EventEntity();
+        eventEntity.setId(UUID.randomUUID().toString());
+        modelAndView.addObject("event", eventEntity);
+        log.debug("增加结束");
+        return modelAndView;
+    }
+
+    /**
      * 列出所有满足记录的 提醒事件数据，以 json 字符串的形式返回给 dataTables 使用
      *
      * @return
@@ -108,17 +137,6 @@ public class EventController extends BaseController {
         return HttpResponseHelper.successInfoInbox("更新成功");
     }
 
-    @BusinessMethod(value = "新建一个事件信息")
-    @GetMapping("/events")
-    public ModelAndView create() throws ControllerException {
-        log.debug("增加的记录");
-        ModelAndView modelAndView = new ModelAndView("/event/new");
-        EventEntity eventEntity = new EventEntity();
-        eventEntity.setId(UUID.randomUUID().toString());
-        modelAndView.addObject("event", eventEntity);
-        log.debug("增加结束");
-        return modelAndView;
-    }
 
     @BusinessMethod(value = "删除一个事件信息")
     @DeleteMapping("/events/{id}")

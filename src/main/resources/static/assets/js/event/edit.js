@@ -26,7 +26,7 @@ function fun_submit() {
         contentType: "application/json",
         dataType: 'json',//默认为预期服务器返回的数据类型
         success: function (data, textStatus, jqXHR) {
-            window.location = contextPath;
+            window.location = contextPath + "events/index";
         },
         error: function (data, textStatus, jqXHR) {
             var responseText = JSON.parse(jqXHR.responseText);

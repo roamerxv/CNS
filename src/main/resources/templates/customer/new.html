@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="decorators/webModel">
+<body>
+
+<div class="content_container" th:fragment="content" th:remove="tag">
+    <div class="col-md">
+        <!--begin::Portlet-->
+        <input type="hidden" th:value="${customer.id}"/ id="id">
+        <div class="col-lg-12">
+            <!--begin::Portlet-->
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide">
+                                        <i class="la la-gear"></i>
+                                </span>
+                            <h3 class="m-portlet__head-text">
+                                <span>新增一个客户信息</span>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <!--begin::Form-->
+                <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed"
+                      target="nm_iframe" onsubmit="fun_submit()">
+                    <div class="m-portlet__body">
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label for="name">
+                                    客户名称
+                                </label>
+                                <input type="input" class="form-control m-input" id="name" placeholder=""
+                                       required="required"
+                                       th:value="${customer.name}">
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="memo">
+                                    联系人名字
+                                </label>
+                                <input type="input" class="form-control m-input" id="memo" th:value="${customer.contacts}">
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label for="noticeContent">
+                                    联系人手机
+                                </label>
+                                <input class="form-control m-input" id="noticeContent" rows="3" required="required"
+                                          th:text="${customer.mobile}"></input>
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="noticeMail">
+                                    公司座机号码
+                                </label>
+                                <input class="form-control m-input" id="noticeMail" rows="3" required="required"
+                                          th:text="${customer.tel}"></input>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-12 col-md-9">
+                                <label for="actDate">
+                                    地址
+                                </label>
+                                <textarea type="text" class="form-control m-input" required="required"
+                                          placeholder="公司地址" id="actDate" th:value="${customer.address}"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                        <div class="m-form__actions m-form__actions--solid">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <button type="submit" class="btn btn-primary">
+                                        保存
+                                    </button>
+                                    <button type="button" onclick="javasript:fun_back()"
+                                            class="btn btn-secondary">
+                                        返回
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe>
+                <!--end::Form-->
+            </div>
+            <!--end::Portlet-->
+        </div>
+        <!--begin::Page Snippets -->
+
+        <script th:src="@{/assets/js/customer/base.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/js/customer/edit.js}" type="text/javascript"></script>
+        <!--end::Page Resources -->
+    </div>
+
+</body>
+</html>
