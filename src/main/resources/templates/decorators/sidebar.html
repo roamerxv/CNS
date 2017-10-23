@@ -9,7 +9,14 @@
             data-menu-dropdown="true" data-menu-scrollable="true" data-menu-dropdown-timeout="500"
     >
         <ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow">
-            <li class="m-menu__item" aria-haspopup="true" name="menu1">
+            <li class="m-menu__item" aria-haspopup="true" name="menu_customer">
+                <a th:href="@{/customers}" class="m-menu__link ">
+                    <span class="m-menu__item-here"></span>
+                    <i class="m-menu__link-icon flaticon-users"></i>
+                    <span class="m-menu__link-text">客户信息</span>
+                </a>
+            </li>
+            <li class="m-menu__item" aria-haspopup="true" name="menu_event">
                 <a th:href="@{/}" class="m-menu__link ">
                     <span class="m-menu__item-here"></span>
                     <i class="m-menu__link-icon flaticon-alert-2"></i>

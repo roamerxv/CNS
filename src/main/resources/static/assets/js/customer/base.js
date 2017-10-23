@@ -1,26 +1,22 @@
 // 事件信息
-var EventInfoEntity = {
+var CustomerEntity = {
     createNew: function () {
-        var eventInfoEntity = BaseObj.createNew();
-        return eventInfoEntity;
+        var customerEntity = BaseObj.createNew();
+        return customerEntity;
     }
 };
 
 
 function getUIValue2Json() {
-    var eventInfoEntity = EventInfoEntity.createNew();
+    var customerEntity = CustomerEntity.createNew();
 
 
-    eventInfoEntity.id = $("#id").val();
-    eventInfoEntity.name = $("#name").val();
-    eventInfoEntity.memo = $("#memo").val();
-    eventInfoEntity.actDate = $("#actDate").val();
-    eventInfoEntity.noticeContent = $("#noticeContent").val();
-    eventInfoEntity.repeatType = $("#repeatType").val();
-    eventInfoEntity.notice = $("#notice").is(":checked");
-    eventInfoEntity.noticeMail = $("#noticeMail").val();
+    customerEntity.id = $("#id").val();
+    customerEntity.name = $("#name").val();
+    customerEntity.memo = $("#memo").val();
 
-    return eventInfoEntity;
+
+    return customerEntity;
 };
 
 
@@ -72,6 +68,6 @@ function fun_delete(id) {
 
 $().ready(function () {
     //显示左侧菜单的对应菜单项激活效果
-    activeMenu("menu_event")
+    activeMenu("menu_customer");
     //end
 });

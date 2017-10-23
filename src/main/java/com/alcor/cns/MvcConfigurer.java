@@ -21,7 +21,8 @@ public class MvcConfigurer extends WebMvcConfigurerAdapter {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/system_log/show").setViewName("systemLogs/systemLoggerIndex");
-        //        registry.addViewController("/login").setViewName("/admin/login");
+        registry.addViewController("/admin/profile").setViewName("admin/profile");
+
         super.addViewControllers(registry);
     }
 }

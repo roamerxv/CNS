@@ -63,7 +63,7 @@ CREATE TABLE `cns`.`event` (
   `notice` tinyint(1) NOT NULL COMMENT '是否需要提醒 0 不需要 1 需要',
   `notice_mail` text NOT NULL COMMENT '提醒对象的 mail 地址 , 以 ，分隔',
   PRIMARY KEY (`id`)
-) COMMENT = '提醒事件表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT = '提醒事件表';
 
 
 # 系统参数表
@@ -85,3 +85,17 @@ INSERT INTO `system_configure` VALUES ('banner_message', '多谢你如此精彩�
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+# 客户基本信息
+CREATE TABLE `customer` (
+  `id` varchar(36) COLLATE utf8_bin NOT NULL COMMENT 'id',
+  `name` varchar(256) COLLATE utf8_bin NOT NULL COMMENT '客户名称',
+  `contacts` varchar(256) COLLATE utf8_bin DEFAULT NULL COMMENT '联系人',
+  `mobile` varchar(36) COLLATE utf8_bin DEFAULT NULL COMMENT '联系手机号',
+  `tel` varchar(36) COLLATE utf8_bin DEFAULT NULL COMMENT '联系座机',
+  `address` varchar(256) COLLATE utf8_bin DEFAULT NULL COMMENT '公司地址',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='客户信息表';
+
+SET FOREIGN_KEY_CHECKS = 1;
+
