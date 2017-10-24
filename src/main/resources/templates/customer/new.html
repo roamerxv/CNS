@@ -37,35 +37,35 @@
                                        th:value="${customer.name}">
                             </div>
                             <div class="col-lg-6">
-                                <label for="memo">
+                                <label for="contacts">
                                     联系人名字
                                 </label>
-                                <input type="input" class="form-control m-input" id="memo" th:value="${customer.contacts}">
+                                <input type="input" class="form-control m-input" id="contacts" required="required" th:value="${customer.contacts}">
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
                             <div class="col-lg-6">
-                                <label for="noticeContent">
+                                <label for="mobile">
                                     联系人手机
                                 </label>
-                                <input class="form-control m-input" id="noticeContent" rows="3" required="required"
+                                <input class="form-control m-input" id="mobile" rows="3" required="required"
                                           th:text="${customer.mobile}"></input>
                             </div>
                             <div class="col-lg-6">
-                                <label for="noticeMail">
+                                <label for="tel">
                                     公司座机号码
                                 </label>
-                                <input class="form-control m-input" id="noticeMail" rows="3" required="required"
+                                <input class="form-control m-input" id="tel" rows="3" required="required"
                                           th:text="${customer.tel}"></input>
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
                             <div class="col-lg-12 col-md-9">
-                                <label for="actDate">
+                                <label for="address">
                                     地址
                                 </label>
                                 <textarea type="text" class="form-control m-input" required="required"
-                                          placeholder="公司地址" id="actDate" th:value="${customer.address}"></textarea>
+                                          placeholder="公司地址" id="address" th:value="${customer.address}"></textarea>
                             </div>
                         </div>
                     </div>

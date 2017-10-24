@@ -2,6 +2,7 @@ package com.alcor.cns.controller;
 
 import com.alcor.cns.entity.UserEntity;
 import com.alcor.cns.service.ServiceException;
+import com.alcor.cns.service.SystemConfigureService;
 import com.alcor.cns.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class UserController extends com.alcor.cns.controller.BaseController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    SystemConfigureService systemConfigureService;
 
 
     /**
@@ -58,6 +62,8 @@ public class UserController extends com.alcor.cns.controller.BaseController {
         try {
             if (userService.login(userEntity)) {
                 httpSession.setAttribute(ConfigHelper.getConfig().getString("System.SessionUserKeyword"), userEntity.getName());
+                String systemBanner = systemConfigureService.findByName("banner_message").getValue() ;
+                httpSession.setAttribute("SystemBanner", systemBanner);
             }
         } catch (ServiceException e) {
             log.error(e.getMessage());

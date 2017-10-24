@@ -6,11 +6,11 @@ import com.alcor.cns.service.ServiceException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import pers.roamer.boracay.aspect.businesslogger.BusinessMethod;
 import pers.roamer.boracay.aspect.httprequest.SessionCheckKeyword;
+import pers.roamer.boracay.helper.HttpResponseHelper;
 import pers.roamer.boracay.helper.JsonUtilsHelper;
 
 import java.util.HashMap;
@@ -23,7 +23,7 @@ import java.util.UUID;
  * @create 2017-10-2017/10/11  下午12:13
  */
 @Log4j2
-@Controller("com.alcor.cns.controller.CustomerController")
+@RestController("com.alcor.cns.controller.CustomerController")
 @SessionCheckKeyword(checkIt = true)
 public class CustomerController extends BaseController {
 
@@ -33,6 +33,7 @@ public class CustomerController extends BaseController {
 
     /**
      * 跳转到显示所有客户信息的界面
+     *
      * @return
      */
     @GetMapping("/customers/index")
@@ -44,7 +45,9 @@ public class CustomerController extends BaseController {
 
     /**
      * 跳转到新建一个客户信息的界面
+     *
      * @return
+     *
      * @throws ControllerException
      */
     @GetMapping("/customers")
@@ -87,5 +90,38 @@ public class CustomerController extends BaseController {
     }
 
 
+    @BusinessMethod(value = "保存/更新一条客户信息")
+    @PostMapping(value = "/customers/{id}")
+    @ResponseBody
+    public String update(@RequestBody CustomerEntity customerEntity) throws ControllerException {
+        log.debug("更新一条客户信息");
+        try {
+            customerService.update(customerEntity);
+        } catch (ServiceException e) {
+            new ControllerException(e.getMessage());
+        }
+        log.debug("更新一条客户信息完成");
+        return HttpResponseHelper.successInfoInbox("更新成功");
+    }
+
+
+    @GetMapping(value = "/customers/{id}")
+    public ModelAndView edit(@PathVariable String id) throws ControllerException {
+        log.debug("显示一个需要编辑的客户信息记录");
+        ModelAndView modelAndView = new ModelAndView("/customer/edit");
+        try {
+            CustomerEntity customerEntity = customerService.findById(id);
+            if (customerEntity == null) {
+                String error_message = "exception.system.customer.not_found";
+                log.error(error_message);
+                throw new ControllerException(error_message);
+            }
+            modelAndView.addObject("customer", customerEntity);
+        } catch (ServiceException e) {
+            throw new ControllerException(e.getMessage());
+        }
+        log.debug("显示结束");
+        return modelAndView;
+    }
 
 }

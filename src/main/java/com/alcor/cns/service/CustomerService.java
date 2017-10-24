@@ -29,5 +29,13 @@ public class CustomerService {
         return iCustomerRepository.findAll();
     }
 
+    @Transactional()
+    public CustomerEntity update(CustomerEntity customerEntity) throws ServiceException {
+        return iCustomerRepository.save(customerEntity);
+    }
 
+    @Transactional(readOnly = true)
+    public CustomerEntity findById(String id) throws ServiceException {
+        return iCustomerRepository.findOne(id);
+    }
 }

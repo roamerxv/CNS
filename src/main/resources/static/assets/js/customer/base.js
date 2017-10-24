@@ -10,11 +10,12 @@ var CustomerEntity = {
 function getUIValue2Json() {
     var customerEntity = CustomerEntity.createNew();
 
-
     customerEntity.id = $("#id").val();
     customerEntity.name = $("#name").val();
-    customerEntity.memo = $("#memo").val();
-
+    customerEntity.contacts = $("#contacts").val();
+    customerEntity.mobile = $("#mobile").val();
+    customerEntity.tel = $("#tel").val();
+    customerEntity.address = $("#address").val();
 
     return customerEntity;
 };
