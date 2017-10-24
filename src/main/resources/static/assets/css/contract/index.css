@@ -1,0 +1,19 @@
+div .m-content {
+    width: 100%
+}
+
+div #contract_table_wrapper {
+    display: inherit !important;
+}
+
+.contract_table {
+    /*font-size: 0.2em;*/
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+
+div.toolbar {
+    float: right;
+}

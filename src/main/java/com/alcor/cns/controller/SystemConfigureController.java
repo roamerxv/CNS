@@ -66,6 +66,9 @@ public class SystemConfigureController extends BaseController {
             SystemConfigureEntity systemConfigureEntity2Update = systemConfigureService.findByName(systemConfigureEntity.getName());
             systemConfigureEntity2Update.setValue(systemConfigureEntity.getValue());
             systemConfigureService.update(systemConfigureEntity2Update);
+            if(systemConfigureEntity2Update.getName().equalsIgnoreCase("banner_message")){
+                httpSession.setAttribute("SystemBanner", systemConfigureEntity2Update.getValue());
+            }
         } catch (ServiceException e) {
             throw new ControllerException(e.getBindingResult());
         }

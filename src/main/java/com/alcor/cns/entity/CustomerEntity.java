@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 /**
  * @author roamer - 徐泽宇
- * @create 2017-10-2017/10/23  下午1:57
+ * @create 2017-10-2017/10/24  下午6:13
  */
 @Entity
 @Table(name = "customer", schema = "cns", catalog = "")

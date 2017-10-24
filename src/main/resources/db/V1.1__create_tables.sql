@@ -99,3 +99,18 @@ CREATE TABLE `customer` (
 
 SET FOREIGN_KEY_CHECKS = 1;
 
+#合同信息表
+CREATE TABLE `cns`.`contract`  (
+  `id` varchar(36) NOT NULL COMMENT '合同 ID',
+  `name` varchar(256) NOT NULL COMMENT '合同名字',
+  `description` text NULL COMMENT '合同描述',
+  `customer_id` varchar(36) NOT NULL COMMENT '所属客户 ID',
+  `begin_date` DATE NOT NULL  COMMENT '合同开始日期',
+  `end_date` DATE NOT NULL  COMMENT '合同结束日期',
+  PRIMARY KEY (`id`)
+) CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT='合同信息表';
+
+
+#增加 客户信息表 和 合同信息表的外键关联
+ALTER TABLE `cns`.`contract`
+  ADD CONSTRAINT `customer_fk` FOREIGN KEY (`customer_id`) REFERENCES `cns`.`customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;

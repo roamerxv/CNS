@@ -79,7 +79,8 @@ public class CustomerController extends BaseController {
                 hashMap.put("data", customerService.findAll());
                 m_rtn = JsonUtilsHelper.objectToJsonString(hashMap);
             } catch (JsonProcessingException e) {
-                log.error(e.getStackTrace());
+                log.trace(e);
+                throw new ControllerException(e.getMessage());
             }
             log.debug("查询完成,返回数据是: {}", m_rtn);
             return m_rtn;
@@ -98,6 +99,7 @@ public class CustomerController extends BaseController {
         try {
             customerService.update(customerEntity);
         } catch (ServiceException e) {
+            log.error(e.getMessage());
             new ControllerException(e.getMessage());
         }
         log.debug("更新一条客户信息完成");
