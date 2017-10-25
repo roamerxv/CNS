@@ -61,7 +61,6 @@ function fun_submit() {
             window.location = contextPath + "customers/index";
         },
         error: function (data, textStatus, jqXHR) {
-            Logger.debug(data);
             var responseText = JSON.parse(jqXHR.responseText);
             mApp.unblock();
             showMessage("error", "错误", responseText.data[0].errorMessage);

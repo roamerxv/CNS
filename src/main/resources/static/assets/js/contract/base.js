@@ -1,26 +1,27 @@
 var contract_table ;
-var customer_table ;
 
-// 事件信息
-var CustomerEntity = {
+// 合同信息
+var ContractEntity = {
     createNew: function () {
-        var customerEntity = BaseObj.createNew();
-        return customerEntity;
+        var contractEntity = BaseObj.createNew();
+        return contractEntity;
     }
 };
 
 
 function getUIValue2Json() {
-    var customerEntity = CustomerEntity.createNew();
+    var contractEntity = ContractEntity.createNew();
 
-    customerEntity.id = $("#id").val();
-    customerEntity.name = $("#name").val();
-    customerEntity.contacts = $("#contacts").val();
-    customerEntity.mobile = $("#mobile").val();
-    customerEntity.tel = $("#tel").val();
-    customerEntity.address = $("#address").val();
+    contractEntity.id = $("#id").val();
+    contractEntity.name = $("#name").val();
+    contractEntity.description = $("#description").val();
+    contractEntity.beginDate = $("#beginDate").val();
+    contractEntity.endDate = $("#endDate").val();
+    contractEntity.customerId = $("#customerId").val();
+    contractEntity.amount = $("#amount").val();
 
-    return customerEntity;
+
+    return contractEntity;
 };
 
 
@@ -47,15 +48,15 @@ function fun_delete(id) {
                 });
                 $.ajax({
                     type: 'delete',
-                    url: contextPath + 'customers/' + id + ".json",
+                    url: contextPath + 'contracts/' + id + ".json",
                     async: false,//默认为true
                     contentType: "application/json",
                     dataType: 'json',//默认为预期服务器返回的数据类型
                     success: function (data, textStatus, jqXHR) {
-                        if (typeof customer_table == 'undefined') {
+                        if (typeof contract_table == 'undefined') {
                             window.location = contextPath;
                         } else {
-                            customer_table.ajax.reload();
+                            contract_table.ajax.reload();
                             mApp.unblock();
                         }
                     },
@@ -71,4 +72,5 @@ function fun_delete(id) {
 }
 
 $().ready(function () {
+
 });
