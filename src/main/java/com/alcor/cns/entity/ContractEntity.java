@@ -16,6 +16,7 @@ public class ContractEntity {
     private Date beginDate;
     private Date endDate;
     private String customerId;
+    private Integer amount;
 
     @Id
     @Column(name = "id")
@@ -101,5 +102,15 @@ public class ContractEntity {
 
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
+    }
+
+    @Basic
+    @Column(name = "amount")
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
 }

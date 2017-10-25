@@ -38,4 +38,9 @@ public class CustomerService {
     public CustomerEntity findById(String id) throws ServiceException {
         return iCustomerRepository.findOne(id);
     }
+
+    @Transactional
+    public void delete(String id) throws ServiceException{
+        iCustomerRepository.delete(id);
+    }
 }

@@ -60,9 +60,9 @@ function fun_delete(id) {
                         }
                     },
                     error: function (data) {
-                        var responseText = JSON.parse(jqXHR.responseText);
+                        var responseText = data.responseJSON.data[0].errorMessage;
                         mApp.unblock();
-                        showMessage("error", "错误", responseText.data[0].errorMessage);
+                        showMessage("error", "错误", responseText);
                     }
                 });
             }

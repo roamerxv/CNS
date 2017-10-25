@@ -6,7 +6,7 @@ div #contract_table_wrapper {
     display: inherit !important;
 }
 
-.contract_table {
+.dataTable_div {
     /*font-size: 0.2em;*/
     margin-left: 10px;
     margin-right: 10px;

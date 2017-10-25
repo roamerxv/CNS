@@ -5,7 +5,7 @@ $().ready(function () {
         "width": "100%",
         "autoWidth": true,
         "ajax": {
-            url: contextPath + "contracts/"+ "21a12da0-55c4-4ab8-a7f2-3e3f1600ee0c"+"/getDataWithoutPaged.json",
+            url: contextPath + "contracts/"+ $("#id").val() +"/getDataWithoutPaged.json",
             error: function (jqXHR, textStatus, errorThrown) {
                 var responseText = JSON.parse(jqXHR.responseText);
                 showMessage("error", "错误", responseText.data[0].errorMessage);
@@ -19,6 +19,8 @@ $().ready(function () {
         }, {
             "data": "description"
         }, {
+            "data": "amount"
+        }, {
             "data": "beginDate"
         }, {
             "data": "endDate"
@@ -26,11 +28,11 @@ $().ready(function () {
         "columnDefs": [
             {
                 "orderable": false,
-                "targets": [4],
+                "targets": [5],
                 "render": function (data, type, row, meta) {
                     // return '<button type="button" class="btn btn-outline-primary"  onclick="fun_edit(\'' + row.id + '\')">编辑</button>&nbsp;&nbsp;<button class="btn btn-outline-danger btn-sm" type="button"  onclick="fun_delete(\'' + row.id + '\')">删除</button>'
-                    return '<a href="javascript:fun_edit(\'' + row.id + '\')" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="编辑"><i class="la la-edit"></i></a>' +
-                        '<a href="javascript:fun_delete(\'' + row.id + '\')" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title=" 删除"><i class="la la-trash"></i></a>'
+                    return '<a href="javascript:fun_contract_edit(\'' + row.id + '\')" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="编辑"><i class="la la-edit"></i></a>' +
+                        '<a href="javascript:fun_contract_delete(\'' + row.id + '\')" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title=" 删除"><i class="la la-trash"></i></a>'
                 }
             }],
     });
@@ -48,7 +50,6 @@ function fun_submit() {
 
     var eventInfoEntity = getUIValue2Json();
     var id = eventInfoEntity.id;
-    Logger.debug(eventInfoEntity);
     $.ajax({
         type: 'post',
         data: eventInfoEntity.toString(),
@@ -71,4 +72,54 @@ function fun_submit() {
 
 function fun_back() {
     window.location = contextPath;
+}
+
+function fun_contract_edit(id) {
+    
+}
+
+function fun_contract_delete() {
+    bootbox.confirm({
+        message: "确认要删除这条记录吗?一经删除，就无法恢复！",
+        buttons: {
+            confirm: {
+                label: '删除',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: '不删了',
+                className: 'btn-danger'
+            }
+        },
+        callback: function (result) {
+            if (result) {
+                mApp.blockPage({
+                    overlayColor: "#000000",
+                    type: "loader",
+                    state: "success",
+                    message: "正在删除，请稍等..."
+                });
+                $.ajax({
+                    type: 'delete',
+                    url: contextPath + 'contract/' + id + ".json",
+                    async: false,//默认为true
+                    contentType: "application/json",
+                    dataType: 'json',//默认为预期服务器返回的数据类型
+                    success: function (data, textStatus, jqXHR) {
+                        if (typeof contract_table == 'undefined') {
+                            window.location = contextPath;
+                        } else {
+                            contract_table.ajax.reload();
+                            mApp.unblock();
+                        }
+                    },
+                    error: function (data, textStatus, jqXHR) {
+                        var responseText = data.responseJSON.data[0].errorMessage;
+                        mApp.unblock();
+                        showMessage("error", "错误", responseText);
+                    }
+                });
+            }
+        }
+    });
 }

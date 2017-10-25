@@ -126,4 +126,17 @@ public class CustomerController extends BaseController {
         return modelAndView;
     }
 
+    @BusinessMethod(value = "删除一个客户信息")
+    @DeleteMapping("/customers/{id}")
+    @ResponseBody
+    public String delete(@PathVariable String id) throws ControllerException {
+        log.debug("删除一条客户记录:" + id);
+        try {
+            customerService.delete(id);
+        } catch (Exception e) {
+            throw new ControllerException(e.getMessage());
+        }
+        log.debug("删除成功");
+        return HttpResponseHelper.successInfoInbox("删除成功");
+    }
 }

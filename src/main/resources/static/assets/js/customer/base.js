@@ -1,3 +1,6 @@
+var contract_table ;
+var customer_table ;
+
 // 事件信息
 var CustomerEntity = {
     createNew: function () {
@@ -44,22 +47,22 @@ function fun_delete(id) {
                 });
                 $.ajax({
                     type: 'delete',
-                    url: contextPath + 'events/' + id + ".json",
+                    url: contextPath + 'customers/' + id + ".json",
                     async: false,//默认为true
                     contentType: "application/json",
                     dataType: 'json',//默认为预期服务器返回的数据类型
-                    success: function (data) {
-                        if (typeof event_table == 'undefined') {
+                    success: function (data, textStatus, jqXHR) {
+                        if (typeof customer_table == 'undefined') {
                             window.location = contextPath;
                         } else {
-                            event_table.ajax.reload();
+                            customer_table.ajax.reload();
                             mApp.unblock();
                         }
                     },
-                    error: function (data) {
-                        var responseText = JSON.parse(jqXHR.responseText);
+                    error: function (data, textStatus, jqXHR) {
+                        var responseText = data.responseJSON.data[0].errorMessage;
                         mApp.unblock();
-                        showMessage("error", "错误", responseText.data[0].errorMessage);
+                        showMessage("error", "错误", responseText);
                     }
                 });
             }
