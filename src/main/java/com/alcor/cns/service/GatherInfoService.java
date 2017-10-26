@@ -7,6 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,8 +24,21 @@ public class GatherInfoService {
     @Autowired
     IGatherInfoRepository iGatherInfoRepository;
 
-    public List<GatherInfoEntity> findAllByContractId(String contractId) throws ServiceException{
+    @Transactional(readOnly = true)
+    public List<GatherInfoEntity> findAllByContractId(String contractId) throws ServiceException {
         return iGatherInfoRepository.findAllByContractId(contractId);
+    }
+
+    public GatherInfoEntity findById(String id)throws ServiceException{
+        return iGatherInfoRepository.findOne(id) ;
+    }
+
+    public void update(GatherInfoEntity gatherInfoEntity) throws ServiceException {
+        iGatherInfoRepository.save(gatherInfoEntity);
+    }
+
+    public void delete(String id) throws ServiceException {
+        iGatherInfoRepository.delete(id);
     }
 
 

@@ -5,7 +5,7 @@ import java.sql.Date;
 
 /**
  * @author roamer - 徐泽宇
- * @create 2017-10-2017/10/26  上午10:59
+ * @create 2017-10-2017/10/26  下午4:10
  */
 @Entity
 @Table(name = "gather_info", schema = "cns", catalog = "")
@@ -17,8 +17,10 @@ public class GatherInfoEntity {
     private Double amount;
     private Date gatherDate;
     private Date noticeDate;
-    private Byte notice;
-    private Byte gathered;
+    private String noticeContent;
+    private String noticeTo;
+    private Boolean notice;
+    private Boolean gathered;
     private Date gatheredDate;
 
     @Id
@@ -92,22 +94,42 @@ public class GatherInfoEntity {
     }
 
     @Basic
+    @Column(name = "notice_content")
+    public String getNoticeContent() {
+        return noticeContent;
+    }
+
+    public void setNoticeContent(String noticeContent) {
+        this.noticeContent = noticeContent;
+    }
+
+    @Basic
+    @Column(name = "notice_to")
+    public String getNoticeTo() {
+        return noticeTo;
+    }
+
+    public void setNoticeTo(String noticeTo) {
+        this.noticeTo = noticeTo;
+    }
+
+    @Basic
     @Column(name = "notice")
-    public Byte getNotice() {
+    public Boolean getNotice() {
         return notice;
     }
 
-    public void setNotice(Byte notice) {
+    public void setNotice(Boolean notice) {
         this.notice = notice;
     }
 
     @Basic
     @Column(name = "gathered")
-    public Byte getGathered() {
+    public Boolean getGathered() {
         return gathered;
     }
 
-    public void setGathered(Byte gathered) {
+    public void setGathered(Boolean gathered) {
         this.gathered = gathered;
     }
 
@@ -135,6 +157,9 @@ public class GatherInfoEntity {
         if (amount != null ? !amount.equals(that.amount) : that.amount != null) return false;
         if (gatherDate != null ? !gatherDate.equals(that.gatherDate) : that.gatherDate != null) return false;
         if (noticeDate != null ? !noticeDate.equals(that.noticeDate) : that.noticeDate != null) return false;
+        if (noticeContent != null ? !noticeContent.equals(that.noticeContent) : that.noticeContent != null)
+            return false;
+        if (noticeTo != null ? !noticeTo.equals(that.noticeTo) : that.noticeTo != null) return false;
         if (notice != null ? !notice.equals(that.notice) : that.notice != null) return false;
         if (gathered != null ? !gathered.equals(that.gathered) : that.gathered != null) return false;
         if (gatheredDate != null ? !gatheredDate.equals(that.gatheredDate) : that.gatheredDate != null) return false;
@@ -151,6 +176,8 @@ public class GatherInfoEntity {
         result = 31 * result + (amount != null ? amount.hashCode() : 0);
         result = 31 * result + (gatherDate != null ? gatherDate.hashCode() : 0);
         result = 31 * result + (noticeDate != null ? noticeDate.hashCode() : 0);
+        result = 31 * result + (noticeContent != null ? noticeContent.hashCode() : 0);
+        result = 31 * result + (noticeTo != null ? noticeTo.hashCode() : 0);
         result = 31 * result + (notice != null ? notice.hashCode() : 0);
         result = 31 * result + (gathered != null ? gathered.hashCode() : 0);
         result = 31 * result + (gatheredDate != null ? gatheredDate.hashCode() : 0);

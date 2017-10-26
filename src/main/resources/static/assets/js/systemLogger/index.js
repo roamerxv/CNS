@@ -10,10 +10,14 @@ $().ready(function () {
         var datetimepickerformat = "Y-m-d H:i"
         jQuery.datetimepicker.setLocale('zh');
         $('#begin_time').datetimepicker({
-            format: datetimepickerformat
+            format: datetimepickerformat,
+            scrollMonth : false,
+            scrollInput : false
         });
         $('#end_time').datetimepicker({
-            format: datetimepickerformat
+            format: datetimepickerformat,
+            scrollMonth : false,
+            scrollInput : false
         });
     }
 

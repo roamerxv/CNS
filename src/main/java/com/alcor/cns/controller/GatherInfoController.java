@@ -1,18 +1,20 @@
 package com.alcor.cns.controller;
 
+import com.alcor.cns.entity.GatherInfoEntity;
 import com.alcor.cns.service.GatherInfoService;
 import com.alcor.cns.service.ServiceException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import pers.roamer.boracay.aspect.businesslogger.BusinessMethod;
 import pers.roamer.boracay.aspect.httprequest.SessionCheckKeyword;
+import pers.roamer.boracay.helper.HttpResponseHelper;
 import pers.roamer.boracay.helper.JsonUtilsHelper;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * 提醒事件的 controller 类
@@ -29,7 +31,48 @@ public class GatherInfoController extends BaseController {
     GatherInfoService gatherInfoService;
 
 
+    /**
+     * 跳转到新建一个收款信息的界面
+     *
+     * @return
+     *
+     * @throws ControllerException
+     */
+    @GetMapping("/contracts/{contractId}/gatherInfos")
+    public ModelAndView create(@PathVariable String contractId) throws ControllerException {
+        log.debug("显示增加的收款信息的界面,所属的合同ID 是：{}", contractId);
+        ModelAndView modelAndView = new ModelAndView("/gatherInfo/new");
+        GatherInfoEntity gatherInfoEntity = new GatherInfoEntity();
+        gatherInfoEntity.setId(UUID.randomUUID().toString());
+        gatherInfoEntity.setContractId(contractId);
+        modelAndView.addObject("gatherInfo", gatherInfoEntity);
+        log.debug("增加结束");
+        return modelAndView;
+    }
 
+    /**
+     * 跳转到显示一个编辑界面
+     *
+     * @param id
+     *
+     * @return
+     *
+     * @throws ControllerException
+     */
+    @GetMapping("/gatherInfos/{id}")
+    public ModelAndView edit(@PathVariable String id) throws ControllerException {
+        log.debug("编辑 id 是:{}的付款信息", id);
+        ModelAndView modelAndView = new ModelAndView("/gatherInfo/edit");
+        GatherInfoEntity gatherInfoEntity;
+        try {
+            gatherInfoEntity = gatherInfoService.findById(id);
+        } catch (ServiceException e) {
+            throw new ControllerException(e.getMessage());
+        }
+        modelAndView.addObject("gatherInfo", gatherInfoEntity);
+        log.debug("编辑结束");
+        return modelAndView;
+    }
 
     /**
      * 列出收款数据，以 json 字符串的形式返回给 dataTables 使用
@@ -41,7 +84,7 @@ public class GatherInfoController extends BaseController {
     @GetMapping(value = "/gatherInfos/{contractId}/getDataWithoutPaged")
     @ResponseBody
     public String getDataWithoutPaged(@PathVariable String contractId) throws ControllerException {
-        log.debug("开始查询合同对应的收款信息,合同编号是:{}",contractId);
+        log.debug("开始查询合同对应的收款信息,合同编号是:{}", contractId);
         try {
             HashMap hashMap = new HashMap();
             String m_rtn = "";
@@ -61,4 +104,36 @@ public class GatherInfoController extends BaseController {
     }
 
 
+    @BusinessMethod(value = "保存/更新一条收款信息")
+    @PostMapping(value = "/gatherInfos/{id}")
+    @ResponseBody
+    public String update(@RequestBody GatherInfoEntity gatherInfoEntity) throws ControllerException {
+        try {
+            log.debug("更新一条收款信息,内容是{}", JsonUtilsHelper.objectToJsonString(gatherInfoEntity));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        try {
+            gatherInfoService.update(gatherInfoEntity);
+        } catch (ServiceException e) {
+            log.error(e.getMessage());
+            new ControllerException(e.getMessage());
+        }
+        log.debug("更新一条收款信息完成");
+        return HttpResponseHelper.successInfoInbox("更新成功");
+    }
+
+    @BusinessMethod(value = "删除一条收款信息")
+    @DeleteMapping("/gatherInfos/{id}")
+    @ResponseBody
+    public String delete(@PathVariable String id) throws ControllerException {
+        log.debug("删除一条收款记录:" + id);
+        try {
+            gatherInfoService.delete(id);
+        } catch (Exception e) {
+            throw new ControllerException(e.getMessage());
+        }
+        log.debug("删除成功");
+        return HttpResponseHelper.successInfoInbox("删除成功");
+    }
 }

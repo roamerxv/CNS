@@ -1,4 +1,5 @@
 var contract_table ;
+var gatherInfo_table;
 
 // 合同信息
 var ContractEntity = {
@@ -48,15 +49,15 @@ function fun_delete(id) {
                 });
                 $.ajax({
                     type: 'delete',
-                    url: contextPath + 'contracts/' + id + ".json",
+                    url: contextPath + 'gatherInfos/' + id + ".json",
                     async: false,//默认为true
                     contentType: "application/json",
                     dataType: 'json',//默认为预期服务器返回的数据类型
                     success: function (data, textStatus, jqXHR) {
-                        if (typeof contract_table == 'undefined') {
+                        if (typeof gatherInfo_table == 'undefined') {
                             window.location = contextPath;
                         } else {
-                            contract_table.ajax.reload();
+                            gatherInfo_table.ajax.reload();
                             mApp.unblock();
                         }
                     },

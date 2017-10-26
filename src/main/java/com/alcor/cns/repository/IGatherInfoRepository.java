@@ -11,4 +11,5 @@ import java.util.List;
 public interface IGatherInfoRepository extends JpaRepository<GatherInfoEntity, String>, PagingAndSortingRepository<GatherInfoEntity, String> {
 
     public List<GatherInfoEntity>  findAllByContractId(String contractId);
+
 }

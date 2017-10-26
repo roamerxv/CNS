@@ -50,6 +50,12 @@ public class ContractController extends BaseController {
         return modelAndView;
     }
 
+    /**
+     * 跳转到显示一个编辑界面
+     * @param id
+     * @return
+     * @throws ControllerException
+     */
     @GetMapping("/contracts/{id}")
     public ModelAndView edit(@PathVariable String id)throws ControllerException{
         log.debug("编辑 id 是:{}的合同信息",id);
@@ -61,7 +67,7 @@ public class ContractController extends BaseController {
             throw new ControllerException(e.getMessage());
         }
         modelAndView.addObject("contract", contractEntity);
-        log.debug("增加结束");
+        log.debug("编辑结束");
         return modelAndView;
     }
 
