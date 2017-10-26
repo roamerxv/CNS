@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="decorators/webModel">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>只是一个测试页面</h1>
+<div th:fragment="content">
+
+    用户名: <input type="text" th:value="${user.name}">
+    性别: <input type="text" th:value="${user.sex}">
+    年龄: <input type="text" th:value="${user.age}">
+
+    <button th:text="测试按钮" class="btn m-btn m-btn--gradient-from-metal m-btn--gradient-to-accent">安抚</button>
+</div>
+
+
+
+</body>
+</html>

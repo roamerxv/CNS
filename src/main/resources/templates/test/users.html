@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>只是一个测试页面</h3>
+<div th:fragment="content">
+    <table border="1">
+        <tr th:each="user,userStat : ${users}">
+            <td th:text="${user.name}">
+
+            </td>
+            <td th:text="${user.sex}">
+
+            </td>
+            <td th:text="${user.age}">
+
+            </td>
+
+        </tr>
+    </table>
+</div>
+</body>
+</html>

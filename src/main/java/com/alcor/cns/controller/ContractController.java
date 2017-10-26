@@ -50,6 +50,21 @@ public class ContractController extends BaseController {
         return modelAndView;
     }
 
+    @GetMapping("/contracts/{id}")
+    public ModelAndView edit(@PathVariable String id)throws ControllerException{
+        log.debug("编辑 id 是:{}的合同信息",id);
+        ModelAndView modelAndView = new ModelAndView("/contract/edit");
+        ContractEntity contractEntity ;
+        try {
+            contractEntity = contractService.findById(id);
+        } catch (ServiceException e) {
+            throw new ControllerException(e.getMessage());
+        }
+        modelAndView.addObject("contract", contractEntity);
+        log.debug("增加结束");
+        return modelAndView;
+    }
+
     /**
      * 列出合同数据，以 json 字符串的形式返回给 dataTables 使用
      *

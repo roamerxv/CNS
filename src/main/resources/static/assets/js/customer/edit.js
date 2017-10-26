@@ -74,8 +74,9 @@ function fun_back() {
 }
 
 function fun_contract_edit(id) {
-    
+    window.location = contextPath + "contracts/" + id;
 }
+
 
 function fun_contract_delete() {
     bootbox.confirm({
