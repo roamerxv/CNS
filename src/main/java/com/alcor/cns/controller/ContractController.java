@@ -75,7 +75,7 @@ public class ContractController extends BaseController {
     @GetMapping(value = "/contracts/{customerId}/getDataWithoutPaged")
     @ResponseBody
     public String getDataWithoutPaged(@PathVariable String customerId) throws ControllerException {
-        log.debug("开始查询全部合同信息,合同编号是:{}",customerId);
+        log.debug("开始查询全部合同信息,客户编号是:{}",customerId);
         try {
             HashMap hashMap = new HashMap();
             String m_rtn = "";
@@ -109,4 +109,17 @@ public class ContractController extends BaseController {
         return HttpResponseHelper.successInfoInbox("更新成功");
     }
 
+    @BusinessMethod(value = "删除一份合同信息")
+    @DeleteMapping("/contracts/{id}")
+    @ResponseBody
+    public String delete(@PathVariable String id) throws ControllerException {
+        log.debug("删除一份合同记录:" + id);
+        try {
+            contractService.delete(id);
+        } catch (Exception e) {
+            throw new ControllerException(e.getMessage());
+        }
+        log.debug("删除成功");
+        return HttpResponseHelper.successInfoInbox("删除成功");
+    }
 }

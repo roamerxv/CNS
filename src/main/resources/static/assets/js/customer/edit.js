@@ -78,7 +78,7 @@ function fun_contract_edit(id) {
 }
 
 
-function fun_contract_delete() {
+function fun_contract_delete(id) {
     bootbox.confirm({
         message: "确认要删除这条记录吗?一经删除，就无法恢复！",
         buttons: {
@@ -101,7 +101,7 @@ function fun_contract_delete() {
                 });
                 $.ajax({
                     type: 'delete',
-                    url: contextPath + 'contract/' + id + ".json",
+                    url: contextPath + 'contracts/' + id + ".json",
                     async: false,//默认为true
                     contentType: "application/json",
                     dataType: 'json',//默认为预期服务器返回的数据类型
@@ -114,9 +114,9 @@ function fun_contract_delete() {
                         }
                     },
                     error: function (data, textStatus, jqXHR) {
-                        var responseText = data.responseJSON.data[0].errorMessage;
+                        var responseText = JSON.parse(jqXHR.responseText);
                         mApp.unblock();
-                        showMessage("error", "错误", responseText);
+                        showMessage("error", "错误", responseText.data[0].errorMessage);
                     }
                 });
             }

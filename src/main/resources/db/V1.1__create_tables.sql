@@ -105,9 +105,23 @@ CREATE TABLE `cns`.`contract`  (
   `name` varchar(256) NOT NULL COMMENT '合同名字',
   `description` text NULL COMMENT '合同描述',
   `customer_id` varchar(36) NOT NULL COMMENT '所属客户 ID',
-  `amount` INTEGER COMMENT  '合同金额',
+  `amount` float(10, 2)  COMMENT  '合同金额',
   `begin_date` DATE NOT NULL  COMMENT '合同开始日期',
   `end_date` DATE NOT NULL  COMMENT '合同结束日期',
   PRIMARY KEY (`id`)
 ) CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT='合同信息表';
 
+# 收款信息表
+CREATE TABLE `cns`.`gather_info`  (
+  `id` varchar(36) NOT NULL COMMENT 'id',
+  `contract_id` varchar(36) NOT NULL COMMENT '对应的合同ID',
+  `name` varchar(256) NOT NULL COMMENT '收款信息的名字',
+  `description` text NULL COMMENT '描述',
+  `amount` float(10, 2) NOT NULL COMMENT '收款金额',
+  `gather_date` date NOT NULL COMMENT '收款日期',
+  `notice_date` date NULL COMMENT '提醒日期',
+  `notice` tinyint(0) NOT NULL COMMENT '是否需要提醒 0 不需要 1 需要',
+  `gathered` tinyint(0) NOT NULL COMMENT '是否已经收款完成 ！未收到 是 0， 已经收讫是 1 ',
+  `gathered_date` date NULL COMMENT '收讫的日期',
+  PRIMARY KEY (`id`)
+) CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT '收款信息表';

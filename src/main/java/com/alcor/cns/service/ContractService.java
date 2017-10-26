@@ -39,4 +39,9 @@ public class ContractService {
     public ContractEntity findById(String id) throws ServiceException {
         return iContractRepository.findOne(id);
     }
+
+    @Transactional
+    public void delete(String id) throws ServiceException{
+        iContractRepository.delete(id);
+    }
 }
