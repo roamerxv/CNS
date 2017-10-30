@@ -16,6 +16,43 @@
                     <span class="m-menu__link-text">客户信息</span>
                 </a>
             </li>
+            <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  name="menu_type" data-menu-submenu-toggle="hover">
+                <a href="#" class="m-menu__link m-menu__toggle">
+                    <span class="m-menu__item-here"></span>
+                    <i class="m-menu__link-icon flaticon-open-box"></i>
+                    <span class="m-menu__link-text">
+                                        分类信息
+                                    </span>
+                    <i class="m-menu__ver-arrow la la-angle-right"></i>
+                </a>
+                <div class="m-menu__submenu">
+                    <span class="m-menu__arrow"></span>
+                    <ul class="m-menu__subnav">
+                        <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                            <a href="#" class="m-menu__link ">
+                                <span class="m-menu__item-here"></span>
+                                <span class="m-menu__link-text">Layouts</span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" name="menu_customer_type">
+                            <a th:href="@{/customer_type/show}" class="m-menu__link">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                    <span></span>
+                                </i>
+                                <span class="m-menu__link-text">客户分类</span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" data-redirect="true">
+                            <a th:href="@{builder.html}" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                    <span></span>
+                                </i>
+                                <span class="m-menu__link-text">合同分类</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
             <li class="m-menu__item" aria-haspopup="true" name="menu_event">
                 <a th:href="@{/events/index}" class="m-menu__link ">
                     <span class="m-menu__item-here"></span>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="decorators/webModel">
+<body>
+
+<div class="content_container" th:fragment="content" th:remove="tag">
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet m-portlet--mobile">
+            <div class="col-md">
+                <!--begin::Portlet-->
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide">
+                                        <i class="la la-gear"></i>
+                                </span>
+                            <h3 class="m-portlet__head-text">
+                                <span>修改客户分类的信息</span>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="form-group m-form__group row">
+                <div class="col-lg-12 col-md-9 col-sm-12">
+                    <label for="type_name">
+                        已有分类
+                    </label>
+                    <select class="" id="customer_type" style="width: 50%">
+                        <option value="AL">Alabama</option>
+                        <option value="WY">Wyoming</option>
+                    </select>
+                </div>
+            </div>
+            <form class="" id="customer_type_form">
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <label for="type_name">
+                            分类名称
+                        </label>
+                        <input type="text" class="form-control m-input" required
+                               placeholder="分类名称" id="type_name" name="type_name">
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-primary" name="add_top_type_btn">
+                            增加成一个顶级分类
+                        </button>
+                        <button type="button" class="btn btn-secondary" name="add_sub_type_btn">
+                            增加成当前分类的子分类
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe>
+        </div>
+    </div>
+
+    <script th:src="@{/assets/js/customer_type/show.js}" type="text/javascript"></script>
+</div>
+</body>
+</html>

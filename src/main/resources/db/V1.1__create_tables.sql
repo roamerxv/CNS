@@ -127,3 +127,12 @@ CREATE TABLE `cns`.`gather_info`  (
   `gathered_date` date NULL COMMENT '收讫的日期',
   PRIMARY KEY (`id`)
 ) CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT '收款信息表';
+
+# 客户分类信息表
+
+CREATE TABLE `cns`.`customer_type`  (
+  `id` varchar(36) NOT NULL COMMENT '客户分类的 ID',
+  `name` varchar(128) NOT NULL COMMENT '分类名称',
+  `p_id` varchar(36) NOT NULL COMMENT '父分类 ID，id 为 0 的时候代表 是一级分类',
+  PRIMARY KEY (`id`)
+) CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '客户分类信息表';
