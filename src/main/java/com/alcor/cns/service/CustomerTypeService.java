@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -34,6 +35,21 @@ public class CustomerTypeService {
     public void create(CustomerTypeEntity customerTypeEntity) throws ServiceException {
         customerTypeEntity.setId(UUID.randomUUID().toString());
         iCustomerTypeRepository.saveAndFlush(customerTypeEntity);
+    }
+
+    @Transactional(readOnly = true)
+    public List<CustomerTypeEntity> findAll() throws ServiceException{
+        return iCustomerTypeRepository.findAll();
+    }
+
+    /**
+     * 列出所有的顶级分类
+     * @return
+     * @throws ServiceException
+     */
+    @Transactional(readOnly = true)
+    public List<CustomerTypeEntity> findWithPid(String pid) throws ServiceException{
+        return iCustomerTypeRepository.findAllByPId(pid);
     }
 
 }

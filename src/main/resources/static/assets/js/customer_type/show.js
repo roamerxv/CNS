@@ -18,11 +18,13 @@ function getUIValue2Json() {
 
 
 $.validator.setDefaults({
-    submitHandler: function() {
+    submitHandler: function () {
         alert("提交事件!");
     }
 });
 
+
+var customer_type_select2 ;
 
 $().ready(function () {
     //显示左侧菜单的对应菜单项激活效果
@@ -30,13 +32,8 @@ $().ready(function () {
     activeMenu("menu_type");
     //end
 
-    $("#customer_type").select2(
-        {
-            language: "zh-CN",
-            placeholder: '选择一个分类'
-        }
-    );
 
+    fun_renderSelect2();
 
     $("#customer_type_form").validate({
         rules: {
@@ -45,15 +42,16 @@ $().ready(function () {
         messages: {
             type_name: "请输入分类名称"
         }
-    })
+    });
 
 
     $("button").click(function () {
         var value = $(this).attr("name"); // $(this)表示获取当前被点击元素的name值
         if ("add_top_type_btn" == value) {
-            if ( !$("#customer_type_form").valid()){
+            if (!$("#customer_type_form").valid()) {
                 return false;
-            };
+            }
+            ;
 
             var customerTypeEntity = getUIValue2Json();
             customerTypeEntity.pId = "0";
@@ -66,6 +64,8 @@ $().ready(function () {
                 contentType: "application/json",
                 dataType: 'json',//默认为预期服务器返回的数据类型
                 success: function (data, textStatus, jqXHR) {
+                    $("#customer_type").select2("val","");
+                    fun_renderSelect2();
                     showMessage("success", "成功", "增加一个顶级分类成功");
                 },
                 error: function (data, textStatus, jqXHR) {
@@ -81,3 +81,31 @@ $().ready(function () {
     });
 });
 
+
+function fun_renderSelect2() {
+    $.ajax({
+        type: "get",
+        async: false,
+        url: contextPath + "customer_type/list.json",
+        dataType: "json",
+        contentType: "application/json",
+        beforeSend: function(){
+
+        },
+        success: function (data) {
+            customer_type_select2 = $("#customer_type").select2({
+                data: data,
+                language: "zh-CN",//汉化
+                placeholder: '请选择分类',//默认文字提示
+                allowClear: false//允许清空
+            }).on("change", function(e) {
+                Logger.debug("sdfdf");
+            })
+
+        },
+        error: function (data) {
+
+        }
+    });
+    
+}
