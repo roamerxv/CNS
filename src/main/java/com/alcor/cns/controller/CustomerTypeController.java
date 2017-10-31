@@ -14,7 +14,9 @@ import pers.roamer.boracay.helper.HttpResponseHelper;
 import pers.roamer.boracay.helper.JsonUtilsHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 提醒事件的 controller 类
@@ -32,7 +34,7 @@ public class CustomerTypeController extends BaseController {
     CustomerTypeService customerTypeService;
 
     /**
-     * 跳转到客户分类信息维护的界面
+     * 跳转到客户分类信息显示的界面
      *
      * @return
      *
@@ -40,11 +42,28 @@ public class CustomerTypeController extends BaseController {
      */
     @GetMapping("/customer_type/show")
     public ModelAndView create() throws ControllerException {
-        log.debug("显示客户分类维护的界面");
+        log.debug("显示客户分类显示的界面");
         ModelAndView modelAndView = new ModelAndView("/customer_type/show");
+        log.debug("显示客户分类显示的界面 end");
+        return modelAndView;
+    }
+
+
+    /**
+     * 跳转到客户分类信息维护的界面
+     *
+     * @return
+     *
+     * @throws ControllerException
+     */
+    @GetMapping("/customer_type/edit")
+    public ModelAndView edit() throws ControllerException {
+        log.debug("显示客户分类维护的界面");
+        ModelAndView modelAndView = new ModelAndView("/customer_type/edit");
         log.debug("显示客户分类维护的界面 end");
         return modelAndView;
     }
+
 
     @PostMapping("/customer_type/create")
     @ResponseBody
@@ -62,15 +81,47 @@ public class CustomerTypeController extends BaseController {
     }
 
     /**
+     * 返回用于 jsTree 控件使用的显示所有客户类型的 json 形式的数据
+     */
+    @GetMapping("customer_type/list4jsTree")
+    @ResponseBody
+    @SessionCheckKeyword(checkIt = false)
+    public String findAllForJsTree() throws ControllerException {
+        log.debug("获取使用在 jsTree 上的所有客户类型的 json 对象: begin");
+        try {
+
+            List<CustomerTypeEntity> customerTypeEntityList = customerTypeService.findAll();
+
+            List<JsTreeItemEntity> jsTreeItemEntityList = new ArrayList<>();
+            log.debug("共发现{}条记录！",customerTypeEntityList.size());
+            for (CustomerTypeEntity item : customerTypeEntityList) {
+                JsTreeItemEntity jsTreeItemEntity = new JsTreeItemEntity();
+                jsTreeItemEntity.setId(item.getId());
+                jsTreeItemEntity.setParent(item.getpId());
+                jsTreeItemEntity.setText(item.getName());
+                jsTreeItemEntityList.add(jsTreeItemEntity);
+            }
+            Map map = new HashMap();
+            map.put("data", jsTreeItemEntityList);
+            String m_rtn = JsonUtilsHelper.objectToJsonString(map);
+            log.debug("返回所有的客户类型的字符串是【{}】", m_rtn);
+            log.debug("获取使用在 jsTree 上的所有客户类型的 json 对象: end");
+            return m_rtn;
+        } catch (JsonProcessingException | ServiceException e) {
+            throw new ControllerException(e.getMessage());
+        }
+    }
+
+    /**
      * 返回用于 select2 控件使用的显示所有客户类型的 json 形式的数据
      *
      * @return
      *
      * @throws ControllerException
      */
-    @GetMapping("customer_type/list")
+    @GetMapping("customer_type/list4Select2")
     @ResponseBody
-    @SessionCheckKeyword(checkIt = false)
+    @SessionCheckKeyword(checkIt = true)
     public String findAllForSelect2() throws ControllerException {
         log.debug("获取所有客户类型的 json 对象");
         try {
@@ -113,3 +164,18 @@ public class CustomerTypeController extends BaseController {
         }
     }
 }
+
+@Data
+class Select2ItemEntity {
+    private String id;
+    private String text;
+    private List<Select2ItemEntity> children;
+}
+
+@Data
+class JsTreeItemEntity{
+    private String id ;
+    private String parent;
+    private String text ;
+}
+

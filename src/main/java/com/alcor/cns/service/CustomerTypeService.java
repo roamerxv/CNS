@@ -31,7 +31,7 @@ public class CustomerTypeService {
         iCustomerTypeRepository.save(customerTypeEntity);
     }
 
-    @Transactional
+    @Transactional()
     public void create(CustomerTypeEntity customerTypeEntity) throws ServiceException {
         customerTypeEntity.setId(UUID.randomUUID().toString());
         iCustomerTypeRepository.saveAndFlush(customerTypeEntity);

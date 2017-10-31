@@ -10,21 +10,13 @@ function getUIValue2Json() {
     var customerTypeEntity = CustomerTypeEntity.createNew();
 
 
-    customerTypeEntity.id = "";
+    customerTypeEntity.pId = $("#type_id").val();
     customerTypeEntity.name = $("#type_name").val();
 
     return customerTypeEntity;
 };
 
-
-$.validator.setDefaults({
-    submitHandler: function () {
-        alert("提交事件!");
-    }
-});
-
-
-var customer_type_select2;
+var jsTree_type ;
 
 $().ready(function () {
     //显示左侧菜单的对应菜单项激活效果
@@ -32,9 +24,6 @@ $().ready(function () {
     activeMenu("menu_type");
     //end
 
-    fun_block();
-
-    fun_renderSelect2();
 
     $("#customer_type_form").validate({
         rules: {
@@ -46,18 +35,23 @@ $().ready(function () {
     });
 
 
+    fun_render_jsTree();
+
     $("button").click(function () {
         var value = $(this).attr("name"); // $(this)表示获取当前被点击元素的name值
-        fun_block();
         if ("add_top_type_btn" == value) {
             if (!$("#customer_type_form").valid()) {
-                fun_unblock();
                 return false;
             }
             ;
+            if ($("#type_id").val() === ""){
+                showMessage("danger","错误","请先选中一个父分类");
+                return false;
+            }
+            fun_block();
             var customerTypeEntity = getUIValue2Json();
-            customerTypeEntity.pId = "0";
-            //增加一个顶级的分类
+            Logger.debug(customerTypeEntity);
+            //增加一个的分类
             $.ajax({
                 type: 'post',
                 data: customerTypeEntity.toString(),
@@ -66,9 +60,8 @@ $().ready(function () {
                 contentType: "application/json",
                 dataType: 'json',//默认为预期服务器返回的数据类型
                 success: function (data, textStatus, jqXHR) {
-                    fun_renderSelect2();
-                    $("#type_name").val("");
-                    showMessage("success", "成功", "增加一个顶级分类成功");
+                    showMessage("success", "成功", "增加一个分类成功");
+                    window.location = contextPath + "/customer_type/edit";
                 },
                 error: function (data, textStatus, jqXHR) {
                     Logger.debug(jqXHR);
@@ -76,47 +69,68 @@ $().ready(function () {
                     showMessage("error", "错误", responseText.data[0].errorMessage);
                 }
             }).done(function (data) {
-
+                fun_unblock();
             });
-        } else if ("add_sub_type_btn" == value) {
-            Logger.debug(customer_type_select2.val());
-            fun_unblock();
+        } else {
+
         }
     });
+
 });
 
 
-function fun_renderSelect2() {
+function fun_render_jsTree() {
+
     $.ajax({
-        type: "get",
-        async: true,
-        url: contextPath + "customer_type/list.json",
-        dataType: "json",
+        type: 'get',
+        url: contextPath + "customer_type/list4jsTree.json",
+        async: true,//默认为true
         contentType: "application/json",
-        beforeSend: function () {
-            $("#customer_type").html("");
+        dataType: 'json',//默认为预期服务器返回的数据类型
+        success: function (data, textStatus, jqXHR) {
+            //加上一个 jsTree 的 root 节点
+            var new_data = {
+                "data": [{
+                    "id": "0",
+                    "parent": "#",
+                    "text": "客户分类"
+                }]
+            };
+            for (var i = 0; i < data.data.length; i++) {
+
+                new_data.data.splice(1 + i, 1, data.data[i]);
+            }
+            //处理完成
+            jsTree_type = $('#jstree_customer_type_div').jstree({
+                'core': new_data,
+                "themes": {
+                    "variant": "large"
+                },
+                "plugins": [
+                    "search", "types", "state",
+                ],
+                'state': {
+                    "opened": true,
+                },
+            }).bind('changed.jstree', function (e, data) {
+                var i, j, r = [];
+                for (i = 0, j = data.selected.length; i < j; i++) {
+                    r.push(data.instance.get_node(data.selected[i]).id);
+                }
+                $("#type_id").val(r)
+            });
         },
-        success: function (data) {
-            customer_type_select2 = $("#customer_type").select2({
-                data: data,
-                language: "zh-CN",//汉化
-                placeholder: '请选择分类',//默认文字提示
-                allowClear: false,//允许清空
-            }).on("change", function (e) {
-
-            })
-
-        },
-        error: function (data) {
-
+        error: function (data, textStatus, jqXHR) {
+            var responseText = JSON.parse(jqXHR.responseText);
+            showMessage("error", "错误", responseText.data[0].errorMessage);
         }
     }).done(function (data) {
-        fun_unblock();
-        $("#type_id").val($("#customer_type_select2").val());
+
     });
 }
 
-function fun_block(){
+
+function fun_block() {
     mApp.block(".content_container", {
         overlayColor: "#000000",
         type: "loader",
