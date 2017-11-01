@@ -16,7 +16,7 @@ function getUIValue2Json() {
     return customerTypeEntity;
 };
 
-var jsTree_type ;
+var jsTree_type;
 
 $().ready(function () {
     //显示左侧菜单的对应菜单项激活效果
@@ -30,7 +30,7 @@ $().ready(function () {
             type_name: "required"
         },
         messages: {
-            type_name: "请输入分类名称"
+            type_name: "分类名称不能为空"
         }
     });
 
@@ -44,14 +44,15 @@ $().ready(function () {
                 return false;
             }
             ;
-            if ($("#type_id").val() === ""){
-                showMessage("danger","错误","请先选中一个父分类");
+            if ($("#type_id").val() === "") {
+                showMessage("danger", "错误", "请先选中一个父分类");
                 return false;
             }
             fun_block();
             var customerTypeEntity = getUIValue2Json();
             Logger.debug(customerTypeEntity);
             //增加一个的分类
+            // 只支持2级菜单的分类
             $.ajax({
                 type: 'post',
                 data: customerTypeEntity.toString(),
@@ -113,11 +114,15 @@ function fun_render_jsTree() {
                     "opened": true,
                 },
             }).bind('changed.jstree', function (e, data) {
-                var i, j, r = [];
+                var i, j, ids = [], names = [];
                 for (i = 0, j = data.selected.length; i < j; i++) {
-                    r.push(data.instance.get_node(data.selected[i]).id);
+                    ids.push(data.instance.get_node(data.selected[i]).id);
+                    names.push(data.instance.get_node(data.selected[i]).text);
                 }
-                $("#type_id").val(r)
+                Logger.debug(ids);
+                Logger.debug(names);
+                $("#type_id").val(ids);
+                $('button[name="add_top_type_btn"]').html("增加为【"+ names +"】的子分类");
             });
         },
         error: function (data, textStatus, jqXHR) {
