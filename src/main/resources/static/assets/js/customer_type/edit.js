@@ -108,21 +108,22 @@ function fun_render_jsTree() {
                     "variant": "large"
                 },
                 "plugins": [
-                    "search", "types", "state",
+                    "search", "types", "state", "changed"
                 ],
                 'state': {
                     "opened": true,
-                },
-            }).bind('changed.jstree', function (e, data) {
-                var i, j, ids = [], names = [];
-                for (i = 0, j = data.selected.length; i < j; i++) {
-                    ids.push(data.instance.get_node(data.selected[i]).id);
-                    names.push(data.instance.get_node(data.selected[i]).text);
                 }
-                Logger.debug(ids);
-                Logger.debug(names);
-                $("#type_id").val(ids);
-                $('button[name="add_top_type_btn"]').html("增加为【"+ names +"】的子分类");
+            }).on('changed.jstree', function (e, data) {
+                Logger.debug(data);
+                Logger.debug();
+
+                if ( typeof(data.node) == "undefined" ){
+                    Logger.debug("undefined");
+                }else{
+                    var selected_node = data.node ;
+                    $("#type_id").val(selected_node.id);
+                    $('button[name="add_top_type_btn"]').html("增加为【"+ selected_node.text +"】的子分类");
+                }
             });
         },
         error: function (data, textStatus, jqXHR) {

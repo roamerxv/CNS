@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 /**
  * @author roamer - 徐泽宇
- * @create 2017-10-2017/10/24  下午6:13
+ * @create 2017-11-2017/11/1  下午9:02
  */
 @Entity
 @Table(name = "customer", schema = "cns", catalog = "")
@@ -14,6 +14,7 @@ public class CustomerEntity {
     private String contacts;
     private String mobile;
     private String tel;
+    private String typeId;
     private String address;
 
     @Id
@@ -67,6 +68,16 @@ public class CustomerEntity {
     }
 
     @Basic
+    @Column(name = "type_id")
+    public String getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
+    }
+
+    @Basic
     @Column(name = "address")
     public String getAddress() {
         return address;
@@ -88,6 +99,7 @@ public class CustomerEntity {
         if (contacts != null ? !contacts.equals(that.contacts) : that.contacts != null) return false;
         if (mobile != null ? !mobile.equals(that.mobile) : that.mobile != null) return false;
         if (tel != null ? !tel.equals(that.tel) : that.tel != null) return false;
+        if (typeId != null ? !typeId.equals(that.typeId) : that.typeId != null) return false;
         if (address != null ? !address.equals(that.address) : that.address != null) return false;
 
         return true;
@@ -100,6 +112,7 @@ public class CustomerEntity {
         result = 31 * result + (contacts != null ? contacts.hashCode() : 0);
         result = 31 * result + (mobile != null ? mobile.hashCode() : 0);
         result = 31 * result + (tel != null ? tel.hashCode() : 0);
+        result = 31 * result + (typeId != null ? typeId.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
         return result;
     }

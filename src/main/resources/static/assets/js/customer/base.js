@@ -19,6 +19,7 @@ function getUIValue2Json() {
     customerEntity.mobile = $("#mobile").val();
     customerEntity.tel = $("#tel").val();
     customerEntity.address = $("#address").val();
+    customerEntity.typeId = $("#customer_type").val();
 
     return customerEntity;
 };

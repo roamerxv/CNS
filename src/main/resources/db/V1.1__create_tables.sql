@@ -93,6 +93,7 @@ CREATE TABLE `customer` (
   `contacts` varchar(256) COLLATE utf8_bin DEFAULT NULL COMMENT '联系人',
   `mobile` varchar(36) COLLATE utf8_bin DEFAULT NULL COMMENT '联系手机号',
   `tel` varchar(36) COLLATE utf8_bin DEFAULT NULL COMMENT '联系座机',
+  `type_id` varchar(36) COLLATE utf8_bin NOT NULL COMMENT '客户分类 ID',
   `address` varchar(256) COLLATE utf8_bin DEFAULT NULL COMMENT '公司地址',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='客户信息表';

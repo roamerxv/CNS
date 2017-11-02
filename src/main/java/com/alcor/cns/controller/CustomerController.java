@@ -100,7 +100,7 @@ public class CustomerController extends BaseController {
             customerService.update(customerEntity);
         } catch (ServiceException e) {
             log.error(e.getMessage());
-            new ControllerException(e.getMessage());
+            throw new ControllerException(e.getMessage());
         }
         log.debug("更新一条客户信息完成");
         return HttpResponseHelper.successInfoInbox("更新成功");
