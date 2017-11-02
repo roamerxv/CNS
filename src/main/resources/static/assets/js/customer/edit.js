@@ -1,4 +1,5 @@
 $().ready(function () {
+
     // 显示此客户对应的合同列表
     if ($("#contract_table").length > 0) {
         contract_table = $("#contract_table").DataTable({

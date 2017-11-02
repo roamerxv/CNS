@@ -1,16 +1,27 @@
 $().ready(function () {
+    // $('#m_modal_gatherInfos').modal('show').css({
+    //     // width: '3000000 px',
+    //     // 'margin-left': function () {
+    //     //     return -($(this).width() / 2);
+    //     // }
+    // });
+
+    $("#m_modal_gatherInfos").on("show.bs.modal", function() {
+        $(this).find(".modal-content").css("width", "110%");
+    });
+
     jQuery.datetimepicker.setLocale('zh');
     $('#beginDate').datetimepicker({
         format: "Y-m-d",
         timepicker: false,    //关闭时间选项
-        scrollMonth : false,
-        scrollInput : false
+        scrollMonth: false,
+        scrollInput: false
     });
     $('#endDate').datetimepicker({
         format: "Y-m-d",
         timepicker: false,    //关闭时间选项
-        scrollMonth : false,
-        scrollInput : false
+        scrollMonth: false,
+        scrollInput: false
     });
 
 
@@ -52,7 +63,7 @@ $().ready(function () {
                     return '<a href="javascript:fun_gatherInfo_edit(\'' + row.id + '\')" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="编辑"><i class="la la-edit"></i></a>' +
                         '<a href="javascript:fun_gatherInfo_delete(\'' + row.id + '\')" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title=" 删除"><i class="la la-trash"></i></a>'
                 }
-            },{
+            }, {
                 "orderable": false,
                 "targets": [3],
                 "render": function (data, type, row, meta) {
@@ -73,7 +84,7 @@ $().ready(function () {
                     }
 
                 }
-            },{
+            }, {
                 "orderable": false,
                 "targets": [5],
                 "render": function (data, type, row, meta) {
