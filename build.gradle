@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '1.5.7.RELEASE'
+		springBootVersion = '1.5.8.RELEASE'
 	}
 	repositories {
 		jcenter()
@@ -10,11 +10,11 @@ buildscript {
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 
-		classpath 'com.github.ben-manes:gradle-versions-plugin:0.15.0'
+		classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
 		classpath 'mysql:mysql-connector-java:8.0.8-dmr'
 		classpath 'org.flywaydb:flyway-gradle-plugin:4.2.0'
 		// 这是版本检测用的插件
-		classpath('com.github.ben-manes:gradle-versions-plugin:0.15.0')
+		classpath('com.github.ben-manes:gradle-versions-plugin:0.17.0')
 		// -----
 	}
 }
@@ -71,7 +71,7 @@ ext {
 	apacheOroVersion = "2.0.8"
 	javaxServletAPIVersion = "4.0.0"
 	mysqlJavaConnectorVersion = "5.1.43"
-	druidVersion = "1.1.4"
+	druidVersion = "1.1.5"
 	hibernateVersion = "5.2.11.Final"
 	siteMeshVersion = "3.0.1"
 	userAgentUtilsVersion = "1.20"
@@ -79,6 +79,9 @@ ext {
 }
 
 
+war {
+	archiveName 'cns.war'
+}
 
 dependencies {
 

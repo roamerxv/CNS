@@ -63,18 +63,8 @@
 
         <!--由于 console 上已经定义了 log 日志是 trace，内容过于繁杂，所有可以再设置下面的日志-->
 
-        <!-- 设置 org.hibernate.hql ， 显示 hibernate 生成的 hql 语句(debug 显示，info 就不显示)-->
-        <logger name="org.hibernate.hql" level="debug" additivity="false"></logger>
-        <!-- 要显示 hibernate 的 sql 语句的参数， 必须 trace -->
-        <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="trace"></logger>
-
         <!--关闭个人组件的 log-->
-        <logger name="pers.roamer.boracay" level="info"></logger>
-
-        <!-- 设置springframe的log -->
-        <logger name="org.springframework" level="error" additivity="false"></logger>
-        <!-- 设置 druid 的 log-->
-        <logger name="com.alibaba.druid" level="error" additivity="false"></logger>
+        <logger name="pers.roamer.boracay" level="error"></logger>
 
         <!--建立一个默认的root的logger，需要在root的level中指定输出的级别， -->
         <root level="${output_log_level}">
