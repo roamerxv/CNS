@@ -114,15 +114,22 @@ function fun_render_jsTree() {
                     "opened": true,
                 }
             }).on('changed.jstree', function (e, data) {
-                Logger.debug(data);
-                Logger.debug();
-
+                // Logger.debug(data);
                 if ( typeof(data.node) == "undefined" ){
                     Logger.debug("undefined");
                 }else{
                     var selected_node = data.node ;
-                    $("#type_id").val(selected_node.id);
-                    $('button[name="add_top_type_btn"]').html("增加为【"+ selected_node.text +"】的子分类");
+                    var parend_id = data.node.parent;
+                    if (parend_id === "0" || parend_id === "#"){
+                        $("#type_id").val(selected_node.id);
+                        $('button[name="add_top_type_btn"]').removeClass("btn-danger");
+                        $('button[name="add_top_type_btn"]').removeAttr('disabled');
+                        $('button[name="add_top_type_btn"]').html("增加为【"+ selected_node.text +"】的子分类");
+                    }else{
+                        $('button[name="add_top_type_btn"]').html("2级分类下不能增加子分类");
+                        $('button[name="add_top_type_btn"]').addClass("btn-danger");
+                        $('button[name="add_top_type_btn"]').attr('disabled','disabled');
+                    }
                 }
             });
         },
