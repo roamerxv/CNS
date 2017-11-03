@@ -73,7 +73,7 @@ function fun_submit() {
 };
 
 function fun_back() {
-    window.location = contextPath;
+    window.location = contextPath + "customers/index";
 }
 
 function fun_contract_edit(id) {
@@ -116,10 +116,9 @@ function fun_contract_delete(id) {
                             mApp.unblock();
                         }
                     },
-                    error: function (data, textStatus, jqXHR) {
-                        var responseText = JSON.parse(jqXHR.responseText);
+                    error: function ( jqXHR, textStatus, errorThrown ) {
+                        showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
                         mApp.unblock();
-                        showMessage("error", "错误", responseText.data[0].errorMessage);
                     }
                 });
             }

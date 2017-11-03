@@ -25,10 +25,9 @@ function fun_submit() {
         success: function (data, textStatus, jqXHR) {
             window.location = contextPath + "contracts/"+ $("#contractId").val();
         },
-        error: function (data, textStatus, jqXHR) {
-            var responseText = JSON.parse(jqXHR.responseText);
+        error: function ( jqXHR, textStatus, errorThrown ) {
+            showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
             mApp.unblock();
-            showMessage("error", "错误", responseText.data[0].errorMessage);
         }
     });
 };

@@ -133,10 +133,9 @@ function fun_render_jsTree() {
                 }
             });
         },
-        error: function (data, textStatus, jqXHR) {
-            var responseText = JSON.parse(jqXHR.responseText);
-            showMessage("error", "错误", responseText.data[0].errorMessage);
-        }
+        error: function ( jqXHR, textStatus, errorThrown ) {
+            showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
+        },
     }).done(function (data) {
 
     });

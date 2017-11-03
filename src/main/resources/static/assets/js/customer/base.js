@@ -60,11 +60,10 @@ function fun_delete(id) {
                             mApp.unblock();
                         }
                     },
-                    error: function (data, textStatus, jqXHR) {
-                        var responseText = data.responseJSON.data[0].errorMessage;
+                    error: function ( jqXHR, textStatus, errorThrown ) {
                         mApp.unblock();
-                        showMessage("error", "错误", responseText);
-                    }
+                        showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
+                    },
                 });
             }
         }

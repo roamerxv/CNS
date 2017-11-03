@@ -102,12 +102,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group m-form__group row">
+                    <div class="form-group m-form__group row" id="noticeContent_div">
                         <div class="col-lg-6 col-md-9 col-sm-12">
                             <label for="noticeContent">
                                 提醒内容
                             </label>
-                            <textarea  class="form-control m-input"
+                            <a  href="javascript:fun_genContent()" class="m-link m-link--state m-link--info">
+                                生成提醒内容
+                            </a>
+                            <textarea  class="form-control m-input" rows="6"
                                        placeholder="提醒内容" id="noticeContent" th:text="${gatherInfo.noticeContent}"></textarea>
                         </div>
                         <div class="col-lg-6 col-md-9 col-sm-12">

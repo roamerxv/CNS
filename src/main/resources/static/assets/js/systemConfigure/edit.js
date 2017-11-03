@@ -17,10 +17,8 @@ function fun_update(name) {
         success: function (data, textStatus) {
             showMessage("success", "成功", "更新完成！");
         },
-        error: function (data) {
-            var responseText = JSON.parse(jqXHR.responseText);
-            mApp.unblock();
-            showMessage("error", "错误", responseText.data[0].errorMessage);
+        error: function ( jqXHR, textStatus, errorThrown ) {
+            showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
         }
     });
 }

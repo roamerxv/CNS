@@ -9,10 +9,9 @@ $().ready(function () {
         "autoWidth": true,
         "ajax": {
             url: contextPath + "customers/getDataWithoutPaged.json",
-            error: function (jqXHR) {
-                var responseText = JSON.parse(jqXHR.responseText);
+            error: function ( jqXHR, textStatus, errorThrown ) {
+                showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
                 mApp.unblock();
-                showMessage("error", "错误", responseText.data[0].errorMessage);
             },
         },
         "language": {

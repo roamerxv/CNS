@@ -80,8 +80,9 @@ CREATE TABLE `system_configure` (
 -- Records of system_configure
 -- ----------------------------
 BEGIN;
-INSERT INTO `system_configure` VALUES ('cns_subject', 'CNS-对[%s]进行的提醒', '提醒邮件的标题',1);
-INSERT INTO `system_configure` VALUES ('banner_message', '多谢你如此精彩耀眼，做我平淡岁月里星辰', '用户的 banner 信息',2);
+INSERT INTO `system_configure` VALUES ('banner_message', '多谢你如此精彩耀眼，做我平淡岁月里星辰', '用户的 banner 信息', 2);
+INSERT INTO `system_configure` VALUES ('cns_content', '{0}的合同[{1}]\n对应的收款计划:{2}\n将于{3}进行收款.\n应收金额是   : {4}', '提醒邮件的内容：{0} 对应客户名字,{1}对应合同名字，{1}对应收款计划名字，{2}对应收款日期，{3}对应收款金额', 3);
+INSERT INTO `system_configure` VALUES ('cns_subject', 'CNS-对[%s]进行的提醒', '提醒邮件的标题', 1);
 
 COMMIT;
 

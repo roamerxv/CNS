@@ -31,9 +31,9 @@ function fun_renderSelect2() {
             })
 
         },
-        error: function (data) {
-
-        }
+        error: function ( jqXHR, textStatus, errorThrown ) {
+            showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
+        },
     }).done(function (data) {
         //如果存在这个 dom 对象,则说明需要手动设置 选中的值。
         if (  $("#customer_type_org").length  > 0 ){

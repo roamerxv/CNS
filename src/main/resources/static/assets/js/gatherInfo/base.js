@@ -26,6 +26,35 @@ function getUIValue2Json() {
     return gatherInfoEntity;
 };
 
+function fun_genContent(){
+    var id = $("#id").val();
+    $.ajax({
+        type: 'get',
+        url: contextPath + 'gatherInfos/gen_notic_ontent/' + id + ".json",
+        data: {},
+        async: true,//默认为true
+        contentType: "application/json",
+        dataType: 'json',//默认为预期服务器返回的数据类型
+        beforeSend: function () {
+            mApp.blockPage({
+                overlayColor: "#000000",
+                type: "loader",
+                state: "success",
+                message: "正在生成提醒内容，请稍等..."
+            });
+        },
+        success: function (data, textStatus, jqXHR) {
+            $("#noticeContent").val(data.content);
+        },
+        error: function ( jqXHR, textStatus, errorThrown ) {
+            showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
+        },
+        complete: function (data) {
+            mApp.unblock();
+        }
+    });
+
+}
 
 
 $().ready(function () {
@@ -49,3 +78,6 @@ $().ready(function () {
         scrollInput : false
     });
 });
+
+
+

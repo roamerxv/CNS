@@ -1,8 +1,9 @@
 package com.alcor.cns.controller;
 
+import com.alcor.cns.entity.ContractEntity;
+import com.alcor.cns.entity.CustomerEntity;
 import com.alcor.cns.entity.GatherInfoEntity;
-import com.alcor.cns.service.GatherInfoService;
-import com.alcor.cns.service.ServiceException;
+import com.alcor.cns.service.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,9 @@ import pers.roamer.boracay.aspect.httprequest.SessionCheckKeyword;
 import pers.roamer.boracay.helper.HttpResponseHelper;
 import pers.roamer.boracay.helper.JsonUtilsHelper;
 
+import java.text.MessageFormat;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -30,6 +33,15 @@ public class GatherInfoController extends BaseController {
     @Autowired
     GatherInfoService gatherInfoService;
 
+    @Autowired
+    ContractService contractService;
+
+    @Autowired
+    CustomerService customerService;
+
+    @Autowired
+    SystemConfigureService systemConfigureService;
+
 
     /**
      * 跳转到新建一个收款信息的界面
@@ -44,6 +56,7 @@ public class GatherInfoController extends BaseController {
         ModelAndView modelAndView = new ModelAndView("/gatherInfo/new");
         GatherInfoEntity gatherInfoEntity = new GatherInfoEntity();
         gatherInfoEntity.setId(UUID.randomUUID().toString());
+        gatherInfoEntity.setAmount(0.00);
         gatherInfoEntity.setContractId(contractId);
         modelAndView.addObject("gatherInfo", gatherInfoEntity);
         log.debug("增加结束");
@@ -75,6 +88,48 @@ public class GatherInfoController extends BaseController {
     }
 
     /**
+     * 生成一个收款信息的提示内容
+     *
+     * @param id
+     *
+     * @return
+     *
+     * @throws ControllerException
+     */
+    @GetMapping("gatherInfos/gen_notic_ontent/{id}")
+    @SessionCheckKeyword(checkIt = false)
+    public String getNoticContent(@PathVariable String id) throws ControllerException {
+        log.debug("生成{}的收款信息的提示内容:begin", id);
+        GatherInfoEntity gatherInfoEntity = null;
+
+        try {
+            gatherInfoEntity = gatherInfoService.findById(id);
+            if (gatherInfoEntity == null) {
+                throw new ControllerException("收款计划不存在！");
+            }
+            // 获取合同信息
+            String contractId = gatherInfoEntity.getContractId();
+            ContractEntity contractEntity = contractService.findById(contractId);
+            // 获取客户信息
+            String customerId = contractEntity.getCustomerId();
+            CustomerEntity customerEntity = customerService.findById(customerId);
+            // 开始拼装提示信息
+
+            String messageTemp = systemConfigureService.findByName("cns_content").getValue();
+            Object[] object = new String[]{customerEntity.getName(), contractEntity.getName(), gatherInfoEntity.getName(), gatherInfoEntity.getGatherDate().toString(), gatherInfoEntity.getAmount().toString()};
+            String content = MessageFormat.format(messageTemp, object);
+            Map map = new HashMap<String, String>();
+            map.put("content", content);
+            log.debug("生成的收款信息的提示内容{}:end", content);
+            return JsonUtilsHelper.objectToJsonString(map);
+        } catch (ServiceException | JsonProcessingException e) {
+            log.error(e.getMessage());
+            throw new ControllerException(e.getMessage());
+        }
+    }
+
+
+    /**
      * 列出收款数据，以 json 字符串的形式返回给 dataTables 使用
      *
      * @return
@@ -98,7 +153,6 @@ public class GatherInfoController extends BaseController {
             log.debug("列出合同对应的收款数据完成,返回数据是: {}", m_rtn);
             return m_rtn;
         } catch (ServiceException e) {
-            log.error(e.getMessage());
             throw new ControllerException(e.getMessage());
         }
     }
