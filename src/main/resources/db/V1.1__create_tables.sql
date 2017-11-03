@@ -50,7 +50,8 @@ CREATE TABLE `user` (
 
 SET FOREIGN_KEY_CHECKS = 1;
 
-INSERT INTO `user` VALUES ('admin@me.com', '1');
+INSERT INTO `user` VALUES ('admin', '1');
+INSERT INTO `user` VALUES ('masa', '1');
 
 
 CREATE TABLE `cns`.`event` (

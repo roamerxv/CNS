@@ -24,7 +24,7 @@ public class PageController extends BaseController {
         ModelAndView modelAndView;
         try {
             if (super.getUserID() != null) {
-                modelAndView = new ModelAndView("/main");
+                modelAndView = new ModelAndView("/dashboard/index");
             } else {
                 modelAndView = new ModelAndView("/admin/login");
             }

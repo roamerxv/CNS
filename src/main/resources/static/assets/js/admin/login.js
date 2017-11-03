@@ -30,7 +30,7 @@ var SnippetLogin = function () {
 
             t.validate({
                 rules: {
-                    email: {required: !0, email: !0},
+                    email: {required: !0},
                     password: {required: !0}
                 }
             }), t.valid() && (a.addClass("m-loader m-loader--right m-loader--light").attr("disabled", !0), t.submit(
