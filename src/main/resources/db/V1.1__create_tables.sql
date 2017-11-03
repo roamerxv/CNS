@@ -139,3 +139,8 @@ CREATE TABLE `cns`.`customer_type`  (
   `p_id` varchar(36) NOT NULL COMMENT '父分类 ID，id 为 0 的时候代表 是一级分类',
   PRIMARY KEY (`id`)
 ) CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '客户分类信息表';
+
+INSERT INTO `customer_type` VALUES ('23737aed-6f80-46d8-9620-762acef80680', 'RS-A', '0');
+INSERT INTO `customer_type` VALUES ('3a08cb62-3db2-4701-9733-a4f01f048d66', 'A2', '23737aed-6f80-46d8-9620-762acef80680');
+INSERT INTO `customer_type` VALUES ('978d8266-762d-4b7d-a50e-d62b56d4a1d6', 'A1', '23737aed-6f80-46d8-9620-762acef80680');
+INSERT INTO `customer_type` VALUES ('bb37ee03-49ec-46cc-985b-a625ecaf404e', 'RS-A', '0');
