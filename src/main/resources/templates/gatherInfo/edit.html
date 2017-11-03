@@ -32,7 +32,7 @@
                             <label for="name">
                                 收款信息名称
                             </label>
-                            <input type="text"  class="form-control m-input" id="name" placeholder=""
+                            <input type="text" class="form-control m-input" id="name" placeholder=""
                                    required="required"
                                    th:value="${gatherInfo.name}">
                         </div>
@@ -66,7 +66,8 @@
                             <div class="col-3">
                                         <span class="m-switch m-switch--outline m-switch--icon m-switch--success">
                                             <label>
-                                                <input type="checkbox"  th:checked="${gatherInfo.gathered}" id="gathered">
+                                                <input type="checkbox" th:checked="${gatherInfo.gathered}"
+                                                       id="gathered">
                                                 <span></span>
                                             </label>
                                         </span>
@@ -95,7 +96,7 @@
                             <div class="col-3">
                                         <span class="m-switch m-switch--outline m-switch--icon m-switch--success">
                                             <label>
-                                                <input type="checkbox" th:checked="${gatherInfo.notice}"  id="notice">
+                                                <input type="checkbox" th:checked="${gatherInfo.notice}" id="notice">
                                                 <span></span>
                                             </label>
                                         </span>
@@ -107,18 +108,20 @@
                             <label for="noticeContent">
                                 提醒内容
                             </label>
-                            <a  href="javascript:fun_genContent()" class="m-link m-link--state m-link--info">
+                            <a href="javascript:fun_genContent()" class="m-link m-link--state m-link--info">
                                 生成提醒内容
                             </a>
-                            <textarea  class="form-control m-input" rows="6"
-                                       placeholder="提醒内容" id="noticeContent" th:text="${gatherInfo.noticeContent}"></textarea>
+                            <textarea class="form-control m-input" rows="6"
+                                      placeholder="提醒内容" id="noticeContent"
+                                      th:text="${gatherInfo.noticeContent}"></textarea>
                         </div>
                         <div class="col-lg-6 col-md-9 col-sm-12">
                             <label for="noticeTo">
                                 提醒对象(mail 地址以"，"分隔)
                             </label>
-                            <textarea  class="form-control m-input"
-                                       placeholder="提醒对象的 mail 地址" id="noticeTo" th:text="${gatherInfo.noticeTo}"></textarea>
+                            <textarea class="form-control m-input"
+                                      placeholder="提醒对象的 mail 地址" id="noticeTo"
+                                      th:text="${gatherInfo.noticeTo}"></textarea>
                         </div>
                     </div>
                 </div>
@@ -133,6 +136,16 @@
                                         class="btn btn-secondary">
                                     返回
                                 </button>
+                            </div>
+                            <div class="col-lg-6 m--align-right">
+                                <a href="javascript:fun_notice_test()" class="btn btn-warning m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air">
+                                    <span>
+                                        <i class="la la-envelope-o"></i>
+                                        <span>
+                                            发送测试邮件
+                                        </span>
+                                    </span>
+                                </a>
                             </div>
                         </div>
                     </div>

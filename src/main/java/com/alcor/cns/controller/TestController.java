@@ -1,11 +1,15 @@
 package com.alcor.cns.controller;
 
+import com.alcor.cns.service.NoticeService;
+import com.alcor.cns.service.ServiceException;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import pers.roamer.boracay.helper.HttpResponseHelper;
 
 import java.util.ArrayList;
 
@@ -20,6 +24,8 @@ import java.util.ArrayList;
 
 public class TestController extends BaseController {
 
+    @Autowired
+    private NoticeService noticeService;
 
     @GetMapping("/tester/user")
     public ModelAndView getUser() throws ControllerException {
@@ -56,6 +62,16 @@ public class TestController extends BaseController {
         throw new ControllerException("一个测试用的错误！");
     }
 
+    @GetMapping("/tester/notice")
+    @ResponseBody
+    public String notice() throws ControllerException{
+        try {
+            noticeService.noticeGatherInfo();
+            return HttpResponseHelper.successInfoInbox("发送完成！");
+        } catch (ServiceException e) {
+            throw new ControllerException(e.getMessage());
+        }
+    }
 
    @Data
     public class User {

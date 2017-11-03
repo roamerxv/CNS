@@ -97,7 +97,6 @@ public class GatherInfoController extends BaseController {
      * @throws ControllerException
      */
     @GetMapping("gatherInfos/gen_notic_ontent/{id}")
-    @SessionCheckKeyword(checkIt = false)
     public String getNoticContent(@PathVariable String id) throws ControllerException {
         log.debug("生成{}的收款信息的提示内容:begin", id);
         GatherInfoEntity gatherInfoEntity = null;
@@ -114,10 +113,12 @@ public class GatherInfoController extends BaseController {
             String customerId = contractEntity.getCustomerId();
             CustomerEntity customerEntity = customerService.findById(customerId);
             // 开始拼装提示信息
-
             String messageTemp = systemConfigureService.findByName("cns_content").getValue();
             Object[] object = new String[]{customerEntity.getName(), contractEntity.getName(), gatherInfoEntity.getName(), gatherInfoEntity.getGatherDate().toString(), gatherInfoEntity.getAmount().toString()};
             String content = MessageFormat.format(messageTemp, object);
+            // 保存到数据库
+            gatherInfoEntity.setNoticeContent(content);
+            gatherInfoService.update(gatherInfoEntity);
             Map map = new HashMap<String, String>();
             map.put("content", content);
             log.debug("生成的收款信息的提示内容{}:end", content);
@@ -190,4 +191,18 @@ public class GatherInfoController extends BaseController {
         log.debug("删除成功");
         return HttpResponseHelper.successInfoInbox("删除成功");
     }
+
+    @PostMapping("/gatherInfos/notice/{id}")
+    @ResponseBody
+    public String noticeTest(@PathVariable  String id) throws ControllerException{
+        log.debug("测试发送一条收款记录:" + id);
+        try {
+            GatherInfoEntity gatherInfoEntity = gatherInfoService.findById(id);
+            gatherInfoService.sentNotice(gatherInfoEntity);
+        } catch (ServiceException e) {
+            throw new ControllerException(e.getMessage());
+        }
+        return HttpResponseHelper.successInfoInbox("测试完成！");
+    }
+
 }

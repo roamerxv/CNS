@@ -1,6 +1,7 @@
 package com.alcor.cns.service;
 
 import com.alcor.cns.entity.EventEntity;
+import com.alcor.cns.entity.GatherInfoEntity;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Future;
 
@@ -31,12 +33,43 @@ public class NoticeService {
     @Autowired
     private MailService mailService;
 
+    @Autowired
+    private GatherInfoService gatherInfoService;
+
     /**
      * 对配置的所有提醒时间进行扫描。符合条件的进行提醒 mail 发送
      */
     @Async
     @org.springframework.transaction.annotation.Transactional(readOnly = true)
     public void notice() throws ServiceException {
+        // 发送提示事件中需要提醒的内容
+        this.noticeEvent();
+        // 发送收款记录中需要提醒的内容
+        this.noticeEvent();
+
+    }
+
+    /**
+     * 发送所有需要提醒的收款计划
+     * @throws ServiceException
+     */
+    @Async
+    public void noticeGatherInfo() throws ServiceException{
+        List<GatherInfoEntity> gatherInfoEntityList = gatherInfoService.needToNotice(new Date());
+        log.debug("总共发现{}条需要发送提醒的收款计划", gatherInfoEntityList.size());
+        gatherInfoEntityList.forEach(item ->{
+            try {
+                gatherInfoService.sentNotice(item);
+            } catch (ServiceException e) {
+                log.error(e.getMessage());
+            }
+        });
+    }
+
+    /**
+     * 发送提醒事件表中的需要提醒的事件
+     */
+    private void noticeEvent() throws  ServiceException {
         //1 获取所有需要提醒的事件
         List<EventEntity> eventEntities = eventService.findAllByNotice(true);
         log.debug("总共发现{}条记录需要提示", eventEntities.size());
@@ -89,7 +122,6 @@ public class NoticeService {
                     log.error("事件[{}]错误的提醒重复类型:{}", eventEntity.getName(), eventEntity.getRepeatType());
             }
         });
-
     }
 
     /**
