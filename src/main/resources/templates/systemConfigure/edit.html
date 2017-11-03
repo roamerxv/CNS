@@ -19,19 +19,19 @@
             </div>
         </div>
         <div class="m-portlet__body">
-            <tbody th:each="systemConfigure,rowStat: ${systemConfigures}">
-            <div class="form-group m-form__group row">
-                <div class="col-lg-6">
+            <tbody>
+            <div class="form-group m-form__group" th:each="systemConfigure,rowStat: ${systemConfigures}">
+                <div class="col-lg-12 row">
                     <label th:for="${systemConfigure.name}" th:text="${systemConfigure.description}"/>
-                    <div class="form-group m-form__group row">
-                        <textarea  type="text" class="form-control m-input" th:id="${systemConfigure.name}" rows="3"
-                               th:text="${systemConfigure.value}">
-                        </textarea>
-                        <input type="button" style="margin-top: 10px" th:id="${systemConfigure.name}"
-                               class="btn btn-primary" value="保存" th:onclick="'javascript:fun_update(\'' + ${systemConfigure.name}+'\')'">
-                    </div>
+                    <textarea type="text" class="form-control m-input" th:id="${systemConfigure.name}" rows="3"
+                              th:text="${systemConfigure.value}">
+                    </textarea>
+                    <input type="button" style="margin-top: 10px" th:id="${systemConfigure.name}"
+                           class="btn btn-primary" value="保存"
+                           th:onclick="'javascript:fun_update(\'' + ${systemConfigure.name}+'\')'"/>
                 </div>
             </div>
+
             </tbody>
         </div>
 

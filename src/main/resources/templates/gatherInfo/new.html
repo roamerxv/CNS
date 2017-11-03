@@ -108,14 +108,14 @@
                                 提醒内容
                             </label>
                             <textarea  class="form-control m-input"
-                                       placeholder="提醒内容" id="noticeContent" th:value="${gatherInfo.noticeContent}"></textarea>
+                                       placeholder="提醒内容" id="noticeContent" th:text="${gatherInfo.noticeContent}"></textarea>
                         </div>
                         <div class="col-lg-6 col-md-9 col-sm-12">
                             <label for="noticeTo">
                                 提醒对象(mail 地址以"，"分隔)
                             </label>
                             <textarea  class="form-control m-input"
-                                       placeholder="提醒对象的 mail 地址" id="noticeTo" th:value="${gatherInfo.noticeTo}"></textarea>
+                                       placeholder="提醒对象的 mail 地址" id="noticeTo" th:text="${gatherInfo.noticeTo}"></textarea>
                         </div>
                     </div>
                 </div>

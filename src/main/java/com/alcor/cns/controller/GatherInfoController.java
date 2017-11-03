@@ -56,6 +56,12 @@ public class GatherInfoController extends BaseController {
         ModelAndView modelAndView = new ModelAndView("/gatherInfo/new");
         GatherInfoEntity gatherInfoEntity = new GatherInfoEntity();
         gatherInfoEntity.setId(UUID.randomUUID().toString());
+        try {
+            gatherInfoEntity.setNoticeTo(systemConfigureService.findByName("cns_mail_to").getValue());
+            log.debug("#########"+gatherInfoEntity.getNoticeTo());
+        } catch (ServiceException e) {
+            throw new ControllerException(e.getMessage());
+        }
         gatherInfoEntity.setAmount(0.00);
         gatherInfoEntity.setContractId(contractId);
         modelAndView.addObject("gatherInfo", gatherInfoEntity);
