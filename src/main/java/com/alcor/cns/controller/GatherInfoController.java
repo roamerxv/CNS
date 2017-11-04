@@ -1,7 +1,5 @@
 package com.alcor.cns.controller;
 
-import com.alcor.cns.entity.ContractEntity;
-import com.alcor.cns.entity.CustomerEntity;
 import com.alcor.cns.entity.GatherInfoEntity;
 import com.alcor.cns.service.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -14,9 +12,7 @@ import pers.roamer.boracay.aspect.httprequest.SessionCheckKeyword;
 import pers.roamer.boracay.helper.HttpResponseHelper;
 import pers.roamer.boracay.helper.JsonUtilsHelper;
 
-import java.text.MessageFormat;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -58,7 +54,6 @@ public class GatherInfoController extends BaseController {
         gatherInfoEntity.setId(UUID.randomUUID().toString());
         try {
             gatherInfoEntity.setNoticeTo(systemConfigureService.findByName("cns_mail_to").getValue());
-            log.debug("#########"+gatherInfoEntity.getNoticeTo());
         } catch (ServiceException e) {
             throw new ControllerException(e.getMessage());
         }
@@ -104,33 +99,9 @@ public class GatherInfoController extends BaseController {
      */
     @GetMapping("gatherInfos/gen_notic_ontent/{id}")
     public String getNoticContent(@PathVariable String id) throws ControllerException {
-        log.debug("生成{}的收款信息的提示内容:begin", id);
-        GatherInfoEntity gatherInfoEntity = null;
-
         try {
-            gatherInfoEntity = gatherInfoService.findById(id);
-            if (gatherInfoEntity == null) {
-                throw new ControllerException("收款计划不存在！");
-            }
-            // 获取合同信息
-            String contractId = gatherInfoEntity.getContractId();
-            ContractEntity contractEntity = contractService.findById(contractId);
-            // 获取客户信息
-            String customerId = contractEntity.getCustomerId();
-            CustomerEntity customerEntity = customerService.findById(customerId);
-            // 开始拼装提示信息
-            String messageTemp = systemConfigureService.findByName("cns_content").getValue();
-            Object[] object = new String[]{customerEntity.getName(), contractEntity.getName(), gatherInfoEntity.getName(), gatherInfoEntity.getGatherDate().toString(), gatherInfoEntity.getAmount().toString()};
-            String content = MessageFormat.format(messageTemp, object);
-            // 保存到数据库
-            gatherInfoEntity.setNoticeContent(content);
-            gatherInfoService.update(gatherInfoEntity);
-            Map map = new HashMap<String, String>();
-            map.put("content", content);
-            log.debug("生成的收款信息的提示内容{}:end", content);
-            return JsonUtilsHelper.objectToJsonString(map);
-        } catch (ServiceException | JsonProcessingException e) {
-            log.error(e.getMessage());
+            return gatherInfoService.genNoticContent(id);
+        } catch (ServiceException e) {
             throw new ControllerException(e.getMessage());
         }
     }

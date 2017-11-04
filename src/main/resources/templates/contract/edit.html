@@ -59,7 +59,7 @@
                             <label for="amount">
                                 合同金额
                             </label>
-                            <input type="number" step="0.01" class="form-control m-input" required="required"
+                            <input type="number" step="0.01" class="form-control m-input" required="required" min="0.00" max="99999999.99"
                                    placeholder="合同金额" id="amount" th:value="${contract.amount}">
                         </div>
                         <div class="col-lg-4">
@@ -71,19 +71,33 @@
                         </div>
                     </div>
                     <div class="form-group m-form__group row">
-                        <div class="col-lg-3 col-md-9 col-sm-12">
+                        <div class="col-lg-2 col-md-9 col-sm-12">
                             <label for="beginDate">
-                                起始日期
+                                合同执行起始日期
                             </label>
                             <input type="text" class="form-control m-input" required="required"
                                    placeholder="起始日期" id="beginDate" th:value="${contract.beginDate}">
                         </div>
-                        <div class="col-lg-3 col-md-9 col-sm-12">
+                        <div class="col-lg-2 col-md-9 col-sm-12">
                             <label for="endDate">
-                                结束日期
+                                合同执行结束日期
                             </label>
                             <input type="text" class="form-control m-input" required="required"
                                    placeholder="结束日期" id="endDate" th:value="${contract.endDate}">
+                        </div>
+                        <div class="col-lg-2 col-md-9 col-sm-12">
+                            <label for="firstGatherDate">
+                                首次付款日
+                            </label>
+                            <input type="text" class="form-control m-input" required="required" disabled="disabled"
+                                   placeholder="首次付款日期" id="firstGatherDate" th:value="${contract.firstGatherDate}">
+                        </div>
+                        <div class="col-lg-6 col-md-9 col-sm-12">
+                            <label for="gatherInterval">
+                                每次付款间隔(月) - 0代表一次付清
+                            </label>
+                            <input type="number" class="form-control m-input col-lg-4" required="required" min="0" disabled="disabled"
+                                   placeholder="间隔数(月)" id="gatherInterval" th:value="${contract.gatherInterval}">
                         </div>
                     </div>
                 </div>
@@ -172,25 +186,25 @@
                                     <thead>
                                     <tr>
                                         <th>名字</th>
-                                        <th>应收金额</th>
-                                        <th>应收日期</th>
+                                        <th>金额</th>
+                                        <th>应收日</th>
                                         <th>提醒</th>
-                                        <th>提醒日期</th>
+                                        <th>提醒日</th>
                                         <th>收讫</th>
-                                        <th>收讫日期</th>
-                                        <th th:width="90px">操作</th>
+                                        <th>收讫日</th>
+                                        <th th:width="60px">操作</th>
                                     </tr>
                                     </thead>
                                     <tfoot>
                                     <tr>
                                         <th>名字</th>
-                                        <th>应收金额</th>
-                                        <th>应收日期</th>
+                                        <th>金额</th>
+                                        <th>应收日</th>
                                         <th>提醒</th>
-                                        <th>提醒日期</th>
+                                        <th>提醒日</th>
                                         <th>收讫</th>
-                                        <th>收讫日期</th>
-                                        <th th:width="90px">操作</th>
+                                        <th>收讫日</th>
+                                        <th>操作</th>
                                     </tr>
                                     </tfoot>
                                 </table>

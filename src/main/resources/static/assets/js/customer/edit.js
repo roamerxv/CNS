@@ -7,9 +7,8 @@ $().ready(function () {
             "autoWidth": true,
             "ajax": {
                 url: contextPath + "contracts/" + $("#id").val() + "/getDataWithoutPaged.json",
-                error: function (jqXHR, textStatus, errorThrown) {
-                    var responseText = JSON.parse(jqXHR.responseText);
-                    showMessage("error", "错误", responseText.data[0].errorMessage);
+                error: function (data, textStatus, jqXHR) {
+                    showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
                 },
             },
             "language": {
@@ -18,13 +17,13 @@ $().ready(function () {
             "columns": [{
                 "data": "name"
             }, {
-                "data": "description"
-            }, {
                 "data": "amount"
             }, {
                 "data": "beginDate"
             }, {
                 "data": "endDate"
+            },{
+                "data": "firstGatherDate"
             }],
             "columnDefs": [
                 {
@@ -50,23 +49,21 @@ function fun_submit() {
         message: "正在保存，请稍等..."
     });
 
-    var eventInfoEntity = getUIValue2Json();
-    var id = eventInfoEntity.id;
+    var customerEntity = getUIValue2Json();
+    var id = customerEntity.id;
     $.ajax({
         type: 'post',
-        data: eventInfoEntity.toString(),
+        data: customerEntity.toString(),
         url: contextPath + 'customers/' + id + ".json",
-        async: false,//默认为true
+        async: true,//默认为true
         contentType: "application/json",
         dataType: 'json',//默认为预期服务器返回的数据类型
         success: function (data, textStatus, jqXHR) {
             window.location = contextPath + "customers/index";
         },
         error: function (data, textStatus, jqXHR) {
-            Logger.debug(jqXHR);
-            var responseText = JSON.parse(jqXHR.responseText);
             mApp.unblock();
-            showMessage("error", "错误", responseText.data[0].errorMessage);
+            showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
         }
     });
 

@@ -65,9 +65,7 @@ $().ready(function () {
                     window.location = contextPath + "/customer_type/edit";
                 },
                 error: function (data, textStatus, jqXHR) {
-                    Logger.debug(jqXHR);
-                    var responseText = JSON.parse(jqXHR.responseText);
-                    showMessage("error", "错误", responseText.data[0].errorMessage);
+                    showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
                 }
             }).done(function (data) {
                 fun_unblock();

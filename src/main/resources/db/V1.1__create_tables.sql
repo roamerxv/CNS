@@ -167,18 +167,22 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 #合同信息表
 CREATE TABLE `cns`.`contract` (
-  `id`          VARCHAR(36)  NOT NULL
+  `id`                 VARCHAR(36)  NOT NULL
   COMMENT '合同 ID',
-  `name`        VARCHAR(256) NOT NULL
+  `name`               VARCHAR(256) NOT NULL
   COMMENT '合同名字',
-  `description` TEXT         NULL
+  `description`        TEXT         NULL
   COMMENT '合同描述',
-  `customer_id` VARCHAR(36)  NOT NULL
+  `customer_id`        VARCHAR(36)  NOT NULL
   COMMENT '所属客户 ID',
-  `amount`      FLOAT(10, 2) COMMENT '合同金额',
-  `begin_date`  DATE         NOT NULL
+  `amount`             FLOAT(10, 2) COMMENT '合同金额',
+  `first_gather_date` DATE         NOT NULL
+  COMMENT '首次付款日期',
+  `gather_interval`    INTEGER      NOT NULL DEFAULT 0
+  COMMENT '每隔多少个月产生下一个收款计划单',
+  `begin_date`         DATE         NOT NULL
   COMMENT '合同开始日期',
-  `end_date`    DATE         NOT NULL
+  `end_date`           DATE         NOT NULL
   COMMENT '合同结束日期',
   PRIMARY KEY (`id`)
 )

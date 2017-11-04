@@ -135,9 +135,8 @@ function fun_submit() {
             window.location = contextPath + "customers/" + $("#customerId").val();
         },
         error: function (data, textStatus, jqXHR) {
-            var responseText = JSON.parse(jqXHR.responseText);
             mApp.unblock();
-            showMessage("error", "错误", responseText.data[0].errorMessage);
+            showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
         }
     });
 
@@ -192,9 +191,8 @@ function fun_gatherInfo_delete(id) {
                         }
                     },
                     error: function (data, textStatus, jqXHR) {
-                        var responseText = data.responseJSON.data[0].errorMessage;
                         mApp.unblock();
-                        showMessage("error", "错误", responseText);
+                        showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
                     }
                 });
             }

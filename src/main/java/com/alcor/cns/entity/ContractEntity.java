@@ -5,7 +5,7 @@ import java.sql.Date;
 
 /**
  * @author roamer - 徐泽宇
- * @create 2017-10-2017/10/26  上午10:59
+ * @create 2017-11-2017/11/4  下午11:09
  */
 @Entity
 @Table(name = "contract", schema = "cns", catalog = "")
@@ -15,6 +15,8 @@ public class ContractEntity {
     private String description;
     private String customerId;
     private Double amount;
+    private Date firstGatherDate;
+    private Integer gatherInterval;
     private Date beginDate;
     private Date endDate;
 
@@ -69,6 +71,26 @@ public class ContractEntity {
     }
 
     @Basic
+    @Column(name = "first_gather_date")
+    public Date getFirstGatherDate() {
+        return firstGatherDate;
+    }
+
+    public void setFirstGatherDate(Date firstGatherDate) {
+        this.firstGatherDate = firstGatherDate;
+    }
+
+    @Basic
+    @Column(name = "gather_interval")
+    public Integer getGatherInterval() {
+        return gatherInterval;
+    }
+
+    public void setGatherInterval(Integer gatherInterval) {
+        this.gatherInterval = gatherInterval;
+    }
+
+    @Basic
     @Column(name = "begin_date")
     public Date getBeginDate() {
         return beginDate;
@@ -100,6 +122,10 @@ public class ContractEntity {
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
         if (customerId != null ? !customerId.equals(that.customerId) : that.customerId != null) return false;
         if (amount != null ? !amount.equals(that.amount) : that.amount != null) return false;
+        if (firstGatherDate != null ? !firstGatherDate.equals(that.firstGatherDate) : that.firstGatherDate != null)
+            return false;
+        if (gatherInterval != null ? !gatherInterval.equals(that.gatherInterval) : that.gatherInterval != null)
+            return false;
         if (beginDate != null ? !beginDate.equals(that.beginDate) : that.beginDate != null) return false;
         if (endDate != null ? !endDate.equals(that.endDate) : that.endDate != null) return false;
 
@@ -113,6 +139,8 @@ public class ContractEntity {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (customerId != null ? customerId.hashCode() : 0);
         result = 31 * result + (amount != null ? amount.hashCode() : 0);
+        result = 31 * result + (firstGatherDate != null ? firstGatherDate.hashCode() : 0);
+        result = 31 * result + (gatherInterval != null ? gatherInterval.hashCode() : 0);
         result = 31 * result + (beginDate != null ? beginDate.hashCode() : 0);
         result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
         return result;

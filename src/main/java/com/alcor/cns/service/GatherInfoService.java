@@ -1,7 +1,10 @@
 package com.alcor.cns.service;
 
+import com.alcor.cns.entity.ContractEntity;
+import com.alcor.cns.entity.CustomerEntity;
 import com.alcor.cns.entity.GatherInfoEntity;
 import com.alcor.cns.repository.IGatherInfoRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
@@ -9,9 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pers.roamer.boracay.helper.JsonUtilsHelper;
 
+import java.text.MessageFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Future;
 
 /**
@@ -29,6 +36,13 @@ public class GatherInfoService {
 
     @Autowired
     private SystemConfigureService systemConfigureService;
+
+    @Autowired
+    @Qualifier("com.alcor.cns.service.ContractService")
+    private ContractService contractService;
+
+    @Autowired
+    private  CustomerService customerService;
 
     @Autowired
     private MailService mailService;
@@ -52,6 +66,43 @@ public class GatherInfoService {
         iGatherInfoRepository.delete(id);
     }
 
+    /**
+     * 生成一个收款信息的提示内容
+     * @param id
+     * @return
+     * @throws ServiceException
+     */
+    public String genNoticContent( String id) throws ServiceException {
+        log.debug("生成{}的收款信息的提示内容:begin", id);
+        GatherInfoEntity gatherInfoEntity = null;
+
+        try {
+            gatherInfoEntity = iGatherInfoRepository.findOne(id);
+            if (gatherInfoEntity == null) {
+                throw new ServiceException("收款计划不存在！");
+            }
+            // 获取合同信息
+            String contractId = gatherInfoEntity.getContractId();
+            ContractEntity contractEntity = contractService.findById(contractId);
+            // 获取客户信息
+            String customerId = contractEntity.getCustomerId();
+            CustomerEntity customerEntity = customerService.findById(customerId);
+            // 开始拼装提示信息
+            String messageTemp = systemConfigureService.findByName("cns_content").getValue();
+            Object[] object = new String[]{customerEntity.getName(), contractEntity.getName(), gatherInfoEntity.getName(), gatherInfoEntity.getGatherDate().toString(), gatherInfoEntity.getAmount().toString()};
+            String content = MessageFormat.format(messageTemp, object);
+            // 保存到数据库
+            gatherInfoEntity.setNoticeContent(content);
+            iGatherInfoRepository.save(gatherInfoEntity);
+            Map map = new HashMap<String, String>();
+            map.put("content", content);
+            log.debug("生成的收款信息的提示内容{}:end", content);
+            return JsonUtilsHelper.objectToJsonString(map);
+        } catch (ServiceException | JsonProcessingException e) {
+            log.error(e.getMessage());
+            throw new ServiceException(e.getMessage());
+        }
+    }
 
     public void sentNotice(GatherInfoEntity gatherInfoEntity) throws ServiceException {
         String mailListString = gatherInfoEntity.getNoticeTo();
