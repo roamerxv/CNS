@@ -17,7 +17,8 @@
     <link th:href="@{/assets/css/gatherInfo/edit.css}" rel="stylesheet"/>
     <!--being::右侧操作栏-->
     <ul class="m-nav-sticky" style="margin-top: 30px;">
-        <li class="m-nav-sticky__item" data-toggle="m-tooltip" title="" data-placement="left" data-original-title="收款计划">
+        <li class="m-nav-sticky__item" data-toggle="m-tooltip" title="" data-placement="left"
+            data-original-title="收款计划">
             <a data-toggle="modal" data-target="#m_modal_gatherInfos">
                 <i class="la flaticon-calendar"></i>
             </a>
@@ -59,7 +60,8 @@
                             <label for="amount">
                                 合同金额
                             </label>
-                            <input type="number" step="0.01" class="form-control m-input" required="required" min="0.00" max="99999999.99"
+                            <input type="number" step="0.01" class="form-control m-input" required="required" min="0.00"
+                                   max="99999999.99"
                                    placeholder="合同金额" id="amount" th:value="${contract.amount}">
                         </div>
                         <div class="col-lg-4">
@@ -96,7 +98,8 @@
                             <label for="gatherInterval">
                                 每次付款间隔(月) - 0代表一次付清
                             </label>
-                            <input type="number" class="form-control m-input col-lg-4" required="required" min="0" disabled="disabled"
+                            <input type="number" class="form-control m-input col-lg-4" required="required" min="0"
+                                   disabled="disabled"
                                    placeholder="间隔数(月)" id="gatherInterval" th:value="${contract.gatherInterval}">
                         </div>
                     </div>
@@ -125,7 +128,7 @@
         <!-- begin:: Model-->
         <div class="modal fade" id="m_modal_gatherInfos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document" >
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
                         <!--begin：收款列表-->
@@ -142,47 +145,19 @@
                                     </div>
                                 </div>
                                 <div class="m-portlet__head-tools">
-                                    <ul class="m-portlet__nav">
-                                        <li class="m-portlet__nav-item">
-                                            <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
-                                                 data-dropdown-toggle="hover" aria-expanded="true">
-                                                <a class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
-                                                    <i class="la la-ellipsis-h m--font-brand"></i>
-                                                </a>
-                                                <div class="m-dropdown__wrapper">
-                                                    <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"
-                                                          style="left: auto; right: 21.5px;"></span>
-                                                    <div class="m-dropdown__inner">
-                                                        <div class="m-dropdown__body">
-                                                            <div class="m-dropdown__content">
-                                                                <ul class="m-nav">
-                                                                    <li class="m-nav__section m-nav__section--first">
-                                                    <span class="m-nav__section-text">
-                                                        更多操作
-                                                    </span>
-                                                                    </li>
-                                                                    <li class="m-nav__item">
-                                                                        <a th:href="@{/contracts/}+${contract.id}+'/gatherInfos'"
-                                                                           class="m-nav__link">
-                                                                            <i class="m-nav__link-icon  flaticon-line-graph"></i>
-                                                                            <span class="m-nav__link-text">
+                                    <a th:href="@{/contracts/}+${contract.id}+'/gatherInfos'"
+                                       class="m-nav__link">
+                                        <i class="m-nav__link-icon  flaticon-line-graph"></i>
+                                        <span class="m-nav__link-text">
                                                                             新建一条收款信息
                                                         </span>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                    </a>
                                 </div>
                             </div>
 
                             <div class="m-portlet__body">
-                                <table id="gatherInfo_table" class="table table-striped table-bordered hover" style="width:100%">
+                                <table id="gatherInfo_table" class="table table-striped table-bordered hover"
+                                       style="width:100%">
                                     <thead>
                                     <tr>
                                         <th>名字</th>

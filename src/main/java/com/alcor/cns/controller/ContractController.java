@@ -101,7 +101,7 @@ public class ContractController extends BaseController {
         }
     }
 
-    @BusinessMethod(value = "保存/更新一份合同信息")
+    @BusinessMethod(value = "新建/更新一份合同信息")
     @PostMapping(value = "/contracts/{id}")
     @ResponseBody
     public String update(@RequestBody ContractEntity contractEntity) throws ControllerException {

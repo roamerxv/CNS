@@ -124,16 +124,6 @@
                  aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
-                        <!--<div class="modal-header">-->
-                        <!--<h5 class="modal-title" id="exampleModalLabel">-->
-                        <!--客户的合同列表-->
-                        <!--</h5>-->
-                        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-                        <!--<span aria-hidden="true">-->
-                        <!--&times;-->
-                        <!--</span>-->
-                        <!--</button>-->
-                        <!--</div>-->
                         <div class="modal-body">
                             <!--begin：合同列表-->
                             <div class="m-portlet m-portlet--mobile">
@@ -149,38 +139,13 @@
                                         </div>
                                     </div>
                                     <div class="m-portlet__head-tools">
-                                        <ul class="m-portlet__nav">
-                                            <li class="m-portlet__nav-item">
-                                                <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
-                                                     data-dropdown-toggle="hover" aria-expanded="true">
-                                                    <a class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
-                                                        <i class="la la-ellipsis-h m--font-brand"></i>
-                                                    </a>
-                                                    <div class="m-dropdown__wrapper">
-                                                        <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"
-                                                              style="left: auto; right: 21.5px;"></span>
-                                                        <div class="m-dropdown__inner">
-                                                            <div class="m-dropdown__body">
-                                                                <div class="m-dropdown__content">
-                                                                    <ul class="m-nav">
-                                                                        <li class="m-nav__section m-nav__section--first">
-                                                                            <span class="m-nav__section-text">更多操作</span>
-                                                                        </li>
-                                                                        <li class="m-nav__item">
-                                                                            <a th:href="@{/customers/}+${customer.id}+'/contracts'"
-                                                                               class="m-nav__link">
-                                                                                <i class="m-nav__link-icon  flaticon-line-graph"></i>
-                                                                                <span class="m-nav__link-text">新建一份合同信息</span>
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
+                                        <div class="col m--align-right">
+                                            <a th:href="@{/customers/}+${customer.id}+'/contracts'"
+                                               class="m-nav__link">
+                                                <i class="m-nav__link-icon  flaticon-line-graph"></i>
+                                                <span class="m-nav__link-text">新建一份合同信息</span>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
 

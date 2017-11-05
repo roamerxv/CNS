@@ -9,7 +9,7 @@ spring:
                 show_sql: true
                 dialect: org.hibernate.dialect.MySQL5Dialect
                 ddl-auto: update
-                format_sql: true #显示格式化后的 sql 语句
+                format_sql: false #显示格式化后的 sql 语句
                 use_sql_comments: true #显示注解
     http:
         multipart:
@@ -56,4 +56,4 @@ logging:
     level:
         org:
             hibernate:
-                type: trace # 显示 sql 的参数值
+                type: info # 显示 sql 的参数值
