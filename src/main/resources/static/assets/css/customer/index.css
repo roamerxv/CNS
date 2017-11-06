@@ -6,6 +6,11 @@ div #customer_table_wrapper {
     display: inherit !important;
 }
 
+div #contract_table_wrapper {
+    display: inherit !important;
+}
+
+
 .dataTable_div {
     /*font-size: 0.2em;*/
     margin-left: 10px;
