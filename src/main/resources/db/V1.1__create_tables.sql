@@ -127,6 +127,7 @@ INSERT INTO `system_configure` VALUES ('banner_message', '多谢你如此精彩�
 INSERT INTO `system_configure` VALUES ('cns_content', '{0}的合同[{1}]\n对应的收款计划:{2}\n将于{3}进行收款.\n应收金额是   : {4}',
                                        '提醒邮件的内容：{0} 对应客户名字,{1}对应合同名字，{1}对应收款计划名字，{2}对应收款日期，{3}对应收款金额', 3);
 INSERT INTO `system_configure` VALUES ('cns_mail_to', 'Masa@dbond.net', "提醒邮件需要发往的邮箱.多个邮箱通过，分隔", 4);
+INSERT INTO `system_configure` VALUES ('notice_date_offset', '1', "自动生成收款记录时，提醒日对应收款日提前的天数",5);
 
 
 COMMIT;
@@ -180,6 +181,8 @@ CREATE TABLE `cns`.`contract` (
   COMMENT '首次付款日期',
   `gather_interval`    INTEGER      NOT NULL DEFAULT 0
   COMMENT '每隔多少个月产生下一个收款计划单',
+  `gather_count`    INTEGER      NOT NULL DEFAULT 0
+  COMMENT '一个合同分多少次收款',
   `begin_date`         DATE         NOT NULL
   COMMENT '合同开始日期',
   `end_date`           DATE         NOT NULL

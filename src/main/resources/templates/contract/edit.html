@@ -87,6 +87,8 @@
                             <input type="text" class="form-control m-input" required="required"
                                    placeholder="结束日期" id="endDate" th:value="${contract.endDate}">
                         </div>
+                    </div>
+                    <div class="form-group m-form__group row">
                         <div class="col-lg-2 col-md-9 col-sm-12">
                             <label for="firstGatherDate">
                                 首次付款日
@@ -96,11 +98,18 @@
                         </div>
                         <div class="col-lg-6 col-md-9 col-sm-12">
                             <label for="gatherInterval">
-                                每次付款间隔(月) - 0代表一次付清
+                                每次付款间隔月
                             </label>
-                            <input type="number" class="form-control m-input col-lg-4" required="required" min="0"
-                                   disabled="disabled"
+                            <input type="number" class="form-control m-input col-lg-4" required="required" min="1" disabled="disabled"
                                    placeholder="间隔数(月)" id="gatherInterval" th:value="${contract.gatherInterval}">
+                            <label>(如果收款期数是1的话,代表一次付清，这个不起左右)</label>
+                        </div>
+                        <div class="col-lg-4 col-md-9 col-sm-12">
+                            <label for="gatherCount">
+                                收款期数(对应收款计划的笔数)
+                            </label>
+                            <input type="number" class="form-control m-input col-lg-4" required="required" min="1" disabled="disabled"
+                                   placeholder="" id="gatherCount" th:value="${contract.gatherCount}">
                         </div>
                     </div>
                 </div>

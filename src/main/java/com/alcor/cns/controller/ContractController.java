@@ -44,7 +44,8 @@ public class ContractController extends BaseController {
         ModelAndView modelAndView = new ModelAndView("/contract/new");
         ContractEntity contractEntity = new ContractEntity();
         contractEntity.setId(UUID.randomUUID().toString());
-        contractEntity.setGatherInterval(0);
+        contractEntity.setGatherInterval(1);
+        contractEntity.setGatherCount(1);
         contractEntity.setCustomerId(customerId);
         modelAndView.addObject("contract", contractEntity);
         log.debug("增加结束");

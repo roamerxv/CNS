@@ -19,9 +19,10 @@ public class ContractEntity {
     private Integer gatherInterval;
     private Date beginDate;
     private Date endDate;
+    private Integer gatherCount;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, length = 36)
     public String getId() {
         return id;
     }
@@ -31,7 +32,7 @@ public class ContractEntity {
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 256)
     public String getName() {
         return name;
     }
@@ -41,7 +42,7 @@ public class ContractEntity {
     }
 
     @Basic
-    @Column(name = "description")
+    @Column(name = "description", nullable = true, length = -1)
     public String getDescription() {
         return description;
     }
@@ -51,7 +52,7 @@ public class ContractEntity {
     }
 
     @Basic
-    @Column(name = "customer_id")
+    @Column(name = "customer_id", nullable = false, length = 36)
     public String getCustomerId() {
         return customerId;
     }
@@ -61,7 +62,7 @@ public class ContractEntity {
     }
 
     @Basic
-    @Column(name = "amount")
+    @Column(name = "amount", nullable = true, precision = 2)
     public Double getAmount() {
         return amount;
     }
@@ -71,7 +72,7 @@ public class ContractEntity {
     }
 
     @Basic
-    @Column(name = "first_gather_date")
+    @Column(name = "first_gather_date", nullable = false)
     public Date getFirstGatherDate() {
         return firstGatherDate;
     }
@@ -81,7 +82,7 @@ public class ContractEntity {
     }
 
     @Basic
-    @Column(name = "gather_interval")
+    @Column(name = "gather_interval", nullable = false)
     public Integer getGatherInterval() {
         return gatherInterval;
     }
@@ -91,7 +92,7 @@ public class ContractEntity {
     }
 
     @Basic
-    @Column(name = "begin_date")
+    @Column(name = "begin_date", nullable = false)
     public Date getBeginDate() {
         return beginDate;
     }
@@ -101,7 +102,7 @@ public class ContractEntity {
     }
 
     @Basic
-    @Column(name = "end_date")
+    @Column(name = "end_date", nullable = false)
     public Date getEndDate() {
         return endDate;
     }
@@ -144,5 +145,15 @@ public class ContractEntity {
         result = 31 * result + (beginDate != null ? beginDate.hashCode() : 0);
         result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
         return result;
+    }
+
+    @Basic
+    @Column(name = "gather_count", nullable = false)
+    public Integer getGatherCount() {
+        return gatherCount;
+    }
+
+    public void setGatherCount(Integer gatherCount) {
+        this.gatherCount = gatherCount;
     }
 }

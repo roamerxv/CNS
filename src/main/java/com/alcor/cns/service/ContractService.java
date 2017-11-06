@@ -7,7 +7,6 @@ import com.alcor.cns.repository.IGatherInfoRepository;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import org.joda.time.DateTime;
-import org.joda.time.Months;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -49,19 +48,17 @@ public class ContractService {
         if (iContractRepository.findOne(contractEntity.getId()) == null) {
             log.debug("新增一条合同记录，并且生成对应的收款计划 begin");
             log.debug("开始生成收款计划");
-            if (contractEntity.getGatherInterval() == 0) {
+            if (contractEntity.getGatherCount() == 1) {
                 log.debug("收款间隔是0，说明是一次性收款合同");
                 this.genGatherInfo(contractEntity, contractEntity.getGatherInterval(), contractEntity.getAmount(), contractEntity.getFirstGatherDate());
-            } else {
-                log.debug("收款间隔是{}个月", contractEntity.getGatherInterval());
-                DateTime beginDate = new DateTime(contractEntity.getBeginDate().getTime());
-                DateTime endDate = new DateTime(contractEntity.getEndDate().getTime());
-                int count_of_gen_gather_inf = Months.monthsBetween(beginDate, endDate).getMonths()/contractEntity.getGatherInterval();
+            } else if (contractEntity.getGatherCount() > 1) {
+                log.debug("收款间隔是{}个月", contractEntity.getGatherCount());
+                int count_of_gen_gather_inf = contractEntity.getGatherCount();
                 log.debug("要生成{}条收款计划", count_of_gen_gather_inf);
                 double amount = contractEntity.getAmount() / count_of_gen_gather_inf;
                 DateTime gatherDate = new DateTime(contractEntity.getFirstGatherDate().getTime());
                 for (int i = 1; i <= count_of_gen_gather_inf; i++) {
-                    this.genGatherInfo(contractEntity, i, amount,new Date(gatherDate.plusMonths((i-1)*contractEntity.getGatherInterval()).toDate().getTime()));
+                    this.genGatherInfo(contractEntity, i, amount, new Date(gatherDate.plusMonths((i - 1) * contractEntity.getGatherInterval()).toDate().getTime()));
                 }
             }
             log.debug("新增一条合同记录，并且生成对应的付款计划 end");
@@ -91,7 +88,7 @@ public class ContractService {
         gatherInfoEntity.setNoticeTo(systemConfigureService.findByName("cns_mail_to").getValue());
         gatherInfoEntity.setAmount(amount);
         gatherInfoEntity.setContractId(contractEntity.getId());
-        if (count == 0) {
+        if (count == 1 && contractEntity.getGatherCount() == 1) {
             gatherInfoEntity.setName("合同[" + contractEntity.getName() + "]的一次性付款");
         } else {
             gatherInfoEntity.setName("合同[" + contractEntity.getName() + "]的第" + (count) + "次付款");
@@ -99,8 +96,9 @@ public class ContractService {
 
         gatherInfoEntity.setGatherDate(gatherDate);
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(contractEntity.getFirstGatherDate());
-        calendar.add(Calendar.DATE, -1);
+        calendar.setTime(gatherDate);
+        int offset = Integer.parseInt(systemConfigureService.findByName("notice_date_offset").getValue().toString());
+        calendar.add(Calendar.DATE, -1 * offset);
         Date noticeDate = new Date(calendar.getTime().getTime());
         gatherInfoEntity.setNoticeDate(noticeDate);
         gatherInfoEntity.setGathered(false);

@@ -20,6 +20,7 @@ function getUIValue2Json() {
     contractEntity.endDate = $("#endDate").val();
     contractEntity.firstGatherDate=$("#firstGatherDate").val();
     contractEntity.gatherInterval=$("#gatherInterval").val();
+    contractEntity.gatherCount=$("#gatherCount").val();
     contractEntity.customerId = $("#customerId").val();
     contractEntity.amount = $("#amount").val();
 
