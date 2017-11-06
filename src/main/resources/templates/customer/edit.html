@@ -16,13 +16,6 @@
 
     <link th:href="@{/assets/css/contract/edit.css}" rel="stylesheet"/>
     <!--being::右侧操作栏-->
-    <ul class="m-nav-sticky" style="margin-top: 30px;">
-        <li class="m-nav-sticky__item" data-toggle="m-tooltip" title="" data-placement="left" data-original-title="合同列表">
-            <a data-toggle="modal" data-target="#m_modal_contracts">
-                <i class="la flaticon-interface-9"></i>
-            </a>
-        </li>
-    </ul>
     <!--end::右侧操作栏-->
     <div class="m-portlet m-portlet--mobile">
         <!--begin::Portlet-->
@@ -124,6 +117,8 @@
                   rel="stylesheet"/>
             <script th:src="@{/assets/js/lib/jQuery.dateTimePicker-2.5.5/jquery.datetimepicker.full.js}"></script>
             <!--引入结束-->
+            <script th:src="@{/assets/js/customer/base.js}"></script>
+            <script th:src="@{/assets/js/customer/edit.js}"></script>
             <!--end::Page Resources -->
     </div>
 </div>
