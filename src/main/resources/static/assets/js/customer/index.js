@@ -201,6 +201,14 @@ $().ready(function () {
         gatherInfo_table.clear();
         gatherInfo_table.ajax.url(contextPath + "gatherInfos/" + contract_id + "/getDataWithoutPaged.json").load();
     });
+
+    if (getUrlParam("showContractModal")!= null){
+        fun_show_contract_modal(getUrlParam("showContractModal"));
+    };
+
+    if (getUrlParam("showGahterInfoModal")!= null){
+        fun_show_gather_modal(getUrlParam("showGahterInfoModal"));
+    };
 });
 
 

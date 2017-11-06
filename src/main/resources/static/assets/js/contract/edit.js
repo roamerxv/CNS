@@ -46,7 +46,7 @@ function fun_submit() {
         contentType: "application/json",
         dataType: 'json',//默认为预期服务器返回的数据类型
         success: function (data, textStatus, jqXHR) {
-            window.location = contextPath + "customers/" + $("#customerId").val();
+            fun_back();
         },
         error: function (data, textStatus, jqXHR) {
             mApp.unblock();
@@ -58,12 +58,10 @@ function fun_submit() {
 
 
 function fun_back() {
-    window.history.back();
+    window.location = contextPath + "customers/index?showContractModal=" + $("#customerId").val();
 }
 
-
-// 删除收款信息
-function fun_gatherInfo_delete(id) {
+function fun_delete(id) {
     bootbox.confirm({
         message: "确认要删除这条记录吗?一经删除，就无法恢复！",
         buttons: {
@@ -98,7 +96,7 @@ function fun_gatherInfo_delete(id) {
                             mApp.unblock();
                         }
                     },
-                    error: function (data, textStatus, jqXHR) {
+                    error: function ( jqXHR, textStatus, errorThrown ) {
                         mApp.unblock();
                         showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
                     }
@@ -107,5 +105,4 @@ function fun_gatherInfo_delete(id) {
         }
     });
 }
-
 

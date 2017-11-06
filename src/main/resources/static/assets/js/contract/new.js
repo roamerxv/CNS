@@ -52,7 +52,7 @@ function fun_submit() {
         contentType: "application/json",
         dataType: 'json',//默认为预期服务器返回的数据类型
         success: function (data, textStatus, jqXHR) {
-            window.location = contextPath + "customers/" + $("#customerId").val();
+            window.location = contextPath + "customers/index?showContractModal=" + $("#customerId").val();
         },
         error: function (data, textStatus, jqXHR) {
             Logger.debug(jqXHR);
@@ -64,61 +64,9 @@ function fun_submit() {
 };
 
 
+
 function fun_back() {
-    window.history.back();
-}
-
-
-// 显示收款信息的编辑界面
-function fun_gatherInfo_edit(id) {
-    window.location = contextPath + "gatherInfos/" + id;
-}
-
-
-// 删除收款信息
-function fun_gatherInfo_delete(id) {
-    bootbox.confirm({
-        message: "确认要删除这条记录吗?一经删除，就无法恢复！",
-        buttons: {
-            confirm: {
-                label: '删除',
-                className: 'btn-success'
-            },
-            cancel: {
-                label: '不删了',
-                className: 'btn-danger'
-            }
-        },
-        callback: function (result) {
-            if (result) {
-                mApp.blockPage({
-                    overlayColor: "#000000",
-                    type: "loader",
-                    state: "success",
-                    message: "正在删除，请稍等..."
-                });
-                $.ajax({
-                    type: 'delete',
-                    url: contextPath + 'gatherInfos/' + id + ".json",
-                    async: false,//默认为true
-                    contentType: "application/json",
-                    dataType: 'json',//默认为预期服务器返回的数据类型
-                    success: function (data, textStatus, jqXHR) {
-                        if (typeof gatherInfo_table == 'undefined') {
-                            window.location = contextPath;
-                        } else {
-                            gatherInfo_table.ajax.reload();
-                            mApp.unblock();
-                        }
-                    },
-                    error: function (data, textStatus, jqXHR) {
-                        mApp.unblock();
-                        showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
-                    }
-                });
-            }
-        }
-    });
+    window.location = contextPath + "customers/index?showContractModal=" + $("#customerId").val();
 }
 
 
