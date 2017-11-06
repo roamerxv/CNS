@@ -1,5 +1,5 @@
-var contract_table ;
-var customer_table ;
+var contract_table;
+var customer_table;
 
 // 事件信息
 var CustomerEntity = {
@@ -19,7 +19,9 @@ function getUIValue2Json() {
     customerEntity.mobile = $("#mobile").val();
     customerEntity.tel = $("#tel").val();
     customerEntity.address = $("#address").val();
-    customerEntity.typeId = $("#customer_type").val();
+    var type = {};
+    type.id = $("#customer_type").val();
+    customerEntity.type = type;
 
     return customerEntity;
 };
@@ -60,7 +62,7 @@ function fun_delete(id) {
                             mApp.unblock();
                         }
                     },
-                    error: function ( jqXHR, textStatus, errorThrown ) {
+                    error: function (jqXHR, textStatus, errorThrown) {
                         mApp.unblock();
                         showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
                     },

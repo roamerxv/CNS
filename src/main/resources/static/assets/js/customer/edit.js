@@ -25,6 +25,7 @@ $().ready(function () {
             },{
                 "data": "firstGatherDate"
             }],
+            "order": [[ 2, "desc" ]],
             "columnDefs": [
                 {
                     "orderable": false,

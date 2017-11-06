@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 /**
  * @author roamer - 徐泽宇
- * @create 2017-10-2017/10/30  下午1:31
+ * @create 2017-11-2017/11/6  上午11:53
  */
 @Entity
 @Table(name = "customer_type", schema = "cns", catalog = "")
@@ -14,7 +14,7 @@ public class CustomerTypeEntity {
     private String pId;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, length = 36)
     public String getId() {
         return id;
     }
@@ -24,7 +24,7 @@ public class CustomerTypeEntity {
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 128)
     public String getName() {
         return name;
     }
@@ -34,7 +34,7 @@ public class CustomerTypeEntity {
     }
 
     @Basic
-    @Column(name = "p_id")
+    @Column(name = "p_id", nullable = false, length = 36)
     public String getpId() {
         return pId;
     }

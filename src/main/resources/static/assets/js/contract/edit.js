@@ -54,6 +54,7 @@ $().ready(function () {
             }, {
                 "data": "gatheredDate"
             }],
+            "order": [[ 2, "asc" ]],
             "columnDefs": [
                 {
                     "orderable": false,
