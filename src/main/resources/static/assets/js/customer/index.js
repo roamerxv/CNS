@@ -1,7 +1,8 @@
 var customer_table;
+var contract_table;
 var gatherInfo_table;
-var customer_id;
-var contract_id;
+
+var loading_message = "正在重新获取数据，请稍等...";
 
 $().ready(function () {
     // 设置 datatables 的错误，不做抛出。以便接管错误信息
@@ -42,41 +43,26 @@ $().ready(function () {
             }],
     });
 
-    $("#addCustomerLink").on("click", function (e) {
-        $.post(contextPath + "events", function (data) {
-            Logger.debug(data);
-        });
-    })
-
-    $("#m_modal_contracts").on('shown.bs.modal', function () {
-        contract_table.clear();
-        contract_table.ajax.reload();
-    });
-});
-
-
-function fun_edit(id) {
-    window.location = contextPath + "customers/" + id;
-}
-
-/**
- * 打开合同列表的模式框
- * @param id
- */
-function fun_show_contract_modal(id) {
-    customer_id = id;
-    $('#m_modal_contracts').modal('show');
-    // 显示此客户对应的合同列表
-
     contract_table = $("#contract_table").DataTable({
         "width": "100%",
         "autoWidth": true,
         "ajax": {
-            url: contextPath + "contracts/" + customer_id + "/getDataWithoutPaged.json",
-            error: function (data, textStatus, jqXHR) {
-                Logger.debug(jqXHR);
-                showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
+            //url: contextPath + "contracts/" + customer_id + "/getDataWithoutPaged.json",
+            beforeSend: function () {
+                mApp.block((".modal-content"), {
+                    overlayColor: "#000000",
+                    type: "loader",
+                    state: "success",
+                    message: loading_message
+                });
             },
+            error: function (data, textStatus, jqXHR) {
+                Logger.debug(data);
+                //showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
+            },
+            complete: function () {
+                mApp.unblock(".modal-content");
+            }
         },
         "language": {
             "url": contextPath + "assets/js/lib/DataTables-1.10.16/chinese.lang.json"
@@ -106,31 +92,26 @@ function fun_show_contract_modal(id) {
             }],
     });
 
-}
-
-/**
- * 跳转到客户新建合同的界面
- */
-function fun_create_contract() {
-    window.location = contextPath + "/customers/" + customer_id + "/contracts";
-}
-
-/**
- * 打开收款信息列表的模式框
- * @param id
- */
-function fun_show_gather_modal(id) {
-    contract_id = id;
-    // 显示此合同对应的收款信息列表
-    $('#m_modal_gatherInfos').modal('show');
     gatherInfo_table = $("#gatherInfo_table").DataTable({
         "width": "100%",
         "autoWidth": true,
         "ajax": {
-            url: contextPath + "gatherInfos/" + contract_id + "/getDataWithoutPaged.json",
-            error: function (jqXHR, textStatus, errorThrown) {
-                showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
+            // url: contextPath + "gatherInfos/" + contract_id + "/getDataWithoutPaged.json",
+            beforeSend: function () {
+                mApp.block((".modal-content"), {
+                    overlayColor: "#000000",
+                    type: "loader",
+                    state: "success",
+                    message: loading_message
+                });
             },
+            error: function (jqXHR, textStatus, errorThrown) {
+                // showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
+            },
+            complete: function () {
+                mApp.unblock(".modal-content");
+            }
+
         },
         "language": {
             "url": contextPath + "assets/js/lib/DataTables-1.10.16/chinese.lang.json"
@@ -203,6 +184,54 @@ function fun_show_gather_modal(id) {
             },
         ],
     });
+
+    $("#addCustomerLink").on("click", function (e) {
+        $.post(contextPath + "events", function (data) {
+            Logger.debug(data);
+        });
+    })
+
+    $("#m_modal_contracts").on('shown.bs.modal', function () {
+        // 显示此客户对应的合同列表
+        contract_table.clear();
+        contract_table.ajax.url(contextPath + "contracts/" + customer_id + "/getDataWithoutPaged.json").load();
+    });
+
+    $("#m_modal_gatherInfos").on('shown.bs.modal', function () {
+        gatherInfo_table.clear();
+        gatherInfo_table.ajax.url(contextPath + "gatherInfos/" + contract_id + "/getDataWithoutPaged.json").load();
+    });
+});
+
+
+function fun_edit(id) {
+    window.location = contextPath + "customers/" + id;
+}
+
+/**
+ * 打开合同列表的模式框
+ * @param id
+ */
+function fun_show_contract_modal(id) {
+    customer_id = id;
+    $('#m_modal_contracts').modal('show');
+}
+
+/**
+ * 跳转到客户新建合同的界面
+ */
+function fun_create_contract() {
+    window.location = contextPath + "/customers/" + customer_id + "/contracts";
+}
+
+/**
+ * 打开收款信息列表的模式框
+ * @param id
+ */
+function fun_show_gather_modal(id) {
+    contract_id = id;
+    // 显示此合同对应的收款信息列表
+    $('#m_modal_gatherInfos').modal('show');
 }
 
 /**

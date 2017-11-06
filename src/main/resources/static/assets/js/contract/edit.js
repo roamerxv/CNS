@@ -62,7 +62,6 @@ function fun_back() {
 }
 
 
-
 // 删除收款信息
 function fun_gatherInfo_delete(id) {
     bootbox.confirm({

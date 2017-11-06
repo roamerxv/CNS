@@ -1,6 +1,3 @@
-var contract_table;
-var customer_table;
-
 // 事件信息
 var CustomerEntity = {
     createNew: function () {
