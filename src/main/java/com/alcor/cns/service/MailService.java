@@ -66,7 +66,7 @@ public class MailService {
      * @param content
      */
     @Async
-    public void sendHtmlMail(String to, String subject, String content) {
+    public Future<String>  sendHtmlMail(String[] to, String subject, String content) {
         MimeMessage message = sender.createMimeMessage();
 
         try {
@@ -82,6 +82,7 @@ public class MailService {
         } catch (MessagingException e) {
             log.error("发送html邮件时发生异常！", e);
         }
+        return new AsyncResult<String>("mail sended");
     }
 
     /**

@@ -13,6 +13,7 @@ import pers.roamer.boracay.helper.HttpResponseHelper;
 import pers.roamer.boracay.helper.JsonUtilsHelper;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -100,8 +101,10 @@ public class GatherInfoController extends BaseController {
     @GetMapping("gatherInfos/gen_notic_ontent/{id}")
     public String getNoticContent(@PathVariable String id) throws ControllerException {
         try {
-            return gatherInfoService.genNoticContent(id);
-        } catch (ServiceException e) {
+            Map map = new HashMap<String, String>();
+            map.put("content", gatherInfoService.genNoticContent(id));
+            return JsonUtilsHelper.objectToJsonString(map);
+        } catch (ServiceException | JsonProcessingException e) {
             throw new ControllerException(e.getMessage());
         }
     }

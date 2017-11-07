@@ -1,8 +1,10 @@
 package com.alcor.cns.service;
 
 import com.alcor.cns.entity.ContractEntity;
+import com.alcor.cns.entity.CustomerEntity;
 import com.alcor.cns.entity.GatherInfoEntity;
 import com.alcor.cns.repository.IContractRepository;
+import com.alcor.cns.repository.ICustomerRepository;
 import com.alcor.cns.repository.IGatherInfoRepository;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
@@ -13,9 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
-import java.util.Calendar;
-import java.util.List;
-import java.util.UUID;
+import java.text.MessageFormat;
+import java.util.*;
 
 /**
  * @author roamer - 徐泽宇
@@ -33,6 +34,10 @@ public class ContractService {
     @Qualifier("com.alcor.cns.repository.IGatherInfoRepository")
     @Autowired
     IGatherInfoRepository iGatherInfoRepository;
+
+    @Qualifier("com.alcor.cns.repository.ICustomerRepository")
+    @Autowired
+    ICustomerRepository iCustomerRepository;
 
     @Autowired
     SystemConfigureService systemConfigureService;
@@ -82,7 +87,7 @@ public class ContractService {
      * @throws ServiceException
      */
     @Transactional(rollbackFor = {Exception.class})
-    private void genGatherInfo(ContractEntity contractEntity, int count, double amount, Date gatherDate) throws ServiceException {
+    public void genGatherInfo(ContractEntity contractEntity, int count, double amount, Date gatherDate) throws ServiceException {
         GatherInfoEntity gatherInfoEntity = new GatherInfoEntity();
         gatherInfoEntity.setId(UUID.randomUUID().toString());
         gatherInfoEntity.setNoticeTo(systemConfigureService.findByName("cns_mail_to").getValue());
@@ -104,7 +109,27 @@ public class ContractService {
         gatherInfoEntity.setGathered(false);
         gatherInfoEntity.setNotice(true);
         gatherInfoEntity.setNoticeTo(systemConfigureService.findByName("cns_mail_to").getValue());
+        CustomerEntity customerEntity = iCustomerRepository.findOne(contractEntity.getCustomerId());
+        String noticeContent = this.genNoticContent(gatherInfoEntity,contractEntity,customerEntity);
+        gatherInfoEntity.setNoticeContent(noticeContent);
         iGatherInfoRepository.save(gatherInfoEntity);
+    }
+
+    /**
+     * 拼装出需要提示的内容
+     * @param gatherInfoEntity
+     * @param contractEntity
+     * @param customerEntity
+     * @return
+     * @throws ServiceException
+     */
+    public String genNoticContent(GatherInfoEntity gatherInfoEntity, ContractEntity contractEntity, CustomerEntity customerEntity) throws ServiceException{
+        // 开始拼装提示信息
+        String messageTemp = systemConfigureService.findByName("cns_content").getValue();
+        Object[] object = new String[]{customerEntity.getName(), contractEntity.getName(), gatherInfoEntity.getName(), gatherInfoEntity.getGatherDate().toString(), gatherInfoEntity.getAmount().toString()};
+        String content = MessageFormat.format(messageTemp, object);
+        log.debug("生成的收款信息的提示内容{}:end", content);
+        return content;
     }
 
     @Transactional(readOnly = true)

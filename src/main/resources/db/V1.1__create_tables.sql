@@ -123,11 +123,15 @@ CREATE TABLE `system_configure` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `system_configure` VALUES ('cns_subject', 'CNS-对[%s]进行的提醒', '提醒邮件的标题', 1);
-INSERT INTO `system_configure` VALUES ('banner_message', '多谢你如此精彩耀眼，做我平淡岁月里星辰', '用户的 banner 信息', 2);
-INSERT INTO `system_configure` VALUES ('cns_content', '{0}的合同[{1}]\n对应的收款计划:{2}\n将于{3}进行收款.\n应收金额是   : {4}',
-                                       '提醒邮件的内容：{0} 对应客户名字,{1}对应合同名字，{1}对应收款计划名字，{2}对应收款日期，{3}对应收款金额', 3);
-INSERT INTO `system_configure` VALUES ('cns_mail_to', 'Masa@dbond.net', "提醒邮件需要发往的邮箱.多个邮箱通过，分隔", 4);
-INSERT INTO `system_configure` VALUES ('notice_date_offset', '1', "自动生成收款记录时，提醒日对应收款日提前的天数",5);
+INSERT INTO `system_configure` VALUES ('cns_content', '<h1>!收款提醒!</h1>
+<h2>{0}</h2><br/>
+<h2>的合同-{1}</h1><br/>
+<h2>对应的收款计划-{2}<h2><br/>
+<h2>将于{3}进行收款.</h2><br/>
+<h2>应收金额是: <font color="red">{4}</font></h2>', '提醒邮件的内容：{0} 对应客户名字,{1}对应合同名字，{1}对应收款计划名字，{2}对应收款日期，{3}对应收款金额', 2);
+INSERT INTO `system_configure` VALUES ('cns_mail_to', 'Masa@dbond.net', "提醒邮件需要发往的邮箱.多个邮箱通过，分隔", 3);
+INSERT INTO `system_configure` VALUES ('notice_date_offset', '1', "自动生成收款记录时，提醒日对应收款日提前的天数", 4);
+INSERT INTO `system_configure` VALUES ('banner_message', '多谢你如此精彩耀眼，做我平淡岁月里星辰', '用户的 banner 信息', 5);
 
 
 COMMIT;
@@ -168,24 +172,24 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 #合同信息表
 CREATE TABLE `cns`.`contract` (
-  `id`                 VARCHAR(36)  NOT NULL
+  `id`                VARCHAR(36)  NOT NULL
   COMMENT '合同 ID',
-  `name`               VARCHAR(256) NOT NULL
+  `name`              VARCHAR(256) NOT NULL
   COMMENT '合同名字',
-  `description`        TEXT         NULL
+  `description`       TEXT         NULL
   COMMENT '合同描述',
-  `customer_id`        VARCHAR(36)  NOT NULL
+  `customer_id`       VARCHAR(36)  NOT NULL
   COMMENT '所属客户 ID',
-  `amount`             FLOAT(10, 2) COMMENT '合同金额',
+  `amount`            FLOAT(10, 2) COMMENT '合同金额',
   `first_gather_date` DATE         NOT NULL
   COMMENT '首次付款日期',
-  `gather_interval`    INTEGER      NOT NULL DEFAULT 0
+  `gather_interval`   INTEGER      NOT NULL DEFAULT 0
   COMMENT '每隔多少个月产生下一个收款计划单',
-  `gather_count`    INTEGER      NOT NULL DEFAULT 0
+  `gather_count`      INTEGER      NOT NULL DEFAULT 0
   COMMENT '一个合同分多少次收款',
-  `begin_date`         DATE         NOT NULL
+  `begin_date`        DATE         NOT NULL
   COMMENT '合同开始日期',
-  `end_date`           DATE         NOT NULL
+  `end_date`          DATE         NOT NULL
   COMMENT '合同结束日期',
   PRIMARY KEY (`id`)
 )
