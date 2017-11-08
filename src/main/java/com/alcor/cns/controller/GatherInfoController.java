@@ -265,7 +265,7 @@ public class GatherInfoController extends BaseController {
         log.debug("开始统计从{}到{}的待收款总金额！", start, end);
         String m_rtn = null;
         try {
-            float sum = this.sumAmountBetweenDate(start, end);
+            double sum = this.sumAmountBetweenDate(start, end);
             Map<String, Object> map = new HashMap<>();
             map.put("data", sum);
             m_rtn = JsonUtilsHelper.objectToJsonString(map);
@@ -293,11 +293,11 @@ public class GatherInfoController extends BaseController {
         log.debug("开始统计从{}到{}的待收款笔数！", start, end);
         String m_rtn = null;
         try {
-            float sum = this.sumAmountBetweenDate(start, end);
+            double sum = this.sumAmountBetweenDate(start, end);
             Map<String, Object> map = new HashMap<>();
             map.put("data", sum);
             m_rtn = JsonUtilsHelper.objectToJsonString(map);
-        } catch (JsonProcessingException  e) {
+        } catch (JsonProcessingException e) {
             new ControllerException(e.getMessage());
         }
         return m_rtn;
@@ -305,9 +305,12 @@ public class GatherInfoController extends BaseController {
 
     /**
      * 统计一段时间内的待收款笔数
+     *
      * @param start
      * @param end
+     *
      * @return
+     *
      * @throws ControllerException
      */
     private int countBetweenDate(DateTime start, DateTime end) throws ControllerException {
@@ -323,15 +326,18 @@ public class GatherInfoController extends BaseController {
 
     /**
      * 统计一段时间内的待收款金额
+     *
      * @param start
      * @param end
+     *
      * @return
+     *
      * @throws ControllerException
      */
-    private float sumAmountBetweenDate(DateTime start, DateTime end) throws ControllerException {
-        float sum = 0;
+    private double sumAmountBetweenDate(DateTime start, DateTime end) throws ControllerException {
+        double sum = 0;
         try {
-            sum = gatherInfoService.sumAmountByGatherDateBetween(start.toDate(), end.toDate());
+            sum = gatherInfoService.sumAmountByGatherDateBetween(start.toDate(), end.toDate()) ;
         } catch (ServiceException e) {
             new ControllerException(e.getMessage());
         }

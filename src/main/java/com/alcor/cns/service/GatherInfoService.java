@@ -37,11 +37,10 @@ public class GatherInfoService {
     private ContractService contractService;
 
     @Autowired
-    private  CustomerService customerService;
+    private CustomerService customerService;
 
     @Autowired
     private MailService mailService;
-
 
 
     @Transactional(readOnly = true)
@@ -63,11 +62,14 @@ public class GatherInfoService {
 
     /**
      * 生成一个收款信息的提示内容
+     *
      * @param id
+     *
      * @return
+     *
      * @throws ServiceException
      */
-    public String genNoticContent( String id) throws ServiceException {
+    public String genNoticContent(String id) throws ServiceException {
         log.debug("生成{}的收款信息的提示内容:begin", id);
         GatherInfoEntity gatherInfoEntity = null;
 
@@ -83,11 +85,11 @@ public class GatherInfoService {
             String customerId = contractEntity.getCustomerId();
             CustomerEntity customerEntity = customerService.findById(customerId);
             // 获取提示信息
-            String content = contractService.genNoticContent(gatherInfoEntity,contractEntity,customerEntity);
+            String content = contractService.genNoticContent(gatherInfoEntity, contractEntity, customerEntity);
             log.debug("生成的收款信息的提示内容{}:end", content);
 
             return content;
-        } catch (ServiceException  e) {
+        } catch (ServiceException e) {
             log.error(e.getMessage());
             throw new ServiceException(e.getMessage());
         }
@@ -95,7 +97,7 @@ public class GatherInfoService {
 
     public void sentNotice(GatherInfoEntity gatherInfoEntity) throws ServiceException {
         String mailListString = gatherInfoEntity.getNoticeTo();
-        try{
+        try {
             if (!StringUtils.isEmpty(mailListString)) {
                 String[] to = mailListString.split(",");
                 String subject = String.format(systemConfigureService.findByName("cns_subject").getValue(), gatherInfoEntity.getName());
@@ -103,38 +105,50 @@ public class GatherInfoService {
                 log.debug("noticing sended  = " + mailSendFuture.isDone());
 
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new ServiceException(e.getMessage());
         }
     }
 
     /**
      * 查询出收款日期在2个日期中的记录
+     *
      * @param beginDate
      * @param endDate
+     *
      * @return
+     *
      * @throws ServiceException
      */
-    public List<GatherInfoEntity> findAllBetweenDates(Date beginDate , Date endDate) throws  ServiceException{
-        return  iGatherInfoRepository.findAllByGatherDateBetween(beginDate,endDate);
+    public List<GatherInfoEntity> findAllBetweenDates(Date beginDate, Date endDate) throws ServiceException {
+        return iGatherInfoRepository.findAllByGatherDateBetween(beginDate, endDate);
     }
 
     /**
      * 列出所有的需要指定日期提醒的收款计划
+     *
      * @return
+     *
      * @throws ServiceException
      */
 
-    public List<GatherInfoEntity> needToNotice(Date noticeDate) throws  ServiceException{
-        return iGatherInfoRepository.findAllByNoticeDateAndGatheredAndNotice(noticeDate,false,true);
+    public List<GatherInfoEntity> needToNotice(Date noticeDate) throws ServiceException {
+        return iGatherInfoRepository.findAllByNoticeDateAndGatheredAndNotice(noticeDate, false, true);
     }
 
-    public int countBetweenDate(Date beginDate ,Date endDate) throws ServiceException{
-        return iGatherInfoRepository.countByGatherDateBetween(beginDate,endDate);
+    public int countBetweenDate(Date beginDate, Date endDate) throws ServiceException {
+        return iGatherInfoRepository.countByGatherDateBetween(beginDate, endDate);
     }
 
-    public float sumAmountByGatherDateBetween(Date beginDate ,Date endDate) throws ServiceException{
-        return iGatherInfoRepository.sumAmountByGatherDateBetween(beginDate,endDate);
+    public double sumAmountByGatherDateBetween(Date beginDate, Date endDate) throws ServiceException {
+        double sum = 0.00;
+        try {
+            sum = iGatherInfoRepository.sumAmountByGatherDateBetween(beginDate, endDate);
+        } catch (Exception e) {
+            log.trace(e);
+            log.error(e.getMessage());
+        }
+        return sum;
     }
 
 }

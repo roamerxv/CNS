@@ -47,8 +47,8 @@ repositories {
 // gradle flyway 查看子命令
 flyway {
 	driver = 'com.mysql.cj.jdbc.Driver'
-//	url = 'jdbc:mysql://116.193.51.100:3306/cns?useUnicode=true&characterEncoding=utf-8&useSSL=false'  //鼎邦docker服务器 ， 生产机
-	url = 'jdbc:mysql://120.76.101.180:3306/cns?useUnicode=true&characterEncoding=utf-8&useSSL=false'  //开发环境-阿里云
+	url = 'jdbc:mysql://116.193.51.100:3306/cns?useUnicode=true&characterEncoding=utf-8&useSSL=false'  //鼎邦docker服务器 ， 生产机
+//	url = 'jdbc:mysql://120.76.101.180:3306/cns?useUnicode=true&characterEncoding=utf-8&useSSL=false'  //开发环境-阿里云
 	user = 'cns'
 	password = 'cnscns'
 	schemas = ['cns']

@@ -23,6 +23,6 @@ public interface IGatherInfoRepository extends JpaRepository<GatherInfoEntity, S
     public int countByGatherDateBetween(Date beginDate, Date endDate);
 
     @Query("select sum(u.amount) from GatherInfoEntity u WHERE u.gatherDate BETWEEN ?1 AND ?2")
-    public float sumAmountByGatherDateBetween(Date beginDate, Date endDate);
+    public Double sumAmountByGatherDateBetween(Date beginDate, Date endDate);
 
 }
