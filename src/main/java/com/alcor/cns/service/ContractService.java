@@ -52,6 +52,7 @@ public class ContractService {
     public ContractEntity update(ContractEntity contractEntity) throws ServiceException {
         if (iContractRepository.findOne(contractEntity.getId()) == null) {
             log.debug("新增一条合同记录，并且生成对应的收款计划 begin");
+            contractEntity = iContractRepository.save(contractEntity);
             log.debug("开始生成收款计划");
             if (contractEntity.getGatherCount() == 1) {
                 log.debug("收款间隔是0，说明是一次性收款合同");
@@ -67,7 +68,7 @@ public class ContractService {
                 }
             }
             log.debug("新增一条合同记录，并且生成对应的付款计划 end");
-            return iContractRepository.save(contractEntity);
+            return  contractEntity;
         } else {
             log.debug("更新一条合同记录，并且生成对应的付款计划 begin");
             ContractEntity contractEntityUpdated = iContractRepository.save(contractEntity);

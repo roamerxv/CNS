@@ -185,6 +185,8 @@ $().ready(function () {
         ],
     });
 
+
+
     $("#addCustomerLink").on("click", function (e) {
         $.post(contextPath + "events", function (data) {
             Logger.debug(data);
