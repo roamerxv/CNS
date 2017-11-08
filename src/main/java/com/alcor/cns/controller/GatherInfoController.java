@@ -4,6 +4,8 @@ import com.alcor.cns.entity.GatherInfoEntity;
 import com.alcor.cns.service.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.log4j.Log4j2;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,6 +14,7 @@ import pers.roamer.boracay.aspect.httprequest.SessionCheckKeyword;
 import pers.roamer.boracay.helper.HttpResponseHelper;
 import pers.roamer.boracay.helper.JsonUtilsHelper;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -192,5 +195,146 @@ public class GatherInfoController extends BaseController {
             throw new ControllerException(e.getMessage());
         }
         return HttpResponseHelper.successInfoInbox("测试完成！");
+    }
+
+    /**
+     * 获取当前一周内的收款计划笔数
+     *
+     * @return
+     *
+     * @throws ControllerException
+     */
+    @PostMapping("/gatherInfos/count/thisWeek")
+    @ResponseBody
+    public String countThisWeek() throws ControllerException {
+        Date today = new Date();
+        DateTime start = new DateTime(today).withDayOfWeek(DateTimeConstants.MONDAY);
+        DateTime end = new DateTime(today).withDayOfWeek(DateTimeConstants.SUNDAY);
+        log.debug("开始统计从{}到{}的待收款笔数！", start, end);
+        String m_rtn = null;
+        try {
+            int count = this.countBetweenDate(start, end);
+            Map<String, Object> map = new HashMap<>();
+            map.put("data", count);
+            m_rtn = JsonUtilsHelper.objectToJsonString(map);
+        } catch (JsonProcessingException e) {
+            new ControllerException(e.getMessage());
+        }
+        return m_rtn;
+    }
+
+    /**
+     * 获取当前月内的收款计划笔数
+     *
+     * @return
+     *
+     * @throws ControllerException
+     */
+    @PostMapping("/gatherInfos/count/thisMonth")
+    @ResponseBody
+    public String countThisMonth() throws ControllerException {
+        Date today = new Date();
+        DateTime start = new DateTime(today).dayOfMonth().withMinimumValue();
+        DateTime end = new DateTime(today).dayOfMonth().withMaximumValue();
+        log.debug("开始统计从{}到{}的待收款笔数！", start, end);
+        String m_rtn = null;
+        try {
+            int count = this.countBetweenDate(start, end);
+            Map<String, Object> map = new HashMap<>();
+            map.put("data", count);
+            m_rtn = JsonUtilsHelper.objectToJsonString(map);
+        } catch (JsonProcessingException e) {
+            new ControllerException(e.getMessage());
+        }
+        return m_rtn;
+    }
+
+    /**
+     * 获取当前一周内的收款计划总金额
+     *
+     * @return
+     *
+     * @throws ControllerException
+     */
+    @PostMapping("/gatherInfos/sum/thisWeek")
+    @ResponseBody
+    public String sumThisWeek() throws ControllerException {
+        Date today = new Date();
+        DateTime start = new DateTime(today).withDayOfWeek(DateTimeConstants.MONDAY);
+        DateTime end = new DateTime(today).withDayOfWeek(DateTimeConstants.SUNDAY);
+        log.debug("开始统计从{}到{}的待收款总金额！", start, end);
+        String m_rtn = null;
+        try {
+            float sum = this.sumAmountBetweenDate(start, end);
+            Map<String, Object> map = new HashMap<>();
+            map.put("data", sum);
+            m_rtn = JsonUtilsHelper.objectToJsonString(map);
+        } catch (JsonProcessingException | ControllerException e) {
+            log.trace(e);
+            new ControllerException(e.getMessage());
+        }
+        return m_rtn;
+    }
+
+
+    /**
+     * 获取当前一个月内的收款计划总金额
+     *
+     * @return
+     *
+     * @throws ControllerException
+     */
+    @PostMapping("/gatherInfos/sum/thisMonth")
+    @ResponseBody
+    public String sumThisMonth() throws ControllerException {
+        Date today = new Date();
+        DateTime start = new DateTime(today).dayOfMonth().withMinimumValue();
+        DateTime end = new DateTime(today).dayOfMonth().withMaximumValue();
+        log.debug("开始统计从{}到{}的待收款笔数！", start, end);
+        String m_rtn = null;
+        try {
+            float sum = this.sumAmountBetweenDate(start, end);
+            Map<String, Object> map = new HashMap<>();
+            map.put("data", sum);
+            m_rtn = JsonUtilsHelper.objectToJsonString(map);
+        } catch (JsonProcessingException  e) {
+            new ControllerException(e.getMessage());
+        }
+        return m_rtn;
+    }
+
+    /**
+     * 统计一段时间内的待收款笔数
+     * @param start
+     * @param end
+     * @return
+     * @throws ControllerException
+     */
+    private int countBetweenDate(DateTime start, DateTime end) throws ControllerException {
+        int count = 0;
+        try {
+            count = gatherInfoService.countBetweenDate(start.toDate(), end.toDate());
+        } catch (ServiceException e) {
+            new ControllerException(e.getMessage());
+        }
+        return count;
+    }
+
+
+    /**
+     * 统计一段时间内的待收款金额
+     * @param start
+     * @param end
+     * @return
+     * @throws ControllerException
+     */
+    private float sumAmountBetweenDate(DateTime start, DateTime end) throws ControllerException {
+        float sum = 0;
+        try {
+            sum = gatherInfoService.sumAmountByGatherDateBetween(start.toDate(), end.toDate());
+        } catch (ServiceException e) {
+            new ControllerException(e.getMessage());
+        }
+        return sum;
     }
 }

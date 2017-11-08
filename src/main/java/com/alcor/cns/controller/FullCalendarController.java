@@ -60,7 +60,7 @@ public class FullCalendarController extends BaseController {
             gatherInfoEntityList.forEach(item -> {
                 FullCalendarEvent fullCalendarEvent = new FullCalendarEvent();
                 fullCalendarEvent.id = item.getId();
-                fullCalendarEvent.title = item.getName();
+                fullCalendarEvent.title = item.getAmount().toString();
                 fullCalendarEvent.start = dateFormat.format(item.getGatherDate());
                 fullCalendarEvent.allDay = true;
                 fullCalendarEvent.url = servletContext.getContextPath() + "/gatherInfos/" + item.getId();

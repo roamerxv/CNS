@@ -129,5 +129,12 @@ public class GatherInfoService {
         return iGatherInfoRepository.findAllByNoticeDateAndGatheredAndNotice(noticeDate,false,true);
     }
 
+    public int countBetweenDate(Date beginDate ,Date endDate) throws ServiceException{
+        return iGatherInfoRepository.countByGatherDateBetween(beginDate,endDate);
+    }
+
+    public float sumAmountByGatherDateBetween(Date beginDate ,Date endDate) throws ServiceException{
+        return iGatherInfoRepository.sumAmountByGatherDateBetween(beginDate,endDate);
+    }
 
 }
