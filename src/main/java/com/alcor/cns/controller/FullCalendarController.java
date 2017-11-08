@@ -36,22 +36,36 @@ public class FullCalendarController extends BaseController {
     @Autowired
     private GatherInfoService gatherInfoService;
 
+    /**
+     * 获取日期时间内的收款计划列表
+     *
+     * @param start 这个参数由 fullCalendar 组件自动传入，缺省的 key 就是是 start ，代表用户选择视图的开始日期
+     * @param end   这个参数由 fullCalendar 组件自动传入，缺省的 key 就是是 end，代表用户选择视图的结束日期
+     *
+     * @return
+     *
+     * @throws ControllerException
+     */
     @GetMapping("/fullcalendar/events")
     @ResponseBody
-    public String listEvents(@RequestParam String beginDate, @RequestParam String endDate) throws ControllerException {
-        log.debug("传入的日期是从{}到{}",beginDate,endDate);
+    public String listEvents(@RequestParam String start, @RequestParam String end) throws ControllerException {
+        log.debug("传入的日期是从{}到{}", start, end);
         List<FullCalendarEvent> fullCalendarEventList = new ArrayList<>();
         EventsDateCondition eventsDateCondition = new EventsDateCondition();
         try {
-            eventsDateCondition.setBeginDate(dateFormat.parse(beginDate));
-            eventsDateCondition.setEndDate(dateFormat.parse(endDate));
+            eventsDateCondition.setBeginDate(dateFormat.parse(start));
+            eventsDateCondition.setEndDate(dateFormat.parse(end));
             log.debug("开始的日期{}，结束的日期{}", eventsDateCondition.getBeginDate(), eventsDateCondition.getEndDate());
-            List<GatherInfoEntity> gatherInfoEntityList = gatherInfoService.findAllBetweenDates(eventsDateCondition.getBeginDate(),eventsDateCondition.getEndDate());
-            gatherInfoEntityList.forEach(item ->{
+            List<GatherInfoEntity> gatherInfoEntityList = gatherInfoService.findAllBetweenDates(eventsDateCondition.getBeginDate(), eventsDateCondition.getEndDate());
+            gatherInfoEntityList.forEach(item -> {
                 FullCalendarEvent fullCalendarEvent = new FullCalendarEvent();
+                fullCalendarEvent.id = item.getId();
                 fullCalendarEvent.title = item.getName();
                 fullCalendarEvent.start = dateFormat.format(item.getGatherDate());
                 fullCalendarEvent.allDay = true;
+                fullCalendarEvent.url = servletContext.getContextPath() + "/gatherInfos/" + item.getId();
+                fullCalendarEvent.description = item.getName() + ",金额:" + item.getAmount();
+                fullCalendarEvent.className = "m-fc-event--danger m-fc-event--solid-focus";
                 fullCalendarEventList.add(fullCalendarEvent);
             });
             String m_rtn;
@@ -78,4 +92,7 @@ class FullCalendarEvent {
     boolean allDay;
     String start;
     String end;
+    String url;
+    String description;
+    String className;
 }
