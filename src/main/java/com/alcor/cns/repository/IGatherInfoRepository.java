@@ -11,8 +11,12 @@ import java.util.List;
 @Repository("com.alcor.cns.repository.IGatherInfoRepository")
 public interface IGatherInfoRepository extends JpaRepository<GatherInfoEntity, String>, PagingAndSortingRepository<GatherInfoEntity, String> {
 
-    public List<GatherInfoEntity>  findAllByContractId(String contractId);
+    public List<GatherInfoEntity> findAll();
 
-    public List<GatherInfoEntity> findAllByNoticeDateAndGatheredAndNotice(Date noticeDate,boolean gathered,boolean notice);
+    public List<GatherInfoEntity> findAllByContractId(String contractId);
+
+    public List<GatherInfoEntity> findAllByNoticeDateAndGatheredAndNotice(Date noticeDate, boolean gathered, boolean notice);
+
+    public List<GatherInfoEntity> findAllByGatherDateBetween(Date beginDate, Date endDate);
 
 }

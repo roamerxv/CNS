@@ -172,9 +172,18 @@ public class GatherInfoController extends BaseController {
         return HttpResponseHelper.successInfoInbox("删除成功");
     }
 
+    /**
+     * 测试发送收款提示信息
+     *
+     * @param id
+     *
+     * @return
+     *
+     * @throws ControllerException
+     */
     @PostMapping("/gatherInfos/notice/{id}")
     @ResponseBody
-    public String noticeTest(@PathVariable  String id) throws ControllerException{
+    public String noticeTest(@PathVariable String id) throws ControllerException {
         log.debug("测试发送一条收款记录:" + id);
         try {
             GatherInfoEntity gatherInfoEntity = gatherInfoService.findById(id);
@@ -184,5 +193,4 @@ public class GatherInfoController extends BaseController {
         }
         return HttpResponseHelper.successInfoInbox("测试完成！");
     }
-
 }

@@ -109,6 +109,17 @@ public class GatherInfoService {
     }
 
     /**
+     * 查询出收款日期在2个日期中的记录
+     * @param beginDate
+     * @param endDate
+     * @return
+     * @throws ServiceException
+     */
+    public List<GatherInfoEntity> findAllBetweenDates(Date beginDate , Date endDate) throws  ServiceException{
+        return  iGatherInfoRepository.findAllByGatherDateBetween(beginDate,endDate);
+    }
+
+    /**
      * 列出所有的需要指定日期提醒的收款计划
      * @return
      * @throws ServiceException
