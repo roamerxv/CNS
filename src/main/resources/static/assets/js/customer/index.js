@@ -5,11 +5,9 @@ var gatherInfo_table;
 var loading_message = "正在重新获取数据，请稍等...";
 
 $().ready(function () {
-    // 设置 datatables 的错误，不做抛出。以便接管错误信息
-    $.fn.dataTable.ext.errMode = 'none';
 
     customer_table = $("#customer_table").DataTable({
-        "width": "100%",
+        layout: {theme: "default", class: "", scroll: !1, height: 450, footer: !1},
         "autoWidth": true,
         "ajax": {
             url: contextPath + "customers/getDataWithoutPaged.json",

@@ -1,5 +1,6 @@
 var businesslog_table;
 
+
 $().ready(function () {
 
     activeMenu("menu3");

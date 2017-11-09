@@ -64,7 +64,7 @@ public class FullCalendarController extends BaseController {
                 fullCalendarEvent.start = dateFormat.format(item.getGatherDate());
                 fullCalendarEvent.allDay = true;
                 fullCalendarEvent.url = servletContext.getContextPath() + "/gatherInfos/" + item.getId();
-                fullCalendarEvent.description = item.getName() + ",金额:" + item.getAmount();
+                fullCalendarEvent.description = item.getName() + "<br/><font color='red'>金额:&nbsp;&nbsp;&nbsp;" + item.getAmount()+"</font>";
                 fullCalendarEvent.className = "m-fc-event--danger m-fc-event--solid-focus";
                 fullCalendarEventList.add(fullCalendarEvent);
             });
