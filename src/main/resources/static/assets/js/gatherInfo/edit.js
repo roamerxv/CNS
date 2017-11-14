@@ -25,7 +25,7 @@ function fun_submit() {
         success: function (data, textStatus, jqXHR) {
             fun_back();
         },
-        error: function ( jqXHR, textStatus, errorThrown ) {
+        error: function (jqXHR, textStatus, errorThrown) {
             showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
             mApp.unblock();
         }
@@ -33,9 +33,9 @@ function fun_submit() {
 };
 
 
-function fun_notice_test(){
-    Logger.debug($("#noticeContent").val().replace(/\s/g,""));
-    if ( $("#noticeContent").val().replace(/\s/g,"")=="" ){
+function fun_notice_test() {
+    Logger.debug($("#noticeContent").val().replace(/\s/g, ""));
+    if ($("#noticeContent").val().replace(/\s/g, "") == "") {
         $.notify({
             title: "<strong>错误</strong> ",
             message: "提醒内容必须设置！"
@@ -47,8 +47,9 @@ function fun_notice_test(){
             }
         });
         return false;
-    };
-    if ($("#noticeTo").val().replace(/\s/g,"")=="" ){
+    }
+    ;
+    if ($("#noticeTo").val().replace(/\s/g, "") == "") {
         $.notify({
             title: "<strong>错误</strong> ",
             message: "发送的地址，必须设置！"
@@ -60,7 +61,8 @@ function fun_notice_test(){
             }
         });
         return false;
-    };
+    }
+    ;
     // 调用测试功能
     //关闭页面响应
     mApp.blockPage({
@@ -79,7 +81,7 @@ function fun_notice_test(){
         success: function (data, textStatus, jqXHR) {
             showMessage("success", "成功", data.data.localMessage);
         },
-        error: function (data, textStatus, jqXHR) {
+        function (jqXHR, textStatus, errorThrown) {
             showMessage("danger", "错误", data.responseJSON.data[0].errorMessage);
         },
     }).always(function () {
@@ -128,7 +130,7 @@ function fun_gatherInfo_delete(id) {
                             mApp.unblock();
                         }
                     },
-                    error: function (data, textStatus, jqXHR) {
+                    error: function (jqXHR, textStatus, errorThrown) {
                         mApp.unblock();
                         showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
                     }

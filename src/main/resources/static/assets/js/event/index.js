@@ -9,7 +9,7 @@ $().ready(function () {
         "autoWidth": true ,
         "ajax": {
             url: contextPath + "events/getDataWithoutPaged.json",
-            error: function (data, textStatus, jqXHR) {
+            function ( jqXHR, textStatus, errorThrown ){
                 showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
             },
         },
@@ -105,7 +105,7 @@ function fun_notice(id) {
         success: function (data, textStatus, jqXHR) {
             showMessage("success", "成功", data.data.localMessage);
         },
-        error: function (data, textStatus, jqXHR) {
+        function ( jqXHR, textStatus, errorThrown ){
             showMessage("danger", "错误", data.responseJSON.data[0].errorMessage);
         },
     }).always(function () {

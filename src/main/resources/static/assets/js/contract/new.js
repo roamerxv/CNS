@@ -56,7 +56,7 @@ function fun_submit() {
         success: function (data, textStatus, jqXHR) {
             window.location = contextPath + "customers/index?showContractModal=" + $("#customerId").val();
         },
-        error: function (data, textStatus, jqXHR) {
+        function ( jqXHR, textStatus, errorThrown ){
             Logger.debug(jqXHR);
             mApp.unblock();
             showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);

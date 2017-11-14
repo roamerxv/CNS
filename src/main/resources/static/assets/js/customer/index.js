@@ -5,7 +5,6 @@ var gatherInfo_table;
 var loading_message = "正在重新获取数据，请稍等...";
 
 $().ready(function () {
-
     customer_table = $("#customer_table").DataTable({
         layout: {theme: "default", class: "", scroll: !1, height: 450, footer: !1},
         "autoWidth": true,
@@ -54,7 +53,7 @@ $().ready(function () {
                     message: loading_message
                 });
             },
-            error: function (data, textStatus, jqXHR) {
+            function ( jqXHR, textStatus, errorThrown ){
                 Logger.debug(data);
                 //showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
             },

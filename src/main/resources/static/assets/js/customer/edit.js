@@ -25,7 +25,7 @@ function fun_submit() {
         success: function (data, textStatus, jqXHR) {
             window.location = contextPath + "customers/index";
         },
-        error: function (data, textStatus, jqXHR) {
+        function ( jqXHR, textStatus, errorThrown ){
             mApp.unblock();
             showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
         }
