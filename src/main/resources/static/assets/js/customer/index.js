@@ -18,7 +18,7 @@ $().ready(function () {
         "language": {
             "url": contextPath + "assets/js/lib/DataTables-1.10.16/chinese.lang.json"
         },
-        "order": [[3, "desc"]],
+        "order": [[1, "desc"]],
         "columns": [{
             "data": "name"
         }, {
@@ -53,9 +53,9 @@ $().ready(function () {
                     message: loading_message
                 });
             },
-            function ( jqXHR, textStatus, errorThrown ){
-                Logger.debug(data);
-                //showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
+            error: function ( jqXHR, textStatus, errorThrown ){
+                Logger.debug(jqXHR);
+                // showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
             },
             complete: function () {
                 mApp.unblock(".modal-content");
