@@ -87,7 +87,7 @@ dependencies {
 
 	compile(
 			// 徐泽宇的web 实用框架
-			"pers.roamer:boracay:2.1.0",
+			"pers.roamer:boracay:2.1.1",
 
 			//  使用alibaba 的druid
 			"com.alibaba:druid:$druidVersion",
@@ -104,7 +104,7 @@ dependencies {
 			"org.apache.logging.log4j:log4j-core:$log4jVersion",
 			//  ------------------------------
 
-			"joda-time:joda-time:2.3",
+			"joda-time:joda-time:2.9.9",
 
 	)
 
@@ -114,8 +114,8 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-mail')
 
 	// compile("org.springframework.boot:spring-boot-starter-thymeleaf") //这个是使用 thymeleaf 2 版本。替换成 3
-	compile("org.thymeleaf:thymeleaf:3.0.8.RELEASE")
-	compile("org.thymeleaf:thymeleaf-spring4:3.0.8.RELEASE")
+	compile("org.thymeleaf:thymeleaf:3.0.9.RELEASE")
+	compile("org.thymeleaf:thymeleaf-spring4:3.0.9.RELEASE")
 	compile("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.2.2")
 	// end
 

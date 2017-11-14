@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSession;
  * @create 2017-06-2017/6/2  下午4:24
  */
 @Log4j2
-@Controller("pers.roamer.boracay.websample.controller.BaseController")
+@Controller("com.alcor.cns.controller.BaseController")
 public class BaseController {
 
     @Autowired
