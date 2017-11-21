@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Log4j2
 @Data
-@Service("com.alcor.cns.service.UserService")
+@Service("com.alcor.ril.service.UserService")
 public class UserService {
     @Qualifier("com.alcor.cns.repository.IUserRepository")
     @Autowired
@@ -44,13 +44,20 @@ public class UserService {
         }
     }
 
-    public boolean modifyPassword(String userName ,String newPassword) throws ServiceException{
+    public boolean modifyPassword(String userName ,String oldPassword ,String newPassword) throws ServiceException{
         UserEntity userEntity = iUserRepository.findOne(userName);
         if (userEntity == null) {
             throw new ServiceException("exception.user.login.user_not_exit");
         }
+        if (!userEntity.getPasswd().equals(oldPassword)){
+            throw new ServiceException("exception.user.login.password_not_match");
+        }
         userEntity.setPasswd(newPassword);
         iUserRepository.save(userEntity);
         return true;
+    }
+
+    public void update(UserEntity userEntity)throws ServiceException{
+        iUserRepository.save(userEntity);
     }
 }

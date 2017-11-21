@@ -49,7 +49,7 @@ function fun_submit() {
         success: function (data, textStatus, jqXHR) {
             fun_back();
         },
-        function ( jqXHR, textStatus, errorThrown ){
+        error: function ( jqXHR, textStatus, errorThrown ){
             mApp.unblock();
             showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
         }

@@ -26,10 +26,10 @@ public class PageController extends BaseController {
             if (super.getUserID() != null) {
                 modelAndView = new ModelAndView("/dashboard/index");
             } else {
-                modelAndView = new ModelAndView("/admin/login");
+                modelAndView = new ModelAndView("/user/login");
             }
         } catch (ControllerException e) {
-            modelAndView = new ModelAndView("/admin/login");
+            modelAndView = new ModelAndView("/user/login");
         }
 
         return modelAndView;

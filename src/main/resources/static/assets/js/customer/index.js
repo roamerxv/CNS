@@ -55,7 +55,7 @@ $().ready(function () {
             },
             error: function ( jqXHR, textStatus, errorThrown ){
                 Logger.debug(jqXHR);
-                // showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
+                showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
             },
             complete: function () {
                 mApp.unblock(".modal-content");

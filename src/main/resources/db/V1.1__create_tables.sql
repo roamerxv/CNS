@@ -57,12 +57,55 @@ CREATE TABLE `business_log` (
   COMMENT ='业务方法调用日志';
 
 
+# 用户信息表
 CREATE TABLE `user` (
-  `name`   VARCHAR(36)
-           COLLATE utf8_bin NOT NULL
+  `name`       VARCHAR(36)
+               COLLATE utf8_bin NOT NULL
   COMMENT '用户名',
-  `passwd` VARCHAR(36)
-           COLLATE utf8_bin NOT NULL
+  `full_name`  VARCHAR(128)
+               COLLATE utf8_bin
+  COMMENT '用户全名',
+  `occupation` VARCHAR(128)
+               COLLATE utf8_bin
+  COMMENT '职务',
+  `company`    VARCHAR(128)
+               COLLATE utf8_bin
+  COMMENT '公司名字',
+  `phone`      VARCHAR(128)
+               COLLATE utf8_bin
+  COMMENT '电话号码',
+  `address`    VARCHAR(128)
+               COLLATE utf8_bin
+  COMMENT '地址',
+  `city`       VARCHAR(128)
+               COLLATE utf8_bin
+  COMMENT '城市',
+  `state`      VARCHAR(128)
+               COLLATE utf8_bin
+  COMMENT '区县',
+  `postcode`   VARCHAR(128)
+               COLLATE utf8_bin
+  COMMENT '邮政编码',
+  `linkedin`   VARCHAR(128)
+               COLLATE utf8_bin
+  COMMENT 'linkedin',
+  `facebook`   VARCHAR(128)
+               COLLATE utf8_bin
+  COMMENT 'Facebook',
+  `twitter`    VARCHAR(128)
+               COLLATE utf8_bin
+  COMMENT 'Twitter',
+  `instagram`  VARCHAR(128)
+               COLLATE utf8_bin
+  COMMENT 'Instagram',
+  `email`      VARCHAR(36)
+               COLLATE utf8_bin
+  COMMENT 'mail地址',
+  `avatar`     VARCHAR(128)
+               COLLATE utf8_bin
+  COMMENT '头像文件 ID',
+  `passwd`     VARCHAR(36)
+               COLLATE utf8_bin
   COMMENT '密码',
   PRIMARY KEY (`name`)
 )
@@ -72,8 +115,17 @@ CREATE TABLE `user` (
 
 SET FOREIGN_KEY_CHECKS = 1;
 
-INSERT INTO `user` VALUES ('admin', '1');
-INSERT INTO `user` VALUES ('masa', '1');
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+BEGIN;
+INSERT INTO `user` VALUES ('admin1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '63857555');
+INSERT INTO `user` VALUES ('admin2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '63857555');
+INSERT INTO `user` VALUES ('admin3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '63857555');
+INSERT INTO `user` VALUES ('masa', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '63857555');
+INSERT INTO `user` VALUES ('roamer', '徐泽宇', ' CTO', 'alcor', '15800392098', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'roamerxv@163.com', '', '1');
+COMMIT;
+
 
 
 CREATE TABLE `cns`.`event` (

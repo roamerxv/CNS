@@ -9,7 +9,7 @@ $().ready(function () {
         "autoWidth": true ,
         "ajax": {
             url: contextPath + "events/getDataWithoutPaged.json",
-            function ( jqXHR, textStatus, errorThrown ){
+            error: function ( jqXHR, textStatus, errorThrown ){
                 showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
             },
         },
@@ -105,8 +105,8 @@ function fun_notice(id) {
         success: function (data, textStatus, jqXHR) {
             showMessage("success", "成功", data.data.localMessage);
         },
-        function ( jqXHR, textStatus, errorThrown ){
-            showMessage("danger", "错误", data.responseJSON.data[0].errorMessage);
+        error: function ( jqXHR, textStatus, errorThrown ){
+            showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
         },
     }).always(function () {
         //关闭页面响应

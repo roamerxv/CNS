@@ -40,47 +40,10 @@
         <!-- 设置上传文件的路径 -->
         <UploadFile>
             <saveFilePath>
-                /Users/roamer/Desktop/upload
+                /upload
             </saveFilePath>
         </UploadFile>
         <!-- -->
-
-        <!--短信接口-->
-        <Sms>
-            <Url>http://222.73.117.158/msg/HttpBatchSendSM</Url>
-            <Username>xxxx</Username>
-            <Password>xxxx</Password>
-            <BusinessMethod>
-                <Regist>
-                    <!--注册验证码有效时长-->
-                    <Duration>1800000</Duration>
-                    <!--注册验证码长度-->
-                    <Length>6</Length>
-                    <Text>尊敬的用户，您注册的手机验证码为：${code}，请填入以完成注册。该验证码有效时间为${duration}分钟，限本次使用。</Text>
-                </Regist>
-                <ForgetPassword>
-                    <!--忘记密码验证码有效时长-->
-                    <Duration>1800000</Duration>
-                    <!--忘记密码验证码长度-->
-                    <Length>6</Length>
-                    <Text>尊敬的用户，您正在使用忘记密码功能，您的手机验证码为：${code}，该验证码有效时间为${duration}分钟，限本次使用。</Text>
-                </ForgetPassword>
-                <ModifyPhoneNumber>
-                    <!--修改手机号码验证码有效时长-->
-                    <Duration>1800000</Duration>
-                    <!--修改手机号码验证码长度-->
-                    <Length>6</Length>
-                    <Text>尊敬的用户，您正在使用修改手机号码功能，您的手机验证码为：${code}，该验证码有效时间为${duration}分钟，限本次使用。</Text>
-                </ModifyPhoneNumber>
-                <ModifyPassword>
-                    <!--修改密码验证码有效时长-->
-                    <Duration>1800000</Duration>
-                    <!--修改密码验证码长度-->
-                    <Length>6</Length>
-                    <Text>尊敬的用户，您正在使用重置密码功能，您的手机验证码为：${code}，该验证码有效时间为${duration}分钟，限本次使用。</Text>
-                </ModifyPassword>
-            </BusinessMethod>
-        </Sms>
     </System>
     <!---->
 
@@ -102,55 +65,7 @@
                 </not_found>
             </event>
         </system>
-        <!--短信验证部分-->
-        <sms>
-            <validate>
-                <mobile>
-                    <not_set>
-                        验证的手机号没有设置！
-                    </not_set>
-                </mobile>
-                <vcode>
-                    <opid_size_no_match>
-                        需要短信验证的方法和传入的验证码数目不一致！| code
-                    </opid_size_no_match>
-                    <not_set>
-                        短信验证码没有设置!| code
-                    </not_set>
-                    <invalid>
-                        该用户没有发送过短信 ！| code
-                        <ReboundOldMobile>
-                            需要解绑手机的验证码没有发送过!
-                        </ReboundOldMobile>
-                        <ReboundNewMobile>
-                            需要绑定的手机的验证码没有发送过!
-                        </ReboundNewMobile>
-                    </invalid>
-                    <expired>
-                        验证码过期！| code
-                        <ReboundOldMobile>
-                            需要解绑手机的验证码已经过期!
-                        </ReboundOldMobile>
-                        <ReboundNewMobile>
-                            需要绑定的手机的验证码已经过期!
-                        </ReboundNewMobile>
-                    </expired>
-                    <not_match>
-                        验证码不匹配！| code
-                        <ReboundOldMobile>
-                            需要解绑手机的验证码不匹配!
-                        </ReboundOldMobile>
-                        <ReboundNewMobile>
-                            需要绑定的手机的验证码不匹配!
-                        </ReboundNewMobile>
-                    </not_match>
-                    <invalid_method>
-                        无效的业务请求| code
-                    </invalid_method>
-                </vcode>
-            </validate>
-        </sms>
-        <!---->
+
         <system_log>
             <datetime_condition>
                 <begin_datetime>
@@ -167,50 +82,14 @@
         </system_log>
 
         <user>
-            <register>
-                <mobile_used>
-                    手机已经被注册过了！| mobile
-                </mobile_used>
-                <name_used>
-                    用户名已经被注册过了！| passwd
-                </name_used>
-
-            </register>
             <login>
+                <user_not_exit>
+                    用户不存在！
+                </user_not_exit>
                 <password_not_match>
-                    密码不匹配|Password
+                    输入的旧密码不匹配！
                 </password_not_match>
-                <user_not_exit>
-                    无此用户|Username
-                </user_not_exit>
-                <unHandle>
-                    未捕获错误的登录失败
-                </unHandle>
-                <mobile_is_null>
-                    手机号为空 |mobile
-                </mobile_is_null>
-                <mobile_pattern_wrong>
-                    手机号格式错误
-                </mobile_pattern_wrong>
             </login>
-            <modify>
-                <password>
-                    <validatecode_not_match>
-                        修改密码的时候，验证码不正确！修改失败！| validate_code
-                    </validatecode_not_match>
-                </password>
-            </modify>
-            <edit>
-                <user_not_exit>
-                    无此用户 | email
-                </user_not_exit>
-                <not_company_account>
-                    非公司账户
-                </not_company_account>
-                <not_personal_account>
-                    非个人账户
-                </not_personal_account>
-            </edit>
         </user>
 
 

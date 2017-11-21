@@ -64,7 +64,7 @@ $().ready(function () {
                     showMessage("success", "成功", "增加一个分类成功");
                     window.location = contextPath + "/customer_type/edit";
                 },
-                function ( jqXHR, textStatus, errorThrown ){
+                error: function ( jqXHR, textStatus, errorThrown ){
                     showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
                 }
             }).done(function (data) {
